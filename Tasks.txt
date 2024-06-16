@@ -1,0 +1,27 @@
+https://drive.google.com/file/d/1Ht1yFjbI5Jl4bWLrmJf7DkdcL6OqOD5P/view?usp=sharing
+
+https://drive.google.com/file/d/1cKQx33zeBYAz0LEiQXi3nttYibLb8nGR/view?usp=sharing
+
+https://drive.google.com/file/d/12gIZw5QvZGfqGiiud7JevSDGWWvvX2WS/view?usp=sharing
+
+https://drive.google.com/file/d/1ZzL0tF8Ad3oBZ2GQCr9QmrlpxiansFOy/view?usp=sharing
+
+
+p300 response
+when audio is playing screen has two button high pitch and low picth and person will click button according to the sound being played
+
+click on recording give option to play audio 1 or 2
+user selcted audio 1 then ask whether to play for 3 or 5 minutes
+now I selected 3 minutes then test start audio is playing eeg data is coming then user will click on button of high pitch or low pitch save when user clicks button
+when test done save the data in file
+
+when recording stops then device still gives data  user should be redirected to initial screen and data recording should be stopped
+
+TASK 2:
+impedence rating  which tells whether device is set on head or not
+
+where we are recording show a green light which tells atleast 6 out of 8 are green then show green light
+
+
+Task 3  Patient information fields to be updated 
+
