@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.props" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8A4AAC37-7E49-4281-A0D2-D35D07BB3A11}</ProjectGuid>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UseMSBuildEngine>true</UseMSBuildEngine>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SharedCore</RootNamespace>
+    <AssemblyName>SharedCore</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <PackageId>SharedCore</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>teodorovichvladimir</Authors>
+    <Description>SharedCore</Description>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Enums\Errors.cs" />
+    <Compile Include="Extensions\StringToByteArrayExtension.cs" />
+    <Compile Include="Models\BaseDisposable.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Bluetooth\BlueToothService.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeBleAdapter.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeBleService.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeBluetoothLE.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeCharacteristic.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeDescriptor.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeDevice.cs" />
+    <Compile Include="Services\Bluetooth\Fake\FakeLiveCharacteristic.cs" />
+    <Compile Include="Services\Bluetooth\IBlueToothService.cs" />
+    <Compile Include="Models\DeviceModel.cs" />
+    <Compile Include="Services\Characteristic3Service\Characteristic3Service.cs" />
+    <Compile Include="Services\Charts\BiopotSignalParser.cs" />
+    <Compile Include="Services\Charts\Filters\CopyFilter.cs" />
+    <Compile Include="Services\Charts\Filters\MultiFilter.cs" />
+    <Compile Include="Services\Charts\Filters\NotchFilterParams.cs" />
+    <Compile Include="Services\Charts\Filters\NotchFilter.cs" />
+    <Compile Include="Services\Charts\Filters\SimpleMultiplyFilter.cs" />
+    <Compile Include="Services\Charts\ISignalFilterService.cs" />
+    <Compile Include="Services\Charts\SignalFilterService.cs" />
+    <Compile Include="Services\DeviceDataTransfer\DeviceDataTransferService.cs" />
+    <Compile Include="Services\DeviceDataTransfer\IDeviceDataTransferService.cs" />
+    <Compile Include="Models\Others\AOResult.cs" />
+    <Compile Include="Services\Characteristic3Service\ICharacteristic3Service.cs" />
+    <Compile Include="Services\Performance\Performance.cs" />
+    <Compile Include="Services\Performance\DefaultPerformanceProvider.cs" />
+    <Compile Include="Services\ReadWriteDeviceDataService\IReadWriteDeviceDataService.cs" />
+    <Compile Include="Services\ReadWriteDeviceDataService\ReadWriteDeviceDataService.cs" />
+    <Compile Include="Services\FileIO\IFileIoService.cs" />
+    <Compile Include="Services\FileIO\IFolderService.cs" />
+    <Compile Include="Services\SaveData\ISaveDataService.cs" />
+    <Compile Include="Enums\ESaveDataWays.cs" />
+    <Compile Include="Services\BatteryDataService\IBatteryDataService.cs" />
+    <Compile Include="Services\HardwareVersionService\IHardwareVersionService.cs" />
+    <Compile Include="Services\HardwareVersionService\HardwareVersionService.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Services\LogService\ILogService.cs" />
+    <Compile Include="Services\TemperatureDataService\ITemperatureDataService.cs" />
+    <Compile Include="Services\TemperatureDataService\BatteryAndTemperatureDataService.cs" />
+    <Compile Include="StaticHelpers.cs" />
+    <Compile Include="Services\Charts\ChartService.cs" />
+    <Compile Include="Services\Charts\IChartService.cs" />
+    <Compile Include="Services\Charts\BiobotDataForChartsService.cs" />
+    <Compile Include="Services\Charts\IBiobotDataForChartsService.cs" />
+    <Compile Include="Enums\EDataForChartsState.cs" />
+    <Compile Include="Services\Charts\IBiopotInfoChartsService.cs" />
+    <Compile Include="Services\Charts\BiopotInfoChartsService.cs" />
+    <Compile Include="Services\RateInfoService\ISamplesRateInfoService.cs" />
+    <Compile Include="Services\RateInfoService\SamplesRateInfoService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.BLE.Abstractions">
+      <HintPath>..\packages\Plugin.BLE.1.3.0\lib\portable-net45+win8+wpa81+wp8\Plugin.BLE.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Plugin.BLE">
+      <HintPath>..\packages\Plugin.BLE.1.3.0\lib\portable-net45+win8+wpa81+wp8\Plugin.BLE.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets" Condition="Exists('..\packages\NuGet.Build.Packaging.0.2.0\build\NuGet.Build.Packaging.targets')" />
+</Project>

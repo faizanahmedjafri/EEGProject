@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unity:PrismApplication 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:biopot" 
+    xmlns:unity="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms" 
+    xmlns:converters="clr-namespace:biopot.Converters;" 
+    xmlns:controls="clr-namespace:biopot.Controls" 
+    x:Class="biopot.App">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            
+            <converters:RssiLevelToImageSourceConverter x:Key="RssiLevelToImageSourceConverter" />
+            <converters:SignalValuetoBgColorConverter x:Key="SignalValuetoBgColorConverter" />
+            <converters:NotNullConverter x:Key="NotNullConverter" />
+            
+            <Color x:Key="stepsActiveColor">#4983EF</Color>
+            <Color x:Key="entryPlaceholderColor">#C8C7CC</Color>
+            <Color x:Key="entrySeparatorColor">#4680F2</Color>
+            <Color x:Key="entrySeparatorColorDefault">#CECED2</Color>
+            <Color x:Key="entryTextColor">#212121</Color>
+            <Color x:Key="buttonBgColor">#4680F2</Color>
+            <Color x:Key="backButtonBgColor">#33C8C7CC</Color>
+            <Color x:Key="backButtonTextColor">#6F6F6F</Color>
+            <Color x:Key="warningBoxColor">#FDD94E</Color>
+            <Color x:Key="connectedDeviceBoxColor">#ffEFEFF4</Color>
+            <Color x:Key="selectedDeviceBorderColor">#FFaFaFaF</Color>
+            <Color x:Key="mainPageChartColor">#FFE3E3E5</Color>
+            <Color x:Key="chartsGroupNameColor">#FF212121</Color>
+            <Color x:Key="chartGroupPanelColor">#FFF5F5F5</Color>
+            <Color x:Key="errorColor">#FF1C3A</Color>
+            <Color x:Key="pickerButtonColor">#ff378af6</Color>
+            <Color x:Key="pickerDisabledButtonColor">#ff616161</Color>
+            <Color x:Key="detailedChartBackgroundColor">#FFF6F8FE</Color>
+            <Color x:Key="toolBarBandTextColor">#FF3A4348</Color>
+            <Color x:Key="toolBarTitleTextColor">#e0e0e0</Color>
+            <Color x:Key="toolBarNoConnectionTitleTextColor">#FF6F6F6F</Color>
+            <Color x:Key="activeTabStripTextColor">#FF4680F2</Color>
+            <Color x:Key="inActiveTabStripTextColor">#FFC8C7CC</Color>
+            <Color x:Key="mainPageChartIDColor">#FF6F6F6F</Color>
+            <Color x:Key="impedanceBgColor">#FF6F6F6F</Color>
+            <Color x:Key="impedanceGreenColor">#ABD69C</Color>
+            <Color x:Key="impedanceOrangeColor">#FFF200</Color>
+            <Color x:Key="impedanceRedColor">#741472</Color>
+            <Color x:Key="impedanceSCh01Color">#FF4680F2</Color>
+            <Color x:Key="impedanceSCh02Color">#FF212121</Color>
+
+            <Color x:Key="toolbarLogoColor">#4983EF</Color>
+            <Color x:Key="toolbarGreyColor">#FF6F6F6F</Color>
+            <Color x:Key="toolbarOmegaColored">#741577</Color>
+            
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoRegular}" />
+            </Style>
+            <Style TargetType="controls:XfxEntry">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoRegular}" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoRegular}" />
+            </Style>
+            <Style x:Key="pageNumberTextLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+            </Style>
+            <Style x:Key="pageNumberImageStyle" TargetType="Image">
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HeightRequest" Value="20" />
+                <Setter Property="Source" Value="done" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="titleTextLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+            </Style>
+            <Style x:Key="labelTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style x:Key="buttonTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+            </Style>
+            <Style x:Key="bandTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="9" />
+                <Setter Property="TextColor" Value="{StaticResource toolBarBandTextColor}" />
+            </Style>
+            <Style x:Key="toolBarTitleTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="TextColor" Value="{StaticResource toolBarTitleTextColor}" />
+            </Style>
+            <Style x:Key="toolBarNoConnectedTitleTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="TextColor" Value="{StaticResource toolBarNoConnectionTitleTextColor}" />
+            </Style>
+            <Style x:Key="textEntryStyle" TargetType="controls:XfxEntry">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+            <Style x:Key="hintLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <Style x:Key="chartIdStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="chartsGroupNameStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoRegular}" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="TextColor" Value="{StaticResource chartsGroupNameColor}" />
+            </Style>
+            <Style x:Key="chartsPickerValueStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoRegular}" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="{StaticResource chartsGroupNameColor}" />
+            </Style>
+            <Style x:Key="chartsDivisonTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoRegular}" />
+                <Setter Property="TextColor" Value="{StaticResource mainPageChartIDColor}" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            <Style x:Key="robotoRegularStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+                <Setter Property="TextColor" Value="{StaticResource entryTextColor}" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+            <Style x:Key="impedanceTitlesStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+            <Style x:Key="impedanceNumericStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="TextColor" Value="{StaticResource chartsGroupNameColor}" />
+            </Style>
+            <Style x:Key="EraseModeTitleStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+                <Setter Property="FontSize" Value="17" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+            <Style x:Key="EraseModeSubtitleStyle" TargetType="Label">
+                <Setter Property="FontFamily" Value="{x:Static local:Styles.FontRobotoMedium}" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="TextColor" Value="White" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</unity:PrismApplication>

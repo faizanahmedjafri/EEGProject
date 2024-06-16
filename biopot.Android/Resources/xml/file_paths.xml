@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+  <external-path name="Biopot" path="/storage/emulated/0/" />
+    <files-path path="/storage/emulated/0/" name="Biopot" />
+     <external-path
+        name="external_files"
+        path="." />
+    <root-path
+        name="storage"
+        path="/storage/" />
+    <external-path path="Android/data/com.meffort.biopot/" name="files_root" />
+    
+    <root-path
+    name="root"
+    path="/" />
+</paths>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+             xmlns:controls="clr-namespace:biopot.Controls"
+             x:Class="biopot.Controls.RecordControl"
+             x:Name="This">
+    <ContentView.Content>
+        <Grid BindingContext="{x:Reference Name=This}" WidthRequest="134" ColumnSpacing="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" Text="{Binding Time, StringFormat='{0:HH:mm:ss}'}" WidthRequest="70" HeightRequest="24" BackgroundColor="{StaticResource inActiveTabStripTextColor}" TextColor="{StaticResource entryTextColor}"
+                   IsVisible="{Binding IsRecording}" VerticalOptions="Center" HorizontalTextAlignment="Start" VerticalTextAlignment="Center"/>
+
+            <controls:ClickableContentView 
+                Grid.Column="1" 
+                Command="{Binding ClickedCommand}" 
+                WidthRequest="100"
+                HeightRequest="100"
+                HorizontalOptions="End"
+                VerticalOptions="Center">
+                
+                <Image Source="{Binding ImageSource}"/>
+            </controls:ClickableContentView>
+            
+        </Grid>
+    </ContentView.Content>
+</ContentView>

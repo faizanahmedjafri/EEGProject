@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:localization="clr-namespace:biopot.Resources.Strings" xmlns:p="clr-namespace:biopot.Views;assembly=biopot" xmlns:controls="clr-namespace:biopot.Controls" xmlns:behavior="clr-namespace:biopot.Behaviors" xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms" xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+                   xmlns:converters="clr-namespace:biopot.Converters;assembly=biopot"
+                   xmlns:biopot="clr-namespace:biopot;assembly=biopot"
+                   x:Class="biopot.Views.DetailedChartView"
+                   x:Name="Root">
+
+    <p:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="NegateBooleanConverter"/>
+        </ResourceDictionary>
+    </p:BaseContentPage.Resources>
+    
+    <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Erase Mode notification -->
+        <controls:EraseModeNotificationView HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand"
+                                            IsVisible="{Binding IsEraseModeActive}"
+                                            Grid.Row="0"/>
+        
+        <!-- Toolbar -->
+        <Grid HeightRequest="50" Grid.Row="1" ColumnSpacing="0" Padding="6,6" BackgroundColor="White" VerticalOptions="Start">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <!-- Back -->
+            <controls:ClickableContentView Grid.Column="0" HorizontalOptions="Start" Command="{Binding BackCommand}">
+                <Grid Padding="0" HeightRequest="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="0.4*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="back" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Grid.Column="1" Text="Back" Style="{StaticResource labelTextStyle}" TextColor="{StaticResource entryTextColor}" VerticalOptions="Center" HorizontalOptions="Center" />
+                </Grid>
+            </controls:ClickableContentView>
+
+            <!-- Omega -->
+            <controls:ClickableContentView Grid.Column="2" Command="{Binding ConnectionStateCommand}" Margin="2">
+                    <controls:TintedImage VerticalOptions="StartAndExpand" HorizontalOptions="Center"
+                                          HeightRequest="32" WidthRequest="32" Aspect="AspectFit"
+                                          TintColor="{StaticResource toolbarOmegaColored}"
+                                          StyleId="button" Source="omega.png">
+                        <Image.Triggers>
+                            <DataTrigger TargetType="controls:TintedImage" Binding="{Binding SensorsConnectionState}" Value="None">
+                                <Setter Property="TintColor" Value="{StaticResource toolbarGreyColor}" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </controls:TintedImage>
+            </controls:ClickableContentView>
+            
+            <!-- Bandwidth -->
+            <controls:ClickableContentView Grid.Column="3" Command="{Binding BandWidthCommand}" Margin="2">
+                <StackLayout Spacing="0" Orientation="Vertical">
+                    <controls:TintedImage InputTransparent="true" VerticalOptions="StartAndExpand" HorizontalOptions="Center" 
+                                          HeightRequest="32" WidthRequest="32" Aspect="AspectFit"
+                                          StyleId="button" TintColor="{StaticResource toolbarGreyColor}" Source="flash.png" />
+
+                    <Label Text="{Binding ChartSps.SensorValue, StringFormat={x:Static localization:Strings.ToolbarSPS}}"
+                           HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"
+                           Style="{StaticResource bandTextStyle}" />
+                </StackLayout>
+            </controls:ClickableContentView>
+            
+            <!-- Open folder -->
+            <controls:ClickableContentView Grid.Column="4" Command="{Binding OpenFolderCommand}" Margin="2">
+                <controls:TintedImage VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" 
+                                      HeightRequest="32" WidthRequest="32" Aspect="AspectFit"
+                                      TintColor="{StaticResource toolbarGreyColor}" Source="folder.png" />
+            </controls:ClickableContentView>
+
+            <!-- Settings -->
+            <controls:LongPressableContentView Grid.Column="5" Margin="2"
+                                               LongPressDelay="00:00:05.00"
+                                               LongPressTriggerInterval="10.00:00:00.00"
+                                               Command="{Binding AdditionalSettingsCommand}"
+                                               OnPressing="{Binding TechnicalSettingsCommand}">
+                <controls:TintedImage VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" 
+                                      HeightRequest="32" WidthRequest="32" Aspect="AspectFit"
+                                      TintColor="{StaticResource toolbarGreyColor}" Source="settings_toolbar.png" />
+            </controls:LongPressableContentView>
+        </Grid>
+        
+        <Image Source="navbar_shadow" HeightRequest="5" Aspect="AspectFill" VerticalOptions="EndAndExpand" Grid.Row="2" />
+
+        <AbsoluteLayout Grid.Row="3" VerticalOptions="FillAndExpand"> 
+        <Grid 
+              Padding="0" Grid.Row="3" VerticalOptions="FillAndExpand" BackgroundColor="White"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+                                    
+            <controls:TabStrip x:Name="tabStrip" Grid.Row="0" Grid.Column="0" ActivePageIndex="{Binding StripTabIndex, Mode=TwoWay}" TabBackColor="White" TabIndicatorColor="{StaticResource activeTabStripTextColor}" TabHeight="44">
+                <controls:TabStrip.Children>
+                    <controls:TabItem>
+                        <controls:TabItem.ButtonView InputTransparent="true">
+                            <ContentView StyleId="Menu" InputTransparent="true" VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding EEMorEMG.Name}" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </ContentView>
+                        </controls:TabItem.ButtonView>
+                        
+                        <controls:TabItem.View>
+                            <!--GriddedChartControl-->
+                            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.NoChannelsSelected}" 
+                                       TextColor="{StaticResource inActiveTabStripTextColor}"
+                                       IsVisible="{Binding EEMorEMG.HasChannels, Converter={StaticResource NegateBooleanConverter}}"/>
+                                <Grid RowSpacing="6" ColumnSpacing="0" IsVisible="{Binding EEMorEMG.HasChannels}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0"
+                                          HeightRequest="50"
+                                          Padding="15,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"
+                                               Text="Zoom Channel:"
+                                               Style="{StaticResource labelTextStyle}"
+                                               TextColor="{StaticResource entryTextColor}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start" />
+                                        <Grid Grid.Column="1"
+                                              HorizontalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.42*" />
+                                                <ColumnDefinition Width="0.16*" />
+                                                <ColumnDefinition Width="0.42*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="gradient" Grid.ColumnSpan="3" Aspect="AspectFill" />
+                                            <controls:ClickableContentView Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding EEMorEMG.CurrentChartChangedCommand}" CommandParameter="prev">
+                                                <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="End">
+                                                    <Image Source="arrow_prev" Aspect="AspectFill" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="37.5" HeightRequest="37.5" />
+                                                    <Label Style="{StaticResource robotoRegularStyle}" VerticalOptions="Center" HorizontalOptions="Start" Text="Prev" />
+                                                </StackLayout>
+                                            </controls:ClickableContentView>
+                                            <Grid Grid.Column="1" RowSpacing="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <ContentView WidthRequest="80" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center">
+                                                    <!-- Current channel with montage (if applied)-->
+                                                        <Label VerticalOptions="Center" HorizontalOptions="Center"  
+                                                               Text="{Binding EEMorEMG.ChartViewModel.ChannelWithMontageFormatted}" 
+                                                               TextColor="{StaticResource entryTextColor}" FontSize="16"  />    
+                                                </ContentView>
+                                                <ncontrol:RoundCornerView Grid.Row="1" BackgroundColor="{StaticResource inActiveTabStripTextColor}" HorizontalOptions="Fill" HeightRequest="2" />
+                                            </Grid>
+                                            <controls:ClickableContentView Command="{Binding EEMorEMG.CurrentChartChangedCommand}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start" CommandParameter="next">
+                                                <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="Start">
+                                                    <Label Style="{StaticResource robotoRegularStyle}" VerticalOptions="Center" HorizontalOptions="End" Text="Next" />
+                                                    <Image Source="arrow_next" Aspect="AspectFill" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="37.5" HeightRequest="37.5" />
+                                                </StackLayout>
+                                            </controls:ClickableContentView>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Padding="0,5,0,0" BackgroundColor="{StaticResource detailedChartBackgroundColor}" RowSpacing="0" ColumnSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <StackLayout Margin="9,0,0,0" Orientation="Horizontal" Spacing="2" Grid.Column="0" Grid.Row="0">
+                                                <Image Source="temperature" VerticalOptions="Center" HorizontalOptions="Center" />
+                                                <Label Style="{StaticResource chartsDivisonTextStyle}"
+                                                       Text="{Binding Temperature, StringFormat={x:Static localization:Strings.TemperatureCelsiusFormat}}" />
+
+                                                <controls:TintedImage x:Name="EegEmgBatteryImage"
+                                                                      Source="{Binding BatteryImage}" 
+                                                                      TintColor="{Binding BatteryImageColor}"
+                                                                      HeightRequest="12" WidthRequest="12"
+                                                                      VerticalOptions="Center" HorizontalOptions="Center" />
+                                            </StackLayout>
+                                        
+                                        <Grid Grid.Row="0"
+                                              Grid.Column="1"
+                                              Padding="10, 5"
+                                              ColumnSpacing="10"
+                                              VerticalOptions="Start"
+                                              HorizontalOptions="End">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <!-- 'reset' button -->
+                                            <controls:ClickableContentView Grid.Column="0"
+                                                                           VerticalOptions="Center"
+                                                                           HorizontalOptions="Center"
+                                                                           Command="{Binding EEMorEMG.ResetChartScaleCommand}">
+                                                <controls:TintedImage VerticalOptions="Center"
+                                                                      HorizontalOptions="Center"
+                                                                      HeightRequest="32"
+                                                                      WidthRequest="32"
+                                                                      Aspect="AspectFit"
+                                                                      TintColor="{StaticResource chartsGroupNameColor}"
+                                                                      Source="ic_refresh_36dp" />
+                                            </controls:ClickableContentView>
+
+                                            <!-- Y-scale picker -->
+                                            <controls:VerticalValuePicker x:Name="EEMorEMGValuePicker"
+                                                                          Grid.Column="1"
+                                                                          VerticalOptions="Center"
+                                                                          MaxValue="{x:Static biopot:Constants+Charts.ChartYAxisMaxValue}"
+                                                                          MinValue="{x:Static biopot:Constants+Charts.ChartYAxisMinValue}"
+                                                                          PickerValue="{Binding EEMorEMG.PickerValue}"
+                                                                          PickerStep="{x:Static biopot:Constants+Charts.YAxisStepInterpolator}"
+                                                                          PickerValueFormatter="{}{0} μV" />
+
+                                            <!-- X-scale picker -->
+                                            <controls:HorizontalValuePicker x:Name="eemOrEegXScalePicker"
+                                                                            Grid.Column="2"
+                                                                            VerticalOptions="Center"
+                                                                            MaxValue="{Binding EEMorEMG.XScaleMaxValue}"
+                                                                            MinValue="{Binding EEMorEMG.XScaleMinValue}"
+                                                                            PickerValue="{Binding EEMorEMG.XScaleValue}"
+                                                                            PickerStep="{x:Static biopot:Constants+Charts.XAxisStepInterpolator}"
+                                                                            PickerValueFormatter="{}{0} sec" />
+                                        </Grid>
+
+                                        <Grid Padding="10,0,5,0" x:Name="chartY_EEG" Grid.Row="1" Grid.Column="0" ColumnSpacing="0" RowSpacing="0" />
+                                        <Grid Grid.Row="1" Grid.Column="1"  x:Name="chartGrid_EEG" BackgroundColor="#FFE3E3E5" RowSpacing="1" ColumnSpacing="1" />
+                                        <microcharts:ChartView Grid.Row="1" Grid.Column="1"  Chart="{Binding EEMorEMG.ChartViewModel.Chart}" BackgroundColor="Transparent" />
+                                        <Grid Padding="0,5" x:Name="chartX_EEG" Grid.Row="2" Grid.Column="1" RowSpacing="0" ColumnSpacing="0" />
+                                    </Grid>
+                                </Grid>
+
+                                    <controls:MontageChannelView IsVisible="{Binding BindingContext.EEMorEMG.HasChannels, Source={x:Reference Root}}"
+                                                             HorizontalOptions="FillAndExpand"
+                                                             VerticalOptions="FillAndExpand"
+                                                             BindingContext="{Binding EEMorEMG.ChartViewModel}"/>
+                                </StackLayout>
+                            <!--/GriddedChartControl-->
+                        </controls:TabItem.View>
+                    </controls:TabItem>
+                    <controls:TabItem>
+                        <controls:TabItem.ButtonView>
+                            <ContentView VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding BioImpedance.Name}" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </ContentView>
+                        </controls:TabItem.ButtonView>
+                        
+                        <controls:TabItem.View>
+                            <!--GriddedChartControl-->
+                            <!-- FIXME place info ScrollView -->
+                            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.NoChannelsSelected}" 
+                                       TextColor="{StaticResource inActiveTabStripTextColor}"
+                                       IsVisible="{Binding BioImpedance.HasChannels, Converter={StaticResource NegateBooleanConverter}}"/>
+                                <Grid RowSpacing="6" ColumnSpacing="0" IsVisible="{Binding BioImpedance.HasChannels}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0"
+                                          HeightRequest="50"
+                                          Padding="15,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"
+                                               Text="Zoom Channel:"
+                                               Style="{StaticResource labelTextStyle}"
+                                               TextColor="{StaticResource entryTextColor}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start" />
+                                        <Grid Grid.Column="1"
+                                              HorizontalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.42*" />
+                                                <ColumnDefinition Width="0.16*" />
+                                                <ColumnDefinition Width="0.42*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="gradient" Grid.ColumnSpan="3" Aspect="AspectFill" />
+                                            <controls:ClickableContentView Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding BioImpedance.CurrentChartChangedCommand}" CommandParameter="prev">
+                                                <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="End">
+                                                    <Image Source="arrow_prev" Aspect="AspectFill" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="37.5" HeightRequest="37.5" />
+                                                    <Label Style="{StaticResource robotoRegularStyle}" VerticalOptions="Center" HorizontalOptions="Start" Text="Prev" />
+                                                </StackLayout>
+                                            </controls:ClickableContentView>
+                                            <Grid Grid.Column="1" RowSpacing="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <ContentView WidthRequest="70" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center">
+                                                    <Label VerticalOptions="Center" HorizontalOptions="Center"  Text="{Binding BioImpedance.CurrentChart}" TextColor="{StaticResource entryTextColor}" FontSize="16"/>    
+                                                </ContentView>
+                                                <ncontrol:RoundCornerView Grid.Row="1" BackgroundColor="{StaticResource inActiveTabStripTextColor}" HorizontalOptions="Fill" HeightRequest="2" />
+                                            </Grid>
+                                            <controls:ClickableContentView Command="{Binding BioImpedance.CurrentChartChangedCommand}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start" CommandParameter="next">
+                                                <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="Start">
+                                                    <Label Style="{StaticResource robotoRegularStyle}" VerticalOptions="Center" HorizontalOptions="End" Text="Next" />
+                                                    <Image Source="arrow_next" Aspect="AspectFill" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="37.5" HeightRequest="37.5" />
+                                                </StackLayout>
+                                            </controls:ClickableContentView>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1"
+                                          Padding="0,5,0,0"
+                                          BackgroundColor="{StaticResource detailedChartBackgroundColor}"
+                                          RowSpacing="0"
+                                          ColumnSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <StackLayout Margin="9,0,0,0" Orientation="Horizontal" Spacing="2">
+                                                <Image Source="temperature" VerticalOptions="Center" HorizontalOptions="Center" />
+                                                <Label Style="{StaticResource chartsDivisonTextStyle}"
+                                                       Text="{Binding Temperature, StringFormat={x:Static localization:Strings.TemperatureCelsiusFormat}}" />
+                                            
+                                                <controls:TintedImage x:Name="BioImpedanceBatteryImage"
+                                                                      Source="{Binding BatteryImage}" 
+                                                                      TintColor="{Binding BatteryImageColor}"
+                                                                      HeightRequest="12" WidthRequest="12" 
+                                                                      VerticalOptions="Center" HorizontalOptions="Center" />
+                                            </StackLayout>
+                                        
+                                            <Grid Grid.Row="0"
+                                              Grid.Column="1"
+                                              Padding="10, 5"
+                                              ColumnSpacing="10"
+                                              VerticalOptions="Start"
+                                              HorizontalOptions="End">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <!-- 'reset' button -->
+                                            <controls:ClickableContentView Grid.Column="0"
+                                                                           VerticalOptions="Center"
+                                                                           HorizontalOptions="Center"
+                                                                           Command="{Binding BioImpedance.ResetChartScaleCommand}">
+                                                <controls:TintedImage VerticalOptions="Center"
+                                                                      HorizontalOptions="Center"
+                                                                      HeightRequest="32"
+                                                                      WidthRequest="32"
+                                                                      Aspect="AspectFit"
+                                                                      TintColor="{StaticResource chartsGroupNameColor}"
+                                                                      Source="ic_refresh_36dp" />
+                                            </controls:ClickableContentView>
+
+                                            <!-- Y-scale picker -->
+                                            <controls:VerticalValuePicker x:Name="bioImpedanceValuePicker"
+                                                                          Grid.Column="1"
+                                                                          VerticalOptions="Start"
+                                                                          MaxValue="{x:Static biopot:Constants+Charts.ChartYAxisMaxValue}"
+                                                                          MinValue="{x:Static biopot:Constants+Charts.ChartYAxisMinValue}"
+                                                                          PickerValue="{Binding BioImpedance.PickerValue}"
+                                                                          PickerStep="{x:Static biopot:Constants+Charts.YAxisStepInterpolator}"
+                                                                          PickerValueFormatter="{}{0} μV" />
+
+                                            <!-- X-scale picker -->
+                                            <controls:HorizontalValuePicker x:Name="bioImpedanceXScalePicker"
+                                                                            Grid.Column="2"
+                                                                            VerticalOptions="Center"
+                                                                            MaxValue="{Binding BioImpedance.XScaleMaxValue}"
+                                                                            MinValue="{Binding BioImpedance.XScaleMinValue}"
+                                                                            PickerValue="{Binding BioImpedance.XScaleValue}"
+                                                                            PickerStep="{x:Static biopot:Constants+Charts.XAxisStepInterpolator}"
+                                                                            PickerValueFormatter="{}{0} sec" />
+                                        </Grid>
+
+                                        <Grid Padding="10,0,5,0" x:Name="chartY_Bio" Grid.Row="1" Grid.Column="0" ColumnSpacing="0" RowSpacing="0" />
+                                        <Grid Grid.Row="1" Grid.Column="1" x:Name="chartGrid_Bio" BackgroundColor="#FFE3E3E5" RowSpacing="1" ColumnSpacing="1" />
+                                        <microcharts:ChartView Grid.Row="1" Grid.Column="1" Chart="{Binding BioImpedance.ChartViewModel.Chart}" BackgroundColor="Transparent" />
+                                        <Grid Padding="0,5" x:Name="chartX_Bio" Grid.Row="2" Grid.Column="1" RowSpacing="0" ColumnSpacing="0" />
+                                    </Grid>
+                                </Grid>
+                                </StackLayout>
+                            <!--/GriddedChartControl-->
+                        </controls:TabItem.View>
+                    </controls:TabItem>
+                    <controls:TabItem>
+                        <controls:TabItem.ButtonView>
+                            <ContentView VerticalOptions="Center" HorizontalOptions="Center">
+                                <Label Text="{Binding Accelerometer.Name}" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </ContentView>
+                        </controls:TabItem.ButtonView>
+                        
+                        <controls:TabItem.View>
+                            <!--GriddedChartControl-->
+                            <!-- FIXME place info ScrollView -->
+                            <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.NoChannelsSelected}" 
+                                       TextColor="{StaticResource inActiveTabStripTextColor}"
+                                       IsVisible="{Binding Accelerometer.HasChannels, Converter={StaticResource NegateBooleanConverter}}"/>
+                                <Grid RowSpacing="6" ColumnSpacing="0" IsVisible="{Binding Accelerometer.HasChannels}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0"
+                                          HeightRequest="50"
+                                          Padding="15,0,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"
+                                               Text="Zoom Channel:"
+                                               Style="{StaticResource labelTextStyle}"
+                                               TextColor="{StaticResource entryTextColor}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start" />
+                                        <Grid Grid.Column="1"
+                                              HorizontalOptions="Center">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="0.42*" />
+                                                <ColumnDefinition Width="0.16*" />
+                                                <ColumnDefinition Width="0.42*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image Source="gradient" Grid.ColumnSpan="3" Aspect="AspectFill" />
+                                            <controls:ClickableContentView Grid.Column="0" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding Accelerometer.CurrentChartChangedCommand}" CommandParameter="prev">
+                                                <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="End">
+                                                    <Image Source="arrow_prev" Aspect="AspectFill" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="37.5" HeightRequest="37.5" />
+                                                    <Label Style="{StaticResource robotoRegularStyle}" VerticalOptions="Center" HorizontalOptions="Start" Text="Prev" />
+                                                </StackLayout>
+                                            </controls:ClickableContentView>
+                                            <Grid Grid.Column="1" RowSpacing="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <ContentView WidthRequest="70" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center">
+                                                    <Label VerticalOptions="Center" HorizontalOptions="Center"  Text="{Binding Accelerometer.CurrentChart}" TextColor="{StaticResource entryTextColor}" FontSize="16"/>    
+                                                </ContentView>
+                                                <ncontrol:RoundCornerView Grid.Row="1" BackgroundColor="{StaticResource inActiveTabStripTextColor}" HorizontalOptions="Fill" HeightRequest="2" />
+                                            </Grid>
+                                            <controls:ClickableContentView Command="{Binding Accelerometer.CurrentChartChangedCommand}" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Start" CommandParameter="next">
+                                                <StackLayout Spacing="0" Orientation="Horizontal" HorizontalOptions="Start">
+                                                    <Label Style="{StaticResource robotoRegularStyle}" VerticalOptions="Center" HorizontalOptions="End" Text="Next" />
+                                                    <Image Source="arrow_next" Aspect="AspectFill" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="37.5" HeightRequest="37.5" />
+                                                </StackLayout>
+                                            </controls:ClickableContentView>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Padding="0,5,0,0" BackgroundColor="{StaticResource detailedChartBackgroundColor}" RowSpacing="0" ColumnSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <StackLayout Margin="9,0,0,0" Orientation="Horizontal" Spacing="2" Grid.Column="0" Grid.Row="0">
+                                                <Image Source="temperature" VerticalOptions="Center" HorizontalOptions="Center" />
+                                                <Label Style="{StaticResource chartsDivisonTextStyle}"
+                                                       Text="{Binding Temperature, StringFormat={x:Static localization:Strings.TemperatureCelsiusFormat}}" />
+
+                                                <controls:TintedImage x:Name="AccelerometerBatteryImage"
+                                                                      Source="{Binding BatteryImage}" 
+                                                                      TintColor="{Binding BatteryImageColor}"
+                                                                      HeightRequest="12" WidthRequest="12"
+                                                                      VerticalOptions="Center" HorizontalOptions="Center" />
+                                            </StackLayout>
+                                        
+                                            <Grid Grid.Row="0"
+                                              Grid.Column="1"
+                                              Padding="10, 5"
+                                              ColumnSpacing="10"
+                                              VerticalOptions="Start"
+                                              HorizontalOptions="End">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <!-- 'reset' button -->
+                                            <controls:ClickableContentView Grid.Column="0"
+                                                                           VerticalOptions="Center"
+                                                                           HorizontalOptions="Center"
+                                                                           Command="{Binding Accelerometer.ResetChartScaleCommand}">
+                                                <controls:TintedImage VerticalOptions="Center"
+                                                                      HorizontalOptions="Center"
+                                                                      HeightRequest="32"
+                                                                      WidthRequest="32"
+                                                                      Aspect="AspectFit"
+                                                                      TintColor="{StaticResource chartsGroupNameColor}"
+                                                                      Source="ic_refresh_36dp" />
+                                            </controls:ClickableContentView>
+
+                                            <!-- Y-scale picker -->
+                                            <controls:VerticalValuePicker x:Name="accelerometerValuePicker"
+                                                                          Grid.Column="1"
+                                                                          VerticalOptions="Start"
+                                                                          MaxValue="{x:Static biopot:Constants+Charts.ChartAccYAxisMaxValue}"
+                                                                          MinValue="{x:Static biopot:Constants+Charts.ChartAccYAxisMinValue}"
+                                                                          PickerValue="{Binding Accelerometer.PickerValue}"
+                                                                          PickerStep="{x:Static biopot:Constants+Charts.AccYAxisStepInterpolator}"
+                                                                          PickerValueFormatter="{}{0} g" />
+
+                                            <!-- X-scale picker -->
+                                            <controls:HorizontalValuePicker x:Name="accelerometerXScalePicker"
+                                                                            Grid.Column="2"
+                                                                            VerticalOptions="Center"
+                                                                            MaxValue="{Binding Accelerometer.XScaleMaxValue}"
+                                                                            MinValue="{Binding Accelerometer.XScaleMinValue}"
+                                                                            PickerValue="{Binding Accelerometer.XScaleValue}"
+                                                                            PickerStep="{x:Static biopot:Constants+Charts.XAxisStepInterpolator}"
+                                                                            PickerValueFormatter="{}{0} sec" />
+                                        </Grid>
+
+
+                                        <Grid Padding="10,0,5,0" x:Name="chartY_Acc" Grid.Row="1" Grid.Column="0" ColumnSpacing="0" RowSpacing="0" />
+                                        <Grid Grid.Row="1" Grid.Column="1"  x:Name="chartGrid_Acc" BackgroundColor="#FFE3E3E5" RowSpacing="1" ColumnSpacing="1" />
+                                        <microcharts:ChartView Grid.Row="1"  Grid.Column="1" Chart="{Binding Accelerometer.ChartViewModel.Chart}" BackgroundColor="Transparent" />
+                                        <Grid Padding="0,5" x:Name="chartX_Acc" Grid.Row="2" Grid.Column="1" RowSpacing="0" ColumnSpacing="0" />
+                                    </Grid>
+                                </Grid>
+                            </StackLayout>
+                            <!--/GriddedChartControl-->
+                        </controls:TabItem.View>
+                    </controls:TabItem>
+                </controls:TabStrip.Children>
+            </controls:TabStrip>
+        </Grid>
+
+        <controls:SpsDetailsView
+            IsVisible="{Binding IsSpsChartVisible}"
+            BindingContext="{Binding .}"
+            CloseSpsDetailsCommand="{Binding CloseSpsDetailsCommand}"
+            AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+            AbsoluteLayout.LayoutFlags="All" />
+            
+        </AbsoluteLayout>
+  
+    </Grid>
+   
+  
+</p:BaseContentPage>

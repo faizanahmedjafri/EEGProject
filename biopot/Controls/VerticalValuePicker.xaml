@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<controls:BaseValuePicker xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:biopot.Controls"
+                          x:Class="biopot.Controls.VerticalValuePicker"
+                          x:Name="this">
+
+    <controls:BaseValuePicker.Resources>
+        <ResourceDictionary>
+            <x:Double x:Key="ImageSize" >32</x:Double>
+        </ResourceDictionary>
+    </controls:BaseValuePicker.Resources>
+    
+    <Grid VerticalOptions="Start" HorizontalOptions="Start"
+          RowSpacing="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <controls:LongPressableContentView Grid.Column="0"
+                                           Grid.Row="0"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           LongPressDelay="00:00:01.00"
+                                           LongPressTriggerInterval="00:00:00.20"
+                                           IsEnabled="{Binding IsIncreaseAllowed, Source={x:Reference this}}"
+                                           OnPressing="{Binding Source={x:Reference this}, Path=ValueRaisingCommand}"
+                                           Command="{Binding Source={x:Reference this}, Path=ValueRaisingCommand}">
+            <controls:TintedImage Source="ic_add_box_filled_48dp"
+                                  IsEnabled="{Binding IsIncreaseAllowed, Source={x:Reference this}}"
+                                  Aspect="AspectFit"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center"
+                                  TintColor="{StaticResource pickerButtonColor}"
+                                  WidthRequest="{StaticResource ImageSize}"
+                                  HeightRequest="{StaticResource ImageSize}">
+                <View.Triggers>
+                    <Trigger TargetType="controls:TintedImage"
+                             Property="IsEnabled"
+                             Value="False">
+                        <Setter Property="TintColor" Value="{StaticResource pickerDisabledButtonColor}" />
+                    </Trigger>
+                </View.Triggers>
+            </controls:TintedImage>
+        </controls:LongPressableContentView>
+
+        <controls:LongPressableContentView Grid.Column="0"
+                                           Grid.Row="1"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Center"
+                                           LongPressDelay="00:00:01.00"
+                                           LongPressTriggerInterval="00:00:00.20"
+                                           IsEnabled="{Binding IsDecreaseAllowed, Source={x:Reference this}}"
+                                           OnPressing="{Binding Source={x:Reference this}, Path=ValueFallingCommand}"
+                                           Command="{Binding Source={x:Reference this}, Path=ValueFallingCommand}">
+            <controls:TintedImage Source="ic_remove_box_filled_48dp"
+                                  IsEnabled="{Binding IsDecreaseAllowed, Source={x:Reference this}}"
+                                  Aspect="AspectFit"
+                                  VerticalOptions="Center"
+                                  HorizontalOptions="Center"
+                                  TintColor="{StaticResource pickerButtonColor}"
+                                  WidthRequest="{StaticResource ImageSize}"
+                                  HeightRequest="{StaticResource ImageSize}">
+                <View.Triggers>
+                    <Trigger TargetType="controls:TintedImage"
+                             Property="IsEnabled"
+                             Value="False">
+                        <Setter Property="TintColor" Value="{StaticResource pickerDisabledButtonColor}" />
+                    </Trigger>
+                </View.Triggers>
+            </controls:TintedImage>
+        </controls:LongPressableContentView>
+
+        <Label Grid.Column="1"
+               Grid.Row="0"
+               Grid.RowSpan="2"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Style="{StaticResource chartsPickerValueStyle}"
+               Text="{Binding Source={x:Reference this}, Path=FormattedValue}" />
+    </Grid>
+</controls:BaseValuePicker>

@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:controls="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+             xmlns:controls1="clr-namespace:biopot.Controls;assembly=biopot"
+             x:Class="biopot.Controls.SpsDetailsView">
+
+    <AbsoluteLayout BackgroundColor="Transparent">
+
+        <!-- overlay -->
+        <BoxView BackgroundColor="Black" Opacity="0.4" AbsoluteLayout.LayoutBounds="0,0,1,1"
+                 AbsoluteLayout.LayoutFlags="All">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseSpsDetailsCommand}" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- Triangle icon -->
+        <Image Source="triangle"
+               Aspect="AspectFit"
+               HeightRequest="10" 
+               AbsoluteLayout.LayoutBounds="0.75,0,-1,-1" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+
+        <!-- Frame with content -->
+        <!-- FIXME check proportional sizes -->
+        <Frame VerticalOptions="Start" HorizontalOptions="End"
+               AbsoluteLayout.LayoutBounds="0.7,0,0.6,0.5" AbsoluteLayout.LayoutFlags="All"
+               Margin="0, 10, 0, 0" Padding="0">
+
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid Padding="5, 5, 5, 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.8*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.3*" />
+                        <RowDefinition Height="0.7*" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Text="Bandwidth[SPS]/1sec"
+                        HorizontalTextAlignment="Start"
+                        VerticalTextAlignment="Center"
+                        Margin="10, 0, 0, 0" />
+
+                    <StackLayout
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Orientation="Vertical"
+                        Margin="0, 0, 0, -20">
+
+                        <Label
+                            Text="1000"
+                            HorizontalTextAlignment="End" />
+
+                        <Label
+                            Text="500"
+                            HorizontalTextAlignment="End"
+                            Margin="0, -3, 0, 0" />
+
+                        <Label
+                            Text="0"
+                            HorizontalTextAlignment="End"
+                            Margin="0, -3, 0, 0" />
+
+                    </StackLayout>
+
+                    <controls:RoundCornerView
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="FillAndExpand"
+                        BackgroundColor="{StaticResource chartGroupPanelColor}"
+                        CornerRadius="5">
+
+                        <ContentView>
+                            <BoxView HeightRequest="1" BackgroundColor="Blue" HorizontalOptions="Fill"
+                                     VerticalOptions="Center" />
+                        </ContentView>
+                    </controls:RoundCornerView>
+
+                    <forms:ChartView
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Chart="{Binding ChartSps.Chart}"
+                        BackgroundColor="Transparent"
+                        Margin="0" />
+                </Grid>
+
+                <controls1:ClickableContentView HorizontalOptions="FillAndExpand"
+                                                Command="{Binding CloseSpsDetailsCommand}">
+                    <Image Source="less" VerticalOptions="Center" HorizontalOptions="Center" />
+                </controls1:ClickableContentView>
+
+            </StackLayout>
+        </Frame>
+
+    </AbsoluteLayout>
+</ContentView>

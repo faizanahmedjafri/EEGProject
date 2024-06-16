@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:p="clr-namespace:biopot.Views;assembly=biopot"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:converters="clr-namespace:biopot.Converters" 
+    xmlns:controls="clr-namespace:biopot.Controls" 
+    xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls" 
+    x:Class="biopot.Views.BandWidthView">
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        
+        <controls:ClickableContentView HorizontalOptions="Start" Command="{Binding BackCommand}">
+            <Grid Padding="16,0" HeightRequest="50" BackgroundColor="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0.4*" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="back" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Grid.Column="1" Text="Band Width" Style="{StaticResource labelTextStyle}" TextColor="{StaticResource entryTextColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
+            </Grid>
+        </controls:ClickableContentView>
+    </Grid>
+
+</p:BaseContentPage >

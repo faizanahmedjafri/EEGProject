@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:p="clr-namespace:biopot.Views;assembly=biopot"
+    xmlns:localization="clr-namespace:biopot.Resources.Strings"
+    xmlns:controls="clr-namespace:biopot.Controls"
+    xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+    xmlns:behavior="clr-namespace:biopot.Behaviors"
+    xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+    xmlns:effects="clr-namespace:biopot.Effects;assembly=biopot"
+    x:Class="biopot.Views.MainView">
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <controls:ClickableContentView IsVisible="false" HorizontalOptions="Start" Command="{Binding BackToMenuCommand}">
+            <Grid Padding="16,0" HeightRequest="50" BackgroundColor="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0.4*" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="back" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Grid.Column="1" Text="User Settings" Style="{StaticResource labelTextStyle}" TextColor="{StaticResource entryTextColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
+            </Grid>
+            <controls:ClickableContentView.Triggers>
+                <DataTrigger TargetType="controls:ClickableContentView" Binding="{Binding IsFromMenu}" Value="true">
+                    <Setter Property="IsVisible" Value="true" />
+                </DataTrigger>
+            </controls:ClickableContentView.Triggers>
+        </controls:ClickableContentView>
+
+        <Grid ColumnSpacing="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+            <controls:WelcomeStepsControl Grid.Column="1" CurrentStep="{Binding CurrentStep}" StepClickedCommand="{Binding StepSelectedCommand}" VerticalOptions="Start" HorizontalOptions="Fill"/>
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding CurrentStep}" Value="Fourth">
+                    <Setter Property="IsVisible" Value="false"/>
+                </DataTrigger>
+            </Grid.Triggers>
+        </Grid>
+        <Image Grid.Row="2" Source="navbar_shadow" Aspect="AspectFill" VerticalOptions="Start">
+            <Image.Triggers>
+                <DataTrigger TargetType="Image" Binding="{Binding CurrentStep}" Value="Fourth">
+                    <Setter Property="IsVisible" Value="false"/>
+                </DataTrigger>
+            </Image.Triggers>
+        </Image>
+
+        <controls:StateContainer Grid.Row="3" State="{Binding CurrentStep}" >
+            <controls:StateCondition Is="First">
+                    <StackLayout>
+                        <StackLayout Spacing="20" Padding="30,0" VerticalOptions="FillAndExpand">
+                            <StackLayout Padding="0,10,0,15">
+                                <ContentView>
+                                    <Label Text="{x:Static localization:Strings.PatientDetails}" Style="{StaticResource titleTextLabelStyle}"
+                                           HorizontalOptions="Center"/>
+                                </ContentView>
+                            </StackLayout>
+
+                        <p:PatientDetailsView VerticalOptions="Center" HorizontalOptions="FillAndExpand"
+                                                  BindingContext="{Binding PatientDetailsViewModel}" />
+                            
+                        </StackLayout>
+
+                        <!-- Skip all -->
+                        <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                            <StackLayout Spacing="0" HorizontalOptions="Center">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       TextColor="{StaticResource entryTextColor}" 
+                                       Style="{StaticResource labelTextStyle}"
+                                       Text="Skip all" />
+                                <BoxView HeightRequest="1" BackgroundColor="{StaticResource entryTextColor}"/>
+                            </StackLayout>
+                            <controls:ClickableContentView.Triggers>
+                                <DataTrigger TargetType="controls:ClickableContentView" Binding="{Binding IsFromMenu}" Value="true">
+                                    <Setter Property="IsVisible" Value="false" />
+                                </DataTrigger>
+                            </controls:ClickableContentView.Triggers>
+                        </controls:ClickableContentView>
+
+                        <Button Command="{Binding NextCommand}" BackgroundColor="{StaticResource buttonBgColor}"
+                                HeightRequest="56"
+                                IsEnabled="{Binding IsNextAllowed}"
+                                Text="{x:Static localization:Strings.Next}"
+                                Style="{StaticResource buttonTextStyle}" />
+                    </StackLayout>
+            </controls:StateCondition>
+                
+            <controls:StateCondition Is="Second">
+                <StackLayout Opacity="0">
+                    <StackLayout Spacing="2" Padding="30,0" VerticalOptions="FillAndExpand">
+                        <StackLayout Padding="0,10,0,15">
+                            <ContentView>
+                                <Label Text="{x:Static localization:Strings.SessionDetails}" Style="{StaticResource titleTextLabelStyle}"
+                                       HorizontalOptions="Center"/>
+                            </ContentView>
+                            <Label HorizontalOptions="Center" Text="{Binding SessionViewModel.ErrorMessage}" Style="{StaticResource hintLabelStyle}" TextColor="{StaticResource errorColor}"/>
+                        </StackLayout>
+                       
+                        <controls:SavingTargetPicker TargetsList="{Binding TargetsList}" SelectedItem="{Binding SessionViewModel.SavingTarget}" Padding="0,0,0,6" TitleText="{x:Static localization:Strings.SavingTarget}"/>
+                        <controls:ExtendetEntry x:Name="entryFolderName" Text="{Binding SessionViewModel.FolderName}" Placeholder="{x:Static localization:Strings.FolderName}"/>
+                        <ContentView Padding="10,0,0,6">
+                            <Label Text="{x:Static localization:Strings.FolderWillBe}"
+                               TextColor="{StaticResource backButtonTextColor}" 
+                               Style="{StaticResource hintLabelStyle}"/>
+                        </ContentView>
+
+                        <controls:ExtendetEntry x:Name="entryFileName" Text="{Binding SessionViewModel.FileName}" Placeholder="{x:Static localization:Strings.FileName}"  Padding="0,0,0,12"/>
+
+                        <StackLayout Spacing="20" Padding="10,0,10,14">
+                            <StackLayout VerticalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" 
+                                   Text="{x:Static localization:Strings.Date}" TextColor="{StaticResource entryTextColor}" Style="{StaticResource labelTextStyle}"/>
+                                <Switch x:Name="switchDateTime" IsToggled="{Binding SessionViewModel.IsDateInName}" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                            </StackLayout>
+                            <StackLayout VerticalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" 
+                                   Text="{x:Static localization:Strings.Time}" TextColor="{StaticResource entryTextColor}" Style="{StaticResource labelTextStyle}"/>
+                                <Switch x:Name="switchTimeInName" IsToggled="{Binding SessionViewModel.IsTimeInName}" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                            </StackLayout>
+                            <!--<StackLayout VerticalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" 
+                                   Text="{x:Static localization:Strings.SequentialNumber}" TextColor="{StaticResource entryTextColor}" Style="{StaticResource labelTextStyle}"/>
+                                <Switch IsEnabled="false" IsToggled="{Binding SessionViewModel.IsSequentialNumberInName}" HorizontalOptions="EndAndExpand" VerticalOptions="Center"/>
+                            </StackLayout>-->
+                        </StackLayout>
+
+                        <StackLayout Spacing="2" Padding="10,0">
+                            <Label Text="{x:Static localization:Strings.Example}"
+                                   TextColor="{StaticResource backButtonTextColor}" 
+                                   Style="{StaticResource hintLabelStyle}"/>
+                            <Label Text="{Binding SessionViewModel.ExampleName}"
+                                   
+                               TextColor="{StaticResource backButtonTextColor}" 
+                               Style="{StaticResource labelTextStyle}"/>
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!-- Skip all -->
+                    <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                        <StackLayout Spacing="0" HorizontalOptions="Center">
+                            <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                   TextColor="{StaticResource entryTextColor}" 
+                                   Style="{StaticResource labelTextStyle}"
+                                   Text="Skip all" />
+                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource entryTextColor}"/>
+                        </StackLayout>
+                        <controls:ClickableContentView.Triggers>
+                            <DataTrigger TargetType="controls:ClickableContentView" Binding="{Binding IsFromMenu}" Value="true">
+                                <Setter Property="IsVisible" Value="false" />
+                            </DataTrigger>
+                        </controls:ClickableContentView.Triggers>
+                    </controls:ClickableContentView>
+
+                    <StackLayout MinimumHeightRequest="56" Spacing="0" Orientation="Horizontal" >
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
+                            <controls:ClickableContentView Command="{Binding BackCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource backButtonTextColor}"
+                                       Text="{x:Static localization:Strings.Back}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource buttonBgColor}">
+                            <controls:ClickableContentView Command="{Binding NextCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.Next}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>
+                    </StackLayout>
+                </StackLayout>
+            </controls:StateCondition>
+
+            <controls:StateCondition Is="Third" Appearing="FadeInAnimation" Disappearing="FadeOutAnimation">
+                <StackLayout Opacity="0">
+                    <StackLayout Spacing="20" Padding="30,0" VerticalOptions="FillAndExpand">
+                        <StackLayout Padding="0,10,0,0" Spacing="6">
+                            <ContentView>
+                                <Label Text="{x:Static localization:Strings.UserDetails}" Style="{StaticResource titleTextLabelStyle}"
+                                       HorizontalOptions="Center"/>
+                            </ContentView>
+                            <Label HorizontalOptions="Center" Text="{Binding UserDetailsViewModel.ErrorMessage}" Style="{StaticResource hintLabelStyle}" TextColor="{StaticResource errorColor}"/>
+                        </StackLayout>
+
+                        <controls:ExtendetEntry Text="{Binding UserDetailsViewModel.Name}" Placeholder="{x:Static localization:Strings.Name}"/>
+                        <controls:ExtendetEntry Text="{Binding UserDetailsViewModel.EmpId}" Placeholder="{x:Static localization:Strings.EmpID}"/>
+                        <controls:ExtendetEntry Text="{Binding UserDetailsViewModel.Role}" Placeholder="{x:Static localization:Strings.Role}"/>
+                        <controls:ExtendetEntry Text="{Binding UserDetailsViewModel.Email}" Placeholder="{x:Static localization:Strings.Email}" IsMailEntry="true"/>
+                    </StackLayout>
+
+                    <!-- Skip all -->
+                    <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                        <StackLayout Spacing="0" HorizontalOptions="Center">
+                            <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                   TextColor="{StaticResource entryTextColor}" 
+                                   Style="{StaticResource labelTextStyle}"
+                                   Text="Skip all" />
+                            <BoxView HeightRequest="1" BackgroundColor="{StaticResource entryTextColor}"/>
+                        </StackLayout>
+                        <controls:ClickableContentView.Triggers>
+                            <DataTrigger TargetType="controls:ClickableContentView" Binding="{Binding IsFromMenu}" Value="true">
+                                <Setter Property="IsVisible" Value="false" />
+                            </DataTrigger>
+                        </controls:ClickableContentView.Triggers>
+                    </controls:ClickableContentView>
+                    
+                    <StackLayout Spacing="0" Orientation="Horizontal" >
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
+                            <controls:ClickableContentView Command="{Binding BackCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource backButtonTextColor}"
+                                       Text="{x:Static localization:Strings.Back}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource buttonBgColor}">
+                            <controls:ClickableContentView Command="{Binding NextCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.Done}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>
+                    </StackLayout>
+                </StackLayout>
+            </controls:StateCondition>
+
+            <!--<controls:StateCondition Is="Fourth" Appearing="FadeInAnimation" Disappearing="FadeOutAnimation">
+                <StackLayout Opacity="0">
+                    <StackLayout Spacing="20" Padding="30,0" VerticalOptions="FillAndExpand">
+                        <StackLayout Padding="0,20,0,0" Spacing="6">
+                            <ContentView>
+                                <Label Text="{x:Static localization:Strings.OtherDetails}" Style="{StaticResource titleTextLabelStyle}"
+                                       HorizontalOptions="Center"/>
+                            </ContentView>
+                            <Label HorizontalOptions="Center" Text="{Binding OtherDetailsViewModel.ErrorMessage}" Style="{StaticResource hintLabelStyle}" TextColor="{StaticResource errorColor}"/>
+                        </StackLayout>
+                        
+                        <controls:ExtendetEntry Text="{Binding OtherDetailsViewModel.Name}" Placeholder="{x:Static localization:Strings.Name}"/>
+                        <controls:ExtendetEntry Text="{Binding OtherDetailsViewModel.EmpId}" Placeholder="{x:Static localization:Strings.EmpID}"/>
+                        <controls:ExtendetEntry Text="{Binding OtherDetailsViewModel.Role}" Placeholder="{x:Static localization:Strings.Role}"/>
+                        <controls:ExtendetEntry Text="{Binding OtherDetailsViewModel.Email}" Placeholder="{x:Static localization:Strings.Email}"/>
+                    </StackLayout>
+                    
+                    <StackLayout Spacing="0" Orientation="Horizontal" >
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
+                            <controls:ClickableContentView Command="{Binding BackCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource backButtonTextColor}"
+                                       Text="{x:Static localization:Strings.Back}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource buttonBgColor}">
+                            <controls:ClickableContentView Command="{Binding NextCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.Next}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>
+                    </StackLayout>
+                </StackLayout>
+            </controls:StateCondition>-->
+
+            <controls:StateCondition Is="Fourth" Appearing="FadeInAnimation" Disappearing="FadeOutAnimation">
+                <StackLayout Spacing="0" Opacity="0" BackgroundColor="White">
+                    <StackLayout VerticalOptions="FillAndExpand" Spacing="0" Padding="23,0,18,0">
+                        <Label Margin="0,20,0,8"
+                               Text="{x:Static localization:Strings.Connections}"
+                               Style="{StaticResource titleTextLabelStyle}"
+                               HorizontalOptions="Center" />
+
+                        <!-- "Connection Failure" warning -->
+                        <ncontrol:RoundCornerView IsVisible="{Binding IsShowWorningAlert}"
+                                                  CornerRadius="4"
+                                                  HeightRequest="36"
+                                                  BackgroundColor="{StaticResource warningBoxColor}">
+                            <StackLayout Spacing="10"
+                                         Orientation="Horizontal"
+                                         Padding="9,0">
+                                <Image Source="warning"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start" />
+                                <Label Text="{x:Static localization:Strings.ConnectionFailed}"
+                                       TextColor="{StaticResource entryTextColor}"
+                                       Style="{StaticResource labelTextStyle}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="StartAndExpand" />
+                            </StackLayout>
+                        </ncontrol:RoundCornerView>
+
+                        <!-- Plain list of devices -->
+                        <Grid Padding="7,0,0,0" VerticalOptions="FillAndExpand">
+                            <StackLayout Spacing="0">
+                                <ContentView Padding="0,12,0,15">
+                                    <Label Text="{x:Static localization:Strings.SelectBioPot}"
+                                           TextColor="{StaticResource backButtonTextColor}"
+                                           Style="{StaticResource hintLabelStyle}" />
+                                </ContentView>
+                                <ListView VerticalOptions="FillAndExpand"
+                                          ItemsSource="{Binding Devices}"
+                                          SeparatorVisibility="None"
+                                          HasUnevenRows="true"
+                                          effects:ListViewSelectionEffect.DisableHighlight="True">
+
+                                    <ListView.Behaviors>
+                                        <behaviors:EventToCommandBehavior
+                                            Command="{Binding DiscoveredDeviceTappedCommand}"
+                                            EventName="ItemTapped"
+                                            EventArgsParameterPath="Item" />
+                                    </ListView.Behaviors>
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <!-- Outer corner view for border of selected item -->
+                                                <ncontrol:RoundCornerView CornerRadius="4"
+                                                                          BackgroundColor="Transparent">
+                                                    <View.Triggers>
+                                                        <DataTrigger TargetType="View"
+                                                                     Binding="{Binding IsSelected}"
+                                                                     Value="True">
+                                                            <Setter Property="BackgroundColor"
+                                                                    Value="{StaticResource selectedDeviceBorderColor}" />
+                                                        </DataTrigger>
+                                                    </View.Triggers>
+
+                                                    <!-- Inner content with padding, matching the border width -->
+                                                    <ContentView Padding="4">
+                                                        <ncontrol:RoundCornerView CornerRadius="4"
+                                                                                  BackgroundColor="{StaticResource connectedDeviceBoxColor}">
+
+                                                            <Grid Padding="10">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto" />
+                                                                    <RowDefinition Height="*" />
+                                                                </Grid.RowDefinitions>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+
+                                                                <!-- Row with checked/unchecked state and device name -->
+                                                                <StackLayout Grid.ColumnSpan="2"
+                                                                             Spacing="10"
+                                                                             Orientation="Horizontal">
+                                                                    <Image Source="radio_off"
+                                                                           VerticalOptions="Center"
+                                                                           HorizontalOptions="Start">
+                                                                        <View.Triggers>
+                                                                            <DataTrigger TargetType="Image"
+                                                                                         Binding="{Binding IsSelected}"
+                                                                                         Value="True">
+                                                                                <Setter Property="Source"
+                                                                                        Value="success" />
+                                                                            </DataTrigger>
+                                                                        </View.Triggers>
+                                                                    </Image>
+                                                                    <Label Text="{Binding DeviceName}"
+                                                                           TextColor="{StaticResource entryTextColor}"
+                                                                           Style="{StaticResource labelTextStyle}"
+                                                                           VerticalOptions="Center"
+                                                                           HorizontalOptions="StartAndExpand" />
+                                                                </StackLayout>
+
+                                                                <!-- Device image -->
+                                                                <ncontrol:RoundCornerView HeightRequest="100"
+                                                                                          WidthRequest="100"
+                                                                                          Grid.Row="1"
+                                                                                          Grid.Column="0"
+                                                                                          CornerRadius="4"
+                                                                                          BackgroundColor="Gray"
+                                                                                          VerticalOptions="Fill"
+                                                                                          HorizontalOptions="Fill">
+                                                                    <Image Source="biopot_image" />
+                                                                </ncontrol:RoundCornerView>
+
+                                                                <!-- List of channels count -->
+                                                                <StackLayout Grid.Row="1"
+                                                                             Grid.Column="1"
+                                                                             Orientation="Vertical"
+                                                                             Padding="9, 0">
+                                                                    <!-- EEG/EMG channels count -->
+                                                                    <StackLayout Spacing="10"
+                                                                                 Orientation="Horizontal"
+                                                                                 IsVisible="True">
+                                                                        <Label
+                                                                            Text="{x:Static localization:Strings.DeviceEegChannelsCount}"
+                                                                            TextColor="{StaticResource entryTextColor}"
+                                                                            Style="{StaticResource hintLabelStyle}"
+                                                                            VerticalOptions="Center"
+                                                                            HorizontalOptions="StartAndExpand" />
+                                                                        <Label Text="{Binding EEGChannelsCount}"
+                                                                               TextColor="{StaticResource entryTextColor}"
+                                                                               Style="{StaticResource hintLabelStyle}"
+                                                                               VerticalOptions="Center"
+                                                                               HorizontalOptions="End" />
+
+                                                                        <View.Triggers>
+                                                                            <DataTrigger TargetType="View"
+                                                                                         Binding="{Binding EEGChannelsCount}"
+                                                                                         Value="0">
+                                                                                <Setter Property="IsVisible"
+                                                                                        Value="False" />
+                                                                            </DataTrigger>
+                                                                        </View.Triggers>
+                                                                    </StackLayout>
+
+                                                                    <!--  Bio Impedance channels count -->
+                                                                    <StackLayout Spacing="10"
+                                                                                 Orientation="Horizontal"
+                                                                                 IsVisible="True">
+                                                                        <Label
+                                                                            Text="{x:Static localization:Strings.DeviceImpedanceChannelsCount}"
+                                                                            TextColor="{StaticResource entryTextColor}"
+                                                                            Style="{StaticResource hintLabelStyle}"
+                                                                            VerticalOptions="Center"
+                                                                            HorizontalOptions="StartAndExpand" />
+                                                                        <Label
+                                                                            Text="{Binding BioImpendanceChannelsCount}"
+                                                                            TextColor="{StaticResource entryTextColor}"
+                                                                            Style="{StaticResource hintLabelStyle}"
+                                                                            VerticalOptions="Center"
+                                                                            HorizontalOptions="End" />
+
+                                                                        <View.Triggers>
+                                                                            <DataTrigger TargetType="View"
+                                                                                         Binding="{Binding BioImpendanceChannelsCount}"
+                                                                                         Value="0">
+                                                                                <Setter Property="IsVisible"
+                                                                                        Value="False" />
+                                                                            </DataTrigger>
+                                                                        </View.Triggers>
+                                                                    </StackLayout>
+
+                                                                    <!--  Accelerometer channels count -->
+                                                                    <StackLayout Spacing="10"
+                                                                                 Orientation="Horizontal"
+                                                                                 IsVisible="True">
+                                                                        <Label
+                                                                            Text="{x:Static localization:Strings.DeviceAccelerometerChannelsCount}"
+                                                                            TextColor="{StaticResource entryTextColor}"
+                                                                            Style="{StaticResource hintLabelStyle}"
+                                                                            VerticalOptions="Center"
+                                                                            HorizontalOptions="StartAndExpand" />
+                                                                        <Label
+                                                                            Text="{Binding AccelerometerChannelsCount}"
+                                                                            TextColor="{StaticResource entryTextColor}"
+                                                                            Style="{StaticResource hintLabelStyle}"
+                                                                            VerticalOptions="Center"
+                                                                            HorizontalOptions="End" />
+
+                                                                        <View.Triggers>
+                                                                            <DataTrigger TargetType="View"
+                                                                                         Binding="{Binding AccelerometerChannelsCount}"
+                                                                                         Value="0">
+                                                                                <Setter Property="IsVisible"
+                                                                                        Value="False" />
+                                                                            </DataTrigger>
+                                                                        </View.Triggers>
+                                                                    </StackLayout>
+                                                                </StackLayout>
+                                                            </Grid>
+                                                        </ncontrol:RoundCornerView>
+                                                    </ContentView>
+                                                </ncontrol:RoundCornerView>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackLayout>
+
+                            <!-- "Retry" page -->
+                            <StackLayout IsVisible="false" Spacing="0" BackgroundColor="White">
+                                <Image Source="empty_connection" HorizontalOptions="Center"
+                                       VerticalOptions="EndAndExpand" />
+                                <ContentView Padding="0,10,0,30" HorizontalOptions="Center">
+                                    <Label Text="{x:Static localization:Strings.EmptyConnections}"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="{StaticResource backButtonTextColor}"
+                                           Style="{StaticResource hintLabelStyle}" />
+                                </ContentView>
+                                <controls:ClickableContentView VerticalOptions="StartAndExpand"
+                                                               Command="{Binding RetryConnectionCommand}"
+                                                               HorizontalOptions="Center">
+                                    <ncontrol:RoundCornerView CornerRadius="21" HeightRequest="36"
+                                                              BackgroundColor="{StaticResource buttonBgColor}">
+                                        <ContentView Padding="20,0">
+                                            <Label Text="{x:Static localization:Strings.Retry}"
+                                                   Style="{StaticResource buttonTextStyle}"
+                                                   VerticalOptions="Center" HorizontalOptions="Center" />
+                                        </ContentView>
+                                    </ncontrol:RoundCornerView>
+                                </controls:ClickableContentView>
+                                <StackLayout.Triggers>
+                                    <DataTrigger TargetType="StackLayout" Binding="{Binding Devices.Count}" Value="0">
+                                        <Setter Property="IsVisible" Value="true" />
+                                    </DataTrigger>
+                                </StackLayout.Triggers>
+                            </StackLayout>
+
+                            <!-- Loading indicator with "Locating Connections" -->
+                            <ContentView BackgroundColor="White"
+                                         IsVisible="{Binding IsShowLoader}"
+                                         HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="FillAndExpand">
+                                <StackLayout Orientation="Vertical"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Center"
+                                             Spacing="18"
+                                             Padding="0">
+                                    <ActivityIndicator IsRunning="true" />
+                                    <Label Text="{x:Static localization:Strings.LocatingConnections}" />
+                                </StackLayout>
+                            </ContentView>
+                        </Grid>
+
+                    </StackLayout>
+
+                    
+                    <StackLayout Spacing="0" MinimumWidthRequest="56" Orientation="Horizontal">
+                        <!--<ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
+                            <controls:ClickableContentView Command="{Binding BackCommand}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" TextColor="{StaticResource backButtonTextColor}"
+                                       Text="{x:Static localization:Strings.Back}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                        </ContentView>-->
+                        <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" Opacity="0.4" BackgroundColor="{StaticResource buttonBgColor}">
+                            <controls:ClickableContentView Command="{Binding StartCommand}"
+                                                           IsEnabled="{Binding IsStartAllowed}">
+                                <Label HorizontalOptions="Center" VerticalOptions="Center" 
+                                       Text="{x:Static localization:Strings.Start}" Style="{StaticResource buttonTextStyle}"/>
+                            </controls:ClickableContentView>
+                            <ContentView.Triggers>
+                                    <DataTrigger TargetType="ContentView" Binding="{Binding IsStartAllowed}" Value="True">
+                                        <Setter Property="Opacity" Value="1" />
+                                    </DataTrigger>
+                            </ContentView.Triggers>
+                        </ContentView>
+                    </StackLayout>
+                </StackLayout>
+            </controls:StateCondition>
+        </controls:StateContainer>
+
+    </Grid>
+</p:BaseContentPage>

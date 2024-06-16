@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+    xmlns:controls="clr-namespace:biopot.Controls;assembly=biopot"
+    x:Class="biopot.Controls.WelcomeStepsControl"
+    x:Name="Root"
+    HeightRequest="56">
+
+
+  <ContentView.Resources>
+      <ResourceDictionary>
+          <GridLength x:Key="StepsItemWidth">60</GridLength>>
+      </ResourceDictionary>
+  </ContentView.Resources>
+    
+        <Grid x:Name="grid" Padding="32,0" ColumnSpacing="0" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="{StaticResource StepsItemWidth}"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="{StaticResource StepsItemWidth}"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="{StaticResource StepsItemWidth}"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+          <!-- Step 1 -->
+          <controls:ClickableContentView Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Command="{Binding FirstStepSelectedCommand, Source={x:Reference Root}}"
+                                         IsEnabled="{Binding IsFirstStepClickable, Source={x:Reference Root}}" IsAnimated="{Binding IsFirstStepClickable, Source={x:Reference Root}}">
+            <Grid ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Text="Patient" HorizontalOptions="Center" TextColor="{StaticResource entryPlaceholderColor}"/>
+                <ncontrol:RoundCornerView x:Name="CircleFirstStep" Grid.Column="0" Grid.Row="1" WidthRequest="20" HeightRequest="20" CornerRadius="10" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{StaticResource entryPlaceholderColor}"/>
+                <Label x:Name="LabelFirstStep" Grid.Column="0" Grid.Row="1" Text="1" Style="{StaticResource pageNumberTextLabelStyle}"/>
+                <Image x:Name="ImageFirstStep" Grid.Column="0" Grid.Row="1" Style="{StaticResource pageNumberImageStyle}"/>
+              
+            </Grid>
+          </controls:ClickableContentView>
+   
+          <ncontrol:RoundCornerView x:Name="ConnectionLine1" Grid.Column="1" Grid.Row="1" HeightRequest="2" CornerRadius="1" HorizontalOptions="Fill" VerticalOptions="Start"  BackgroundColor="{StaticResource entryPlaceholderColor}"/>
+
+          <!-- Step 2 -->
+            <controls:ClickableContentView Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Command="{Binding SecondStepSelectedCommand, Source={x:Reference Root}}"
+                                           IsEnabled="{Binding IsSecondStepClickable, Source={x:Reference Root}}" IsAnimated="{Binding IsSecondStepClickable, Source={x:Reference Root}}">
+              <Grid ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Text="Session" HorizontalOptions="Center" TextColor="{StaticResource entryPlaceholderColor}"/>
+                <ncontrol:RoundCornerView x:Name="CircleSecondStep" Grid.Column="0" Grid.Row="1" WidthRequest="20" HeightRequest="20" CornerRadius="10" HorizontalOptions="Center" VerticalOptions="Center"  BackgroundColor="{StaticResource entryPlaceholderColor}"/>
+                <Label x:Name="LabelSecondStep" Grid.Column="0" Grid.Row="1" Text="2" Style="{StaticResource pageNumberTextLabelStyle}"/>
+                <Image x:Name="ImageSecondStep" Grid.Column="0" Grid.Row="1" Style="{StaticResource pageNumberImageStyle}"/>
+              </Grid>
+            </controls:ClickableContentView>
+
+            <ncontrol:RoundCornerView x:Name="ConnectionLine2" Grid.Column="3" Grid.Row="1" HeightRequest="2" CornerRadius="1" HorizontalOptions="Fill" VerticalOptions="Start" BackgroundColor="{StaticResource entryPlaceholderColor}"/>
+
+          <!-- Step 3 -->
+            <controls:ClickableContentView Grid.Column="4" Grid.Row="0" Grid.RowSpan="2" Command="{Binding ThirdStepSelectedCommand, Source={x:Reference Root}}"
+                                           IsEnabled="{Binding IsThirdStepClickable, Source={x:Reference Root}}" IsAnimated="{Binding IsThirdStepClickable, Source={x:Reference Root}}">
+              <Grid ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Text="User" HorizontalOptions="Center" TextColor="{StaticResource entryPlaceholderColor}"/>
+                <ncontrol:RoundCornerView x:Name="CircleThirdStep" Grid.Column="0" Grid.Row="1" WidthRequest="20" HeightRequest="20" CornerRadius="10" HorizontalOptions="Center" VerticalOptions="Center"  BackgroundColor="{StaticResource entryPlaceholderColor}"/>
+                <Label x:Name="LabelThirdStep" Grid.Column="0" Grid.Row="1" Text="3" Style="{StaticResource pageNumberTextLabelStyle}"/>
+                <Image x:Name="ImageThirdStep" Grid.Column="0" Grid.Row="1" Style="{StaticResource pageNumberImageStyle}"/>
+              </Grid>
+            </controls:ClickableContentView>
+          
+        </Grid>
+</ContentView>

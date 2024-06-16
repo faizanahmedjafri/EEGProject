@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+    x:Class="biopot.Controls.ImpedanceControl">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <x:Double x:Key="CircleSize" >30</x:Double>
+            <x:Int32 x:Key="CircleCornerRadius" >30</x:Int32>
+        </ResourceDictionary>
+    </ContentView.Resources>
+      
+    <AbsoluteLayout VerticalOptions="Center" HorizontalOptions="Center"
+                    HeightRequest="{Binding Source={x:Reference ImpedanceImage}, Path=Height}"
+                    WidthRequest="{Binding Source={x:Reference ImpedanceImage}, Path=Width}">
+
+        <Image AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All"
+               x:Name="ImpedanceImage"
+               Aspect="AspectFit" Source="impedance_shape"/>
+
+        <!-- Center Y -->
+        <!-- A1 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0, 0.48, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="A1Circle"
+                                  IsVisible="{Binding IsActive}" BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}" />
+
+        <Label AbsoluteLayout.LayoutBounds="0, 0.48, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="A1Label"
+               IsVisible="{Binding Source={x:Reference A1Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="A1" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- T3 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.13, 0.5, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="T3Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.13, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="T3Label"
+               IsVisible="{Binding Source={x:Reference T3Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="T3" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- C3 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.3, 0.5, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="C3Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.3, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="C3Label"
+               IsVisible="{Binding Source={x:Reference C3Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="C3" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- Cz -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="CzCircle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="CzLabel"
+               IsVisible="{Binding Source={x:Reference CzCircle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="Cz" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- C4 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.7, 0.5, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="C4Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.7, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="C4Label"
+               IsVisible="{Binding Source={x:Reference C4Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="C4" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- T4 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.87, 0.5, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="T4Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.87, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="T4Label"
+               IsVisible="{Binding Source={x:Reference T4Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="T4" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- A2 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="1, 0.48, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="A2Circle"
+                                  IsVisible="{Binding IsActive}" BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="1, 0.48, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="A2Label"
+               IsVisible="{Binding Source={x:Reference A2Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="A2" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- Center X -->
+        <!-- Fz -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.5, 0.35, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="FzCircle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.5, 0.35, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="FzLabel"
+               IsVisible="{Binding Source={x:Reference FzCircle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="Fz" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- Pz -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.5, 0.65, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="PzCircle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.5, 0.65, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="PzLabel"
+               IsVisible="{Binding Source={x:Reference PzCircle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="Pz" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- In small circle - top part -->
+        <!-- F3 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.35, 0.35, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="F3Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.35, 0.35, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="F3Label"
+               IsVisible="{Binding Source={x:Reference F3Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="F3" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- F4 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.65, 0.35, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="F4Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.65, 0.35, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="F4Label"
+               IsVisible="{Binding Source={x:Reference F4Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="F4" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- In small circle - bottom part -->
+        <!-- P3 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.35, 0.65, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="P3Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.35, 0.65, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="P3Label"
+               IsVisible="{Binding Source={x:Reference P3Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="P3" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- P4 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.65, 0.65, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="P4Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.65, 0.65, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="P4Label"
+               IsVisible="{Binding Source={x:Reference P4Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="P4" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- On big circle - top part -->
+        <!-- F7 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.2, 0.3, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="F7Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.2, 0.3, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="F7Label"
+               IsVisible="{Binding Source={x:Reference F7Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="F7" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- Fp1 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.4, 0.18, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="Fp1Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.4, 0.18, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="Fp1Label"
+               IsVisible="{Binding Source={x:Reference Fp1Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="Fp1" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- Fp2 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.6, 0.18, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="Fp2Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.6, 0.18, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="Fp2Label"
+               IsVisible="{Binding Source={x:Reference Fp2Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="Fp2" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- F8 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.8, 0.3, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="F8Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.8, 0.3, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="F8Label"
+               IsVisible="{Binding Source={x:Reference F8Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="F8" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- On big circle - bottom part -->
+        <!-- T5 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.2, 0.7, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="T5Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.2, 0.7, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="T5Label"
+               IsVisible="{Binding Source={x:Reference T5Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="T5" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- 01 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.4, 0.83, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="Circle01"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.4, 0.83, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="Label01"
+               IsVisible="{Binding Source={x:Reference Circle01}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="01" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- 02 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.6, 0.83, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="Circle02"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.6, 0.83, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="Label02"
+               IsVisible="{Binding Source={x:Reference Circle02}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="02" Style="{StaticResource impedanceNumericStyle}" />
+
+        <!-- T6 -->
+        <ncontrol:RoundCornerView AbsoluteLayout.LayoutBounds="0.8, 0.7, -1, -1"
+                                  AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  x:Name="T6Circle"
+                                  IsVisible="{Binding IsActive}"
+                                  BackgroundColor="{Binding SignalValue, Converter={StaticResource SignalValuetoBgColorConverter}}"
+                                  CornerRadius="{StaticResource CircleCornerRadius}" WidthRequest="{StaticResource CircleSize}" HeightRequest="{StaticResource CircleSize}"/>
+
+        <Label AbsoluteLayout.LayoutBounds="0.8, 0.7, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional"
+               x:Name="T6Label"
+               IsVisible="{Binding Source={x:Reference T6Circle}, Path=IsVisible}"
+               WidthRequest="30" HorizontalTextAlignment="Center"
+               HeightRequest="30" VerticalTextAlignment="Center"
+               Text="T6" Style="{StaticResource impedanceNumericStyle}" />
+
+    </AbsoluteLayout>
+</ContentView>

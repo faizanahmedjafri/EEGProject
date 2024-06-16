@@ -1,0 +1,546 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD3A205F-CAB5-4D94-AE77-74EE44D9672F}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>biopot.Droid</RootNamespace>
+    <AssemblyName>biopot.Android</AssemblyName>
+    <AndroidApplication>True</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <AndroidResgenClass>Resource</AndroidResgenClass>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
+    <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>__DEBUG__;DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <AndroidSupportedAbis>armeabi-v7a;x86;x86_64;arm64-v8a</AndroidSupportedAbis>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>__RELEASE__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+    <AndroidSupportedAbis>armeabi-v7a;x86;x86_64;arm64-v8a</AndroidSupportedAbis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2" />
+    <PackageReference Include="Xamarin.Forms">
+      <Version>3.1.0.697729</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>7.0.0.396</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Unity.Forms">
+      <Version>7.0.0.396</Version>
+    </PackageReference>
+    <PackageReference Include="Acr.UserDialogs">
+      <Version>7.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="NControl.Controls">
+      <Version>0.9.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="NControl">
+      <Version>0.9.1</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.BLE">
+      <Version>1.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugins.Settings">
+      <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Crashes">
+      <Version>1.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Analytics">
+      <Version>1.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="ZXing.Net.Mobile">
+      <Version>2.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="ZXing.Net.Mobile.Forms">
+      <Version>2.4.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MainActivity.cs" />
+    <Compile Include="PlatformSpecific\CustomUserDialog.cs" />
+    <Compile Include="Renderers\TintedImageRenderer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderers\XfxEntryRenderer.cs" />
+    <Compile Include="Extensions\FontExtensions.cs" />
+    <Compile Include="Services\DroidPermissionsRequester.cs" />
+    <Compile Include="Services\FolderService.cs" />
+    <Compile Include="Services\Sharing\ShareService.cs" />
+    <Compile Include="MainApplication.cs" />
+    <Compile Include="Services\SoundService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+    <None Include="Properties\AndroidManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Tabbar.axml" />
+    <AndroidResource Include="Resources\layout\Toolbar.axml" />
+    <AndroidResource Include="Resources\values\styles.xml" />
+    <AndroidResource Include="Resources\values\colors.xml" />
+    <AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\connect_1.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\connect_2.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\connect_3.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\connect_4.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\done.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\dropdown.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\empty_connection.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\navbar_shadow.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\radio_off.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\radio_on.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\success.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\warning.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\connect_1.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\connect_2.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\connect_3.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\connect_4.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\done.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\dropdown.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\empty_connection.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\navbar_shadow.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\radio_off.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\radio_on.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\success.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\warning.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\connect_1.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\connect_2.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\connect_3.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\connect_4.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\done.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\dropdown.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\empty_connection.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\navbar_shadow.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\radio_off.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\radio_on.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\success.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\warning.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\connect_1.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\connect_2.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\connect_3.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\connect_4.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\done.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\dropdown.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\empty_connection.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\navbar_shadow.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\radio_off.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\radio_on.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\success.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\warning.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\arrow_next.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\arrow_prev.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\bandwidth.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\back.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\btn_rec_inacive.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\btn_rec.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\btn_stop.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\calendar.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\delete_inactive.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\folder.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_chip_inactive.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_chip.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\less.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\minus.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\more.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\settings_toolbar.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\share_inactive.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\share.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\temperature.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\arrow_next.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\arrow_prev.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\bandwidth.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\back.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\btn_rec_inacive.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\btn_rec.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\btn_stop.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\calendar.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\delete_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\folder.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_chip_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_chip.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\less.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\minus.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\more.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\settings_toolbar.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\share_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\share.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\temperature.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\arrow_next.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\arrow_prev.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\bandwidth.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\back.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\btn_rec_inacive.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\btn_rec.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\btn_stop.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\calendar.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\delete_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\folder.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_chip_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_chip.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\less.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\minus.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\more.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\settings_toolbar.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\share_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\share.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\temperature.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\arrow_next.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\arrow_prev.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\bandwidth.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\back.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\btn_rec_inacive.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\btn_rec.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\btn_stop.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\calendar.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\delete_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\folder.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_chip_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_chip.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\less.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\minus.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\more.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\plus.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\settings_toolbar.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\share_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\share.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\temperature.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\check_off.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\check_on_inactive.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\check_on.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\check_off.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\check_on_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\check_on.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\check_off.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\check_on_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\check_on.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\check_off.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\check_on_inactive.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\check_on.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\gradient.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\omega.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\gradient.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\omega.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\gradient.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\omega.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\gradient.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\omega.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\biopot_image.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\biopot_image.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\biopot_image.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\biopot_image.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splash.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\omega_green.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\omega_red.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\omega_yellow.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\patient.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\pic_impedance.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\read.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\write.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\omega_green.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\omega_red.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\omega_yellow.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\patient.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\pic_impedance.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\read.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\write.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\omega_green.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\omega_red.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\omega_yellow.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\patient.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\pic_impedance.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\read.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\write.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\omega_green.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\omega_red.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\omega_yellow.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\patient.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\pic_impedance.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\read.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\write.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\back_white.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\back_white.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\back_white.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\back_white.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launch.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launch.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launch.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launch.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launch.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_launch_hdpi.png" />
+    <AndroidResource Include="Resources\drawable\splashDraw.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\splashTitle.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splashTitle.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splashTitle.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\splashTitle.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splashTitle.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\splashLogo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\splashLogo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\splashLogo.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\splashLogo.png" />
+    <AndroidResource Include="Resources\xml\file_paths.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\biopot\biopot.csproj">
+      <Project>{1A8091BD-E7E1-42EE-9C0A-A54AE9FC45BE}</Project>
+      <Name>biopot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SharedCore\SharedCore.csproj">
+      <Project>{8A4AAC37-7E49-4281-A0D2-D35D07BB3A11}</Project>
+      <Name>SharedCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Roboto-Medium.ttf" />
+    <AndroidAsset Include="Assets\Roboto-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\flash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\sml_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\flash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\sml_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\flash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\sml_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\flash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\sml_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_refresh_36dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_refresh_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_refresh_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_refresh_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_refresh_36dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\battery_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\battery_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\battery_half_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\battery_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\battery_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\battery_half_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\battery_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\battery_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\battery_half_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\battery_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\battery_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\battery_half_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\battery_empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\battery_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\battery_half_full.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\splashLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\splashTitle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\triangle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\impedance_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\impedance_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\impedance_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\impedance_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\impedance_shape.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\dialog_border.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\scan_again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\scan_again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\scan_again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\scan_again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\scan_again.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_remove_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_remove_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_remove_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_remove_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_remove_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_add_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_add_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_add_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_add_box_filled_48dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_add_box_filled_48dp.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>

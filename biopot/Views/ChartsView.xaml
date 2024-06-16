@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:p="clr-namespace:biopot.Views;assembly=biopot"
+    xmlns:controls="clr-namespace:biopot.Controls"
+    xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:enums="clr-namespace:biopot.Enums;assembly=biopot"
+    xmlns:localization="clr-namespace:biopot.Resources.Strings;assembly=biopot"
+    xmlns:biopot="clr-namespace:biopot;assembly=biopot"
+    x:Class="biopot.Views.ChartsView"
+    x:Name="Root">
+
+    <p:BaseContentPage.Resources>
+        <ResourceDictionary>
+            <GridLength x:Key="ChannelIdViewWidth" >40</GridLength>
+            <!-- The same height as in 'RetractableToolBar for 'MENU_CLOSE_STATE'-->
+            <GridLength x:Key="TopMenuHeigh" >90</GridLength>
+        </ResourceDictionary>
+    </p:BaseContentPage.Resources>
+
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{StaticResource TopMenuHeigh}" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Erase Mode notification -->
+        <controls:EraseModeNotificationView HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand"
+                                            IsVisible="{Binding IsEraseModeActive}"
+                                            Grid.Row="0" />
+                
+        <AbsoluteLayout Grid.Row="2">
+            <controls:SwipableListView ItemsSource="{Binding Devices}" BackgroundColor="Transparent"  
+                                       SeparatorVisibility="None" IsGroupingEnabled="true"
+                                       AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional" 
+                                       HasUnevenRows="true">
+                    <ListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <!-- Panel with group name and scale controls -->
+                                <Grid BackgroundColor="{StaticResource chartGroupPanelColor}"
+                                      Padding="10, 0, 0, 0"
+                                      ColumnSpacing="10"
+                                      HeightRequest="{Binding HeaderHeight}"
+                                      IsVisible="{Binding IsHeaderVisible}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Charts group name -->
+                                    <Label Text="{Binding Name}"
+                                           Grid.Column="0"
+                                           Style="{StaticResource chartsGroupNameStyle}"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="Start" />
+
+                                    <!-- 'reset' button -->
+                                <controls:ClickableContentView Grid.Column="1"
+                                                                   Command="{Binding BindingContext.ResetChartScaleCommand, Source={x:Reference Root}}"
+                                                                   CommandParameter="{Binding .}"
+                                                                   VerticalOptions="Center"
+                                                                   HorizontalOptions="Center">
+                                    <controls:TintedImage VerticalOptions="Center"
+                                                              HorizontalOptions="Center"
+                                                              HeightRequest="32"
+                                                              WidthRequest="32"
+                                                              Aspect="AspectFit"
+                                                              TintColor="{StaticResource chartsGroupNameColor}"
+                                                              Source="ic_refresh_36dp" />
+                                </controls:ClickableContentView>
+                                <!-- Y-scale picker -->
+                                    <controls:VerticalValuePicker Grid.Column="2"
+                                                                  HorizontalOptions="End"
+                                                                  VerticalOptions="Center"
+                                                                  MaxValue="{Binding MaxValue}"
+                                                                  MinValue="{Binding MinValue}"
+                                                                  PickerValue="{Binding PickerValue}"
+                                                                  PickerStep="{x:Static biopot:Constants+Charts.YAxisStepInterpolator}"
+                                                                  PickerValueFormatter="{}{0} μV" >
+                                        
+                                        <View.Triggers>
+                                        <DataTrigger TargetType="controls:VerticalValuePicker"
+                                                         Binding="{Binding DeviceType}"
+                                                         Value="{x:Static enums:EDeviceType.Accelerometer}">
+                                            <Setter Property="PickerValueFormatter" Value="{}{0} g" />
+                                            <Setter Property="PickerStep" Value="1" />
+                                        </DataTrigger>
+                                    </View.Triggers>
+                                </controls:VerticalValuePicker>
+                                <!-- X-scale picker -->
+                                    <controls:HorizontalValuePicker Grid.Column="3"
+                                                                    IsVisible="False"
+                                                                    HorizontalOptions="End"
+                                                                    VerticalOptions="Center"
+                                                                    MaxValue="{Binding BindingContext.XScaleMaxValue, Source={x:Reference Root}}"
+                                                                    MinValue="{Binding BindingContext.XScaleMinValue, Source={x:Reference Root}}"
+                                                                    PickerValue="{Binding BindingContext.XScaleValue, Source={x:Reference Root}}"
+                                                                    PickerStep="{x:Static biopot:Constants+Charts.XAxisStepInterpolator}"
+                                                                    PickerValueFormatter="{}{0} sec">
+                                        <View.Triggers>
+                                        <DataTrigger TargetType="controls:HorizontalValuePicker"
+                                                         Binding="{Binding DeviceType}"
+                                                         Value="{x:Static enums:EDeviceType.EEGorEMG}">
+                                            <Setter Property="IsVisible" Value="True" />
+                                        </DataTrigger>
+                                    </View.Triggers>
+
+                                </controls:HorizontalValuePicker>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.GroupHeaderTemplate>
+                    <ListView.Footer>
+                        <BoxView HeightRequest="30"/>
+                    </ListView.Footer>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="50">
+
+                                <controls:SwipableListItem IsSwipable="{Binding IsEEGChannel}">
+                                    <controls:SwipableListItem.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding BindingContext.ItemTappedCommand, Source={x:Reference Root}}"
+                                                          CommandParameter="{Binding .}" />
+                                    </controls:SwipableListItem.GestureRecognizers>
+
+                                    <!-- Initial view -->
+                                    <controls:SwipableListItem.InitialView>
+                                        <Grid ColumnSpacing="0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource ChannelIdViewWidth}" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="1" BackgroundColor="Transparent">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.16*" />
+                                                    <ColumnDefinition Width="0.16*" />
+                                                    <ColumnDefinition Width="0.16*" />
+                                                    <ColumnDefinition Width="0.16*" />
+                                                    <ColumnDefinition Width="0.16*" />
+                                                    <ColumnDefinition Width="0.16 *" />
+                                                </Grid.ColumnDefinitions>
+                                                <BoxView Grid.Column="0" WidthRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" HorizontalOptions="End" />
+                                                <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" HorizontalOptions="End" />
+                                                <BoxView Grid.Column="2" WidthRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" HorizontalOptions="End" />
+                                                <BoxView Grid.Column="3" WidthRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" HorizontalOptions="End" />
+                                                <BoxView Grid.Column="4" WidthRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" HorizontalOptions="End" />
+                                                <BoxView Grid.Column="5" WidthRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" HorizontalOptions="End" />
+                                            </Grid>
+                                            <BoxView Grid.Column="1" HeightRequest="1" BackgroundColor="{StaticResource mainPageChartColor}" VerticalOptions="End" />
+                                            
+                                            <!-- Channel id + Selected montage channel number (if any) -->
+                                            <StackLayout Orientation="Vertical" Grid.Column="0"
+                                                         BackgroundColor="{StaticResource mainPageChartIDColor}"
+                                                         VerticalOptions="FillAndExpand">
+                                                
+                                                <Label Text="{Binding ChartId}" 
+                                                       Style="{StaticResource chartIdStyle}" 
+                                                       VerticalOptions="FillAndExpand"
+                                                       VerticalTextAlignment="Center"/>
+                                                
+                                                <Label Text="{Binding MontageChannelFormatted}"
+                                                       Style="{StaticResource chartIdStyle}"
+                                                       IsVisible="{Binding IsMontageApplied}"
+                                                       VerticalTextAlignment="Start"
+                                                       VerticalOptions="FillAndExpand"/>
+                                            </StackLayout>
+                                            
+                                            <microcharts:ChartView Grid.Column="1" Chart="{Binding Chart}" BackgroundColor="Transparent" Margin="0" />
+                                        </Grid>
+                                    </controls:SwipableListItem.InitialView>
+
+                                    <!-- Swipped view -->
+                                    <controls:SwipableListItem.SwippedView>
+
+                                        <Grid x:Name="SwippedView"
+                                              BackgroundColor="{StaticResource mainPageChartIDColor}"
+                                              VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                                              RowSpacing="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="{StaticResource ChannelIdViewWidth}" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <!-- Channel id + Selected montage channel number (if any) -->
+                                            <StackLayout Orientation="Vertical"
+                                                         Grid.RowSpan="2" Grid.Column="0" Grid.Row="0"
+                                                         BackgroundColor="{StaticResource mainPageChartIDColor}"
+                                                         VerticalOptions="FillAndExpand"
+                                                         Spacing="0">
+
+                                                <Label Text="{Binding ChartId}"
+                                                       Style="{StaticResource chartIdStyle}"
+                                                       VerticalOptions="FillAndExpand"
+                                                       VerticalTextAlignment="Center" />
+
+                                                <Label Text="{Binding MontageChannelFormatted}"
+                                                       Style="{StaticResource chartIdStyle}"
+                                                       IsVisible="{Binding IsMontageApplied}"
+                                                       VerticalTextAlignment="Start"
+                                                       VerticalOptions="FillAndExpand" />
+                                            </StackLayout>
+
+                                            <Label Text="Montage Channel"
+                                                   Grid.Column="1" Grid.Row="0"
+                                                   HorizontalOptions="Start" VerticalOptions="End"
+                                                   HorizontalTextAlignment="Start"
+                                                   LineBreakMode="TailTruncation"
+                                                   Style="{StaticResource chartIdStyle}" />
+
+                                            <Label Text="View this channel over:"
+                                                   Grid.Column="1" Grid.Row="1"
+                                                   HorizontalOptions="Start" VerticalOptions="Start"
+                                                   HorizontalTextAlignment="Start"
+                                                   LineBreakMode="TailTruncation"
+                                                   Style="{StaticResource chartIdStyle}" />
+
+                                            <!-- FIXME remove width request and font size -->
+                                            <Picker Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"
+                                                    WidthRequest="75" FontSize="14" TextColor="White"
+                                                    ItemsSource="{Binding MontageChannelsFormatted}"
+                                                    SelectedIndex="{Binding SelectedMontageIndex}"
+                                                    HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand"/>
+
+                                            <Button Text="Apply"
+                                                    Grid.RowSpan="2" Grid.Column="3" Grid.Row="0"
+                                                    HorizontalOptions="FillAndExpand" VerticalOptions="End"
+                                                    Command="{Binding ApplyMontageChannelCommand}"
+                                                    CommandParameter="{Binding Source={x:Reference SwippedView}}" />
+
+                                        <controls:TintedImage Source="close.png"
+                                                                  Grid.Column="4" Grid.Row="0"
+                                                                  HorizontalOptions="End" VerticalOptions="Start"
+                                                                  HeightRequest="16" WidthRequest="16"
+                                                                  TintColor="White"
+                                                                  Aspect="AspectFit">
+
+                                                <controls:TintedImage.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        NumberOfTapsRequired="1"
+                                                        Command="{Binding CloseMontageChannelCommand}"
+                                                        CommandParameter="{Binding Source={x:Reference SwippedView}}" />
+                                                </controls:TintedImage.GestureRecognizers>
+
+                                            </controls:TintedImage>
+
+                                        </Grid>
+                                    </controls:SwipableListItem.SwippedView>
+
+                                </controls:SwipableListItem>
+                                
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </controls:SwipableListView>
+
+            <controls:RecordControl 
+                    Padding="0,0,5,0"
+                    IsRecording="{Binding IsRecording, Mode=TwoWay}" 
+                    IsConnected="{Binding IsConnected}" 
+                    StartRecordCommand="{Binding StartRecordCommand}" 
+                    StopRecordCommand="{Binding StopRecordCommand}"
+                    BackgroundColor="Transparent"
+                    AbsoluteLayout.LayoutBounds="0.97,0.97,134,80" AbsoluteLayout.LayoutFlags="PositionProportional"/>
+                
+            <controls:SpsDetailsView
+                IsVisible="{Binding IsSpsChartVisible}"
+                BindingContext="{Binding .}"
+                CloseSpsDetailsCommand="{Binding CloseSpsDetailsCommand}"
+                AbsoluteLayout.LayoutBounds="0, 0, 1, 1"
+                AbsoluteLayout.LayoutFlags="All" />
+                
+        </AbsoluteLayout>
+        
+        <!--Need to be reviewed-->
+        <ContentView Grid.Row="3" BackgroundColor="{StaticResource chartGroupPanelColor}">
+            <Grid ColumnSpacing="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Padding="2,0,0,0" Orientation="Horizontal" Spacing="2" Grid.Column="0">
+                    <Image Source="temperature" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Style="{StaticResource chartsDivisonTextStyle}"
+                           Text="{Binding Temperature, StringFormat={x:Static localization:Strings.TemperatureCelsiusFormat}}" />
+
+                    <controls:TintedImage x:Name="BatteryImage"
+                                          Source="{Binding BatteryImage}"
+                                          TintColor="{Binding BatteryImageColor}"
+                                          HeightRequest="12" WidthRequest="12"
+                                          VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+
+
+                <Grid Grid.Column="1" RowSpacing="0" ColumnSpacing="0">
+                    <Grid x:Name="chartX" ColumnSpacing="6" />
+                </Grid>
+            </Grid>
+        </ContentView>
+
+        <controls:RetractableToolBar
+            x:Name="TopMenu"
+            Grid.Row="1" Grid.Column="0"
+            Devices="{Binding CheckboxViewmodels}"
+            UpdateChartState="{Binding UpdateChartStateCommand}"
+            ConnectionStateCommand="{Binding ConnectionStateCommand}"
+            BandWidthCommand="{Binding BandWidthCommand}"
+            OpenFolderCommand="{Binding OpenFolderCommand}"
+            AdditionalSettingsCommand="{Binding AdditionalSettingsCommand}"
+            UserSettingsCommand="{Binding UserSettingsCommand}"
+            TechnicalSettingsCommand="{Binding TechnicalSettingsCommand}"
+            SensorsConnectionState="{Binding SensorsConnectionState}"
+            DeviceNameTappedCommand="{Binding DeviceNameTappedCommand}"
+            DeviceInfo="{Binding DeviceInfo}"
+            IsMenuOpened="{Binding IsMenuOpened}"
+            CanOpenMenu="{Binding CanOpenMenu}"
+            IsConnectionLost="{Binding IsConnectionLost}"
+            SPSValue="{Binding ChartSps.SensorValue}" />
+    </Grid>
+
+</p:BaseContentPage>

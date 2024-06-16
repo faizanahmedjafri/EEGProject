@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:p="clr-namespace:biopot.Views;assembly=biopot" x:Name="this" xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:converters="clr-namespace:biopot.Converters" xmlns:controls="clr-namespace:biopot.Controls" xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls" x:Class="biopot.Views.FilesBrowserView">
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <controls:ClickableContentView Command="{Binding BackCommand}">
+                <Grid HeightRequest="50" BackgroundColor="White" HorizontalOptions="Start" Padding="16,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="0.4*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="back" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Grid.Column="1" Text="Files Browser" Style="{StaticResource labelTextStyle}" TextColor="{StaticResource entryTextColor}" VerticalOptions="Center" HorizontalOptions="Center" />
+                </Grid>
+            </controls:ClickableContentView>
+            <!--Calendar-->
+            <Grid Grid.Column="1" Grid.Row="0" Padding="16,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label TextColor="Black" Text="{Binding CalendarDate}" Grid.Column="0" HorizontalOptions="End" VerticalOptions="Center" />
+                <Image Source="calendar" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Grid>
+            <ContentView Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center" Padding="16,0">
+                <DatePicker Opacity="0" Date="{Binding FilteringDate}" MaximumDate="{Binding MaxFilteringDate}" MinimumDate="{Binding MinFilteringDate}" />
+            </ContentView>
+            <controls:ChartCheckBox IsChecked="{Binding SelectAll}" Text="Select all" IsSelectedAllCheckBox="true" Grid.Row="1" Grid.Column="0" Padding="16,0" />
+            <!--Shadow-->
+            <Image Source="navbar_shadow" Grid.Row="2" Grid.ColumnSpan="2" Aspect="AspectFill" HorizontalOptions="Fill" />
+        </Grid>
+        <!--Files in folder-->
+        <ListView ItemsSource="{Binding Files}" IsPullToRefreshEnabled="true" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" HasUnevenRows="true" Grid.Row="1" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <controls:ChartCheckBox IsSelectedAll="{Binding Enabled}" InputTransparent="true" Padding="16" IsChecked="{Binding Checked}" Text="{Binding Name}" IsSelectedAllCheckBox="false" />
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior EventName="ItemTapped" Command="{Binding ItemTappedCommand}" EventArgsConverter="{converters:ItemTappedEventArgsConverter}" />
+            </ListView.Behaviors>
+        </ListView>
+        <!--Share and remove-->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <!--Shadow-->
+            <Image Source="navbar_shadow" Grid.Row="0" HorizontalOptions="Fill" Aspect="AspectFill" />
+            <Grid Grid.Row="1" Margin="16,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="share_inactive" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" />
+                <controls:ClickableContentView Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start" Command="{Binding ShareFilesCommand}">
+                    <controls:ClickableContentView.Triggers>
+                        <DataTrigger TargetType="controls:ClickableContentView" Binding="{Binding SelectedFilesAmount}" Value="0">
+                            <Setter Property="IsVisible" Value="false" />
+                        </DataTrigger>
+                    </controls:ClickableContentView.Triggers>
+                    <Image Source="share" />
+                </controls:ClickableContentView>
+                <Grid Grid.Column="1" HorizontalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.7*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Selected files:" VerticalOptions="Center" HorizontalOptions="End" Grid.Column="0">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding SelectedFilesAmount}" Value="0">
+                                <Setter Property="TextColor" Value="{StaticResource inActiveTabStripTextColor}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Label Text="{Binding SelectedFilesAmount}" VerticalOptions="Center" HorizontalOptions="Start" Grid.Column="1">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding SelectedFilesAmount}" Value="0">
+                                <Setter Property="TextColor" Value="{StaticResource inActiveTabStripTextColor}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </Grid>
+                <Image Source="delete_inactive" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" />
+                <controls:ClickableContentView Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End" Command="{Binding RemoveFilesCommand}">
+                    <controls:ClickableContentView.Triggers>
+                        <DataTrigger TargetType="controls:ClickableContentView" Binding="{Binding SelectedFilesAmount}" Value="0">
+                            <Setter Property="IsVisible" Value="false" />
+                        </DataTrigger>
+                    </controls:ClickableContentView.Triggers>
+                    <Image Source="delete" />
+                </controls:ClickableContentView>
+            </Grid>
+        </Grid>
+    </Grid>
+</p:BaseContentPage>

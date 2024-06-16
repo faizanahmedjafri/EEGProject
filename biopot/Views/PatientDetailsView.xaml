@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:biopot.Controls;assembly=biopot"
+             xmlns:converters="clr-namespace:biopot.Converters;assembly=biopot"
+             xmlns:forms="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
+             x:Class="biopot.Views.PatientDetailsView">
+
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+            <x:Double x:Key="ScannerViewSize">200</x:Double>
+            <Thickness x:Key="ScannerViewMargin">16, 32, 16, 8</Thickness>>
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <!-- FIXME move strings to resources -->
+    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                 x:Name="StackLayout"
+                 Padding="16">
+
+        <!-- Scan or enter barcode -->
+        <Label Text="Patient Code (scan or enter)"
+               HorizontalOptions="StartAndExpand" />
+
+        <Entry Placeholder="0000"
+               Text="{Binding Id}"
+               IsEnabled="{Binding IsBarcodeScanned, Converter={StaticResource NegateBooleanConverter}}"
+               HorizontalOptions="FillAndExpand" />
+
+        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand"
+                     IsVisible="{Binding IsBarcodeScanned, Converter={StaticResource NegateBooleanConverter}}">
+
+           <!-- Camera viewfinder -->
+           <Grid HeightRequest="{StaticResource ScannerViewSize}" WidthRequest="{StaticResource ScannerViewSize}"
+                 x:Name="CameraViewfinder"
+                 HorizontalOptions="Center" VerticalOptions="Center"
+                 Margin="{StaticResource ScannerViewMargin}">
+
+               <BoxView VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="{StaticResource ScannerViewSize}"
+                        WidthRequest="{StaticResource ScannerViewSize}"
+                        BackgroundColor="Black" />
+
+               <!-- The actual surface view goes here in the code behind -->
+
+           </Grid>
+
+            <!-- Help message -->
+            <Label Text="{Binding InfoMessage}"
+                   HorizontalOptions="CenterAndExpand"
+                   HorizontalTextAlignment="Center"
+                   TextColor="{Binding InfoMessageColor}" />
+        </StackLayout>
+
+        <!-- Scan again -->
+        <controls:ClickableContentView Padding="0, 16, 0, 16" IsVisible="{Binding IsBarcodeScanned}"
+                                       Command="{Binding ScanAgainCommand}">
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                <Image HeightRequest="24" WidthRequest="24"
+                       Source="scan_again" />
+
+                <Label Text="Scan Again" VerticalOptions="Center"/>
+
+            </StackLayout>
+        </controls:ClickableContentView>
+
+    </StackLayout>
+</ContentView>

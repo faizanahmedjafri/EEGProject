@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="biopot.Controls.RetractableToolBar"
+    xmlns:controls="clr-namespace:biopot.Controls"
+    xmlns:localization="clr-namespace:biopot.Resources.Strings;assembly=biopot"
+    x:Name="this">
+
+  <AbsoluteLayout x:Name="main" BackgroundColor="Transparent" 
+                  BindingContext="{x:Reference this}">
+
+        <BoxView x:Name="overlaybox" StyleId="button" BackgroundColor="Black" Opacity="0.4"
+                 IsVisible="{Binding IsOpenState}"
+                 AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+            <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenCloseMenuCommand}"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Grid x:Name="whiteOverlay" BackgroundColor="White" VerticalOptions="Start" 
+              AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"/>
+
+        <!-- Expanded menu-->
+        <Grid x:Name="box" RowSpacing="0" StyleId="Menu" BackgroundColor="White"
+              IsVisible="{Binding IsOpenState}" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+
+          <!-- Tabs: EEG/EMG, Bio Impedance and Accelerometer channels -->
+            <Grid Padding="17,0,17,0" Grid.Row="0" VerticalOptions="FillAndExpand" >
+              <controls:TabStrip x:Name="tabStrip" Grid.Row="0" Grid.Column="0"
+                      ActivePageIndex="{Binding StripTabIndex, Mode=TwoWay}"
+                      TabBackColor="White"
+                      TabIndicatorColor="{StaticResource activeTabStripTextColor}"
+                      TabHeight="44">
+                <controls:TabStrip.Children>
+
+                  <!-- EEG/EMG grid with channels -->
+                  <controls:TabItem>
+                    <controls:TabItem.ButtonView>
+                      <ContentView StyleId="Menu" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="EEG/EMG" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center"/>
+                      </ContentView>
+                    </controls:TabItem.ButtonView>
+                    <controls:TabItem.View>
+                      <Grid x:Name="EEGEMGrid" ColumnSpacing="0" RowSpacing="0" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid ColumnSpacing="0" Grid.ColumnSpan="4">
+                          <controls:ChartCheckBox Text="Select all" IsSelectedAllCheckBox="true" IsSelectedAll="{Binding SelectAllEEGEMG}" HorizontalOptions="Start"/>
+                        </Grid>
+                      </Grid>
+                    </controls:TabItem.View>
+                  </controls:TabItem>
+
+                  <!-- Bio impedance grid with channels -->
+                  <controls:TabItem>
+                    <controls:TabItem.ButtonView>
+                      <ContentView VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="Bio Impedance" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center"/>
+                      </ContentView>
+                    </controls:TabItem.ButtonView>
+                    <controls:TabItem.View>
+                      <Grid x:Name="BioGrid" ColumnSpacing="0" RowSpacing="0" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid ColumnSpacing="0" Grid.ColumnSpan="4" IsVisible="{Binding IsBioImpedancePresent}">
+                          <controls:ChartCheckBox Text="Select all" IsSelectedAllCheckBox="true" IsSelectedAll="{Binding SelectAllBioImpedance}" HorizontalOptions="Start"/>
+                        </Grid>
+                      </Grid>
+                    </controls:TabItem.View>
+                  </controls:TabItem>
+
+                  <!-- Accelerometer grid with channels -->
+                  <controls:TabItem>
+                    <controls:TabItem.ButtonView>
+                      <ContentView VerticalOptions="Center" HorizontalOptions="Center">
+                        <Label Text="Accelerometer" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center"/>
+                      </ContentView>
+                    </controls:TabItem.ButtonView>
+                    <controls:TabItem.View>
+                      <Grid x:Name="AccelerGrid" ColumnSpacing="0" RowSpacing="0" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                          <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid ColumnSpacing="0" Grid.ColumnSpan="4" IsVisible="{Binding IsAccelerometerPresent}">
+                          <controls:ChartCheckBox Text="Select all" IsSelectedAllCheckBox="true" IsSelectedAll="{Binding SelectAllAccelerometer}" HorizontalOptions="Start"/>
+                        </Grid>
+                      </Grid>
+                    </controls:TabItem.View>
+                  </controls:TabItem>
+                </controls:TabStrip.Children>
+              </controls:TabStrip>
+            </Grid>
+
+           <!-- Expanded menu footer: 'Additional settings' and 'Patient/Session/User setup' -->
+            <Grid x:Name="boxFooter" RowSpacing="0" Grid.Row="1" VerticalOptions="End" StyleId="Menu" >
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+
+              <ContentView StyleId="Menu" VerticalOptions="Start" Padding="10,0,10,8">
+                <BoxView InputTransparent="true" HeightRequest="1" BackgroundColor="{StaticResource entrySeparatorColorDefault}"/>
+              </ContentView>
+
+              <Grid StyleId="Menu" ColumnSpacing="8" Padding="20,0,0,0" Grid.Row="1" HorizontalOptions="Start">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Image StyleId="Menu" InputTransparent="true" Source="settings" VerticalOptions="Center"/>
+                <Label StyleId="Menu" Grid.Column="1" InputTransparent="true"
+                       Text="{x:Static localization:Strings.ToolbarAdditionalSettings}"
+                       Style="{StaticResource labelTextStyle}"
+                       TextColor="{StaticResource entryTextColor}"/>
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding AdditionalSettingsCommand}"/>
+                </Grid.GestureRecognizers>
+              </Grid>
+
+              <Grid StyleId="Menu" ColumnSpacing="8" Padding="20,12,0,0" Grid.Row="2" HorizontalOptions="Start">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="Auto"/>
+                  <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Image StyleId="Menu" InputTransparent="true" Source="patient" VerticalOptions="Center"/>
+                <Label StyleId="Menu" Grid.Column="1" InputTransparent="true"
+                       Text="{x:Static localization:Strings.ToolbarAdvancedSetup}"
+                       Style="{StaticResource labelTextStyle}"
+                       TextColor="{StaticResource entryTextColor}"/>
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding UserSettingsCommand}"/>
+                </Grid.GestureRecognizers>
+              </Grid>
+
+              <Grid StyleId="Menu" Grid.Row="3" Padding="0,5,0,0">
+                <Image InputTransparent="true" IsVisible="true" Source="less" VerticalOptions="End" HorizontalOptions="Center"/>
+                <Grid.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding OpenCloseMenuCommand}"/>
+                </Grid.GestureRecognizers>
+              </Grid>
+            </Grid>
+          </Grid>
+
+        <Grid x:Name="menuButtons"  ColumnSpacing="0" Padding="6,0" BackgroundColor="White" VerticalOptions="Start" 
+              AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.57*"/>
+                <ColumnDefinition Width="0.11*"/>
+                <ColumnDefinition Width="0.11*"/>
+                <ColumnDefinition Width="0.11*"/>
+                <ColumnDefinition Width="0.11*"/>
+            </Grid.ColumnDefinitions>
+
+            <ContentView Padding="0,6" Grid.Column="0" Grid.Row="0" StyleId="button">
+                <controls:TintedImage InputTransparent="true" VerticalOptions="Center" HorizontalOptions="Center"
+                       HeightRequest="46" WidthRequest="46" Aspect="AspectFit"
+                       TintColor="{StaticResource toolbarLogoColor}" Source="sml_logo.png"/>
+            </ContentView>
+            <StackLayout Spacing="2" Grid.Column="1" StyleId="button" BackgroundColor="White">
+
+                <!-- Device name -->
+                <Label
+                    InputTransparent="true"
+                    Text="{Binding DeviceName}"
+                    VerticalOptions="StartAndExpand"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource toolBarTitleTextStyle}">
+                    <Label.Triggers>
+                        <DataTrigger
+                            TargetType="Label"
+                            Binding="{Binding IsConnectionLost}"
+                            Value="false">
+                            <Setter Property="Style" Value="{StaticResource toolBarNoConnectedTitleTextStyle}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!-- Channels num -->
+                <Label VerticalOptions="StartAndExpand" HorizontalOptions="Start"
+                       Text="{Binding ChannelsNumber, StringFormat={x:Static localization:Strings.DeviceConfigurationChannelsNum}}"
+                       Style="{StaticResource toolBarTitleTextStyle}"
+                       InputTransparent="true">
+                    <Label.Triggers>
+                        <DataTrigger
+                            TargetType="Label"
+                            Binding="{Binding IsConnectionLost}"
+                            Value="false">
+                            <Setter Property="Style" Value="{StaticResource toolBarNoConnectedTitleTextStyle}" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+
+                <!-- Accelerometer -->
+                <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand" HorizontalOptions="Start">
+
+                    <!-- FIXME add correct images -->
+                    <Image Source="close.png" HeightRequest="16" WidthRequest="16" Aspect="AspectFit">
+                        <Image.Triggers>
+                            <DataTrigger
+                                TargetType="Image"
+                                Binding="{Binding IsAccelerometerPresent}"
+                                Value="true">
+                                <Setter Property="Source" Value="check.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+
+                    <Label Text="{x:Static localization:Strings.DeviceConfigurationAccelerometer}"
+                           Style="{StaticResource toolBarTitleTextStyle}"
+                           InputTransparent="true">
+                        <Label.Triggers>
+                            <DataTrigger
+                                TargetType="Label"
+                                Binding="{Binding IsConnectionLost}"
+                                Value="false">
+                                <Setter Property="Style" Value="{StaticResource toolBarNoConnectedTitleTextStyle}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </StackLayout>
+
+                <!-- Bo-impedance -->
+                <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand" HorizontalOptions="Start">
+
+                    <Image Source="close.png" HeightRequest="16" WidthRequest="16" Aspect="AspectFit">
+                        <Image.Triggers>
+                            <DataTrigger
+                                TargetType="Image"
+                                Binding="{Binding IsBioImpedancePresent}"
+                                Value="true">
+                                <Setter Property="Source" Value="check.png" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+
+                    <Label Text="{Binding BioImpedanceFormatted}"
+                           Style="{StaticResource toolBarTitleTextStyle}"
+                           InputTransparent="true">
+                        <Label.Triggers>
+                            <DataTrigger
+                                TargetType="Label"
+                                Binding="{Binding IsConnectionLost}"
+                                Value="false">
+                                <Setter Property="Style" Value="{StaticResource toolBarNoConnectedTitleTextStyle}" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </StackLayout>
+
+              <!-- TODO device config examples -->
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeviceNameTappedCommand}"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+          
+            <StackLayout x:Name="omegaIconGrid" Spacing="0" Grid.Column="2" StyleId="button" BackgroundColor="White" Margin="2">
+
+              <!-- Omega layout-->
+              <!-- FIXME change omega color depending on correct state -->
+                <controls:TintedImage VerticalOptions="StartAndExpand" HorizontalOptions="Center"
+                                      HeightRequest="46" WidthRequest="46" Aspect="AspectFit"
+                                      StyleId="button" TintColor="{StaticResource toolbarOmegaColored}" Source="omega.png">
+                  
+                  <controls:TintedImage.Triggers>
+                        <DataTrigger TargetType="controls:TintedImage" Binding="{Binding SensorsConnectionState}" Value="None">
+                            <Setter Property="TintColor" Value="{StaticResource toolbarGreyColor}" />
+                        </DataTrigger>
+                    </controls:TintedImage.Triggers>
+                </controls:TintedImage>
+  
+                <Label InputTransparent="true" Text="" VerticalOptions="StartAndExpand" HorizontalOptions="Center" Style="{StaticResource bandTextStyle}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" Binding="{Binding SensorsConnectionState}" Value="BadConnection">
+                            <Setter Property="Text" Value="Bad"/>
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ConnectionStateCommand}"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+          
+            <StackLayout Spacing="0" Grid.Column="3" StyleId="button" BackgroundColor="White" Margin="2">
+                <controls:TintedImage InputTransparent="true" VerticalOptions="Start" HorizontalOptions="Center"
+                       HeightRequest="46" WidthRequest="46" Aspect="AspectFit"
+                       StyleId="button" TintColor="Gray" Source="flash.png"/>
+              
+                <Grid ColumnSpacing="0" x:Name="SPStack" VerticalOptions="Start">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="0.4*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding SPSValue}" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource bandTextStyle}" />
+                    <Label Text="SPS" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Style="{StaticResource bandTextStyle}" FontSize="6" Margin="0,2,0,0"/>
+                </Grid>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BandWidthCommand}"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+          
+            <ContentView Grid.Column="4" StyleId="button" Margin="2">
+                <controls:TintedImage VerticalOptions="StartAndExpand" HorizontalOptions="Center"
+                       HeightRequest="46" WidthRequest="46" Aspect="AspectFit"
+                       TintColor="Gray" Source="folder.png"/>
+              
+                <ContentView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenFolderCommand}"/>
+                </ContentView.GestureRecognizers>
+            </ContentView>
+          
+            <controls:LongPressableContentView Grid.Column="5" StyleId="button" Margin="2"
+                                               LongPressDelay="00:00:05.00"
+                                               LongPressTriggerInterval="10.00:00:00.00"
+                                               Command="{Binding OpenCloseMenuCommand}"
+                                               OnPressing="{Binding TechnicalSettingsCommand}">
+              <controls:TintedImage VerticalOptions="StartAndExpand" HorizontalOptions="Center"
+                                    HeightRequest="46" WidthRequest="46" Aspect="AspectFit"
+                                    TintColor="Gray" Source="settings_toolbar.png" />
+            </controls:LongPressableContentView>
+          
+        </Grid>
+
+    </AbsoluteLayout>
+    
+</ContentView>

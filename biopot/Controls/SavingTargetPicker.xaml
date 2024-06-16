@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:biopot.Controls"
+    xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls"
+    xmlns:localization="clr-namespace:biopot.Resources.Strings"
+    x:Class="biopot.Controls.SavingTargetPicker"
+    x:Name="this">
+
+    <Grid BindingContext="{x:Reference this}">
+        <StackLayout Spacing="0" BackgroundColor="Transparent">
+            <ContentView Padding="8,0,0,0" BackgroundColor="Transparent">
+                <Label Text="{Binding TitleText}" VerticalOptions="End" BackgroundColor="Transparent"
+                    TextColor="{StaticResource backButtonTextColor}" 
+                    Style="{StaticResource hintLabelStyle}"/> 
+            </ContentView>
+            <StackLayout Padding="8,0,17,0" Orientation="Horizontal" BackgroundColor="Transparent">
+                <Label x:Name="label" HorizontalOptions="StartAndExpand" VerticalOptions="Center" BackgroundColor="Transparent"
+                   TextColor="{StaticResource entryTextColor}" 
+                   Style="{StaticResource labelTextStyle}"/>
+                <Image Source="dropdown" TranslationY="-5" HorizontalOptions="EndAndExpand" VerticalOptions="Start"/>
+            </StackLayout>
+            <ncontrol:RoundCornerView 
+                HeightRequest="2" 
+                CornerRadius="1" 
+                BackgroundColor="{StaticResource entrySeparatorColorDefault}"
+                HorizontalOptions="Fill"/>
+        </StackLayout>
+        <Picker SelectedIndexChanged="OnSelectedIndexChanged" ItemsSource="{Binding TargetsList}" SelectedItem="{Binding SelectedItem}" Opacity="0"/>
+    </Grid>
+    
+</ContentView>

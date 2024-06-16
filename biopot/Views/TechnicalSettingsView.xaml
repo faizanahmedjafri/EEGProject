@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:p="clr-namespace:biopot.Views;assembly=biopot"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:localization="clr-namespace:biopot.Resources.Strings"
+    xmlns:controls="clr-namespace:biopot.Controls" 
+    xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls" 
+    x:Class="biopot.Views.TechnicalSettingsView">
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <controls:ClickableContentView HorizontalOptions="Start" Command="{Binding BackCommand}">
+            <Grid Padding="16,0" HeightRequest="50" BackgroundColor="White">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0.4*" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="back" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Grid.Column="1" Text="Back" Style="{StaticResource labelTextStyle}" TextColor="{StaticResource entryTextColor}" VerticalOptions="Center" HorizontalOptions="Center"/>
+            </Grid>
+        </controls:ClickableContentView>
+        <Image Source="navbar_shadow" HeightRequest="5" Aspect="AspectFill" VerticalOptions="EndAndExpand" Grid.Row="1"/>
+
+        <controls:TabStrip Padding="22,0" x:Name="tabStrip" Grid.Row="2" Grid.Column="0"
+            BackgroundColor="White"
+            ActivePageIndex="{Binding StripTabIndex, Mode=TwoWay}" 
+            TabBackColor="White"
+            TabIndicatorColor="{StaticResource activeTabStripTextColor}" 
+            TabHeight="44">
+            <controls:TabStrip.Children>
+                <controls:TabItem>
+                    <controls:TabItem.ButtonView>
+                        <ContentView VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label Text="Technical Settings" TextColor="Blue" VerticalOptions="Center" HorizontalOptions="Center"/>
+                        </ContentView>
+                    </controls:TabItem.ButtonView>
+                    <controls:TabItem.View>
+
+                        <StackLayout>
+                            <ncontrol:RoundCornerView CornerRadius="4" Margin="0,12,0,0" BackgroundColor="{StaticResource warningBoxColor}">
+                                <StackLayout Spacing="10" Orientation="Horizontal" Padding="6">
+                                    <Image Margin="0,0,0,0" Source="warning" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                    <Label Text="{x:Static localization:Strings.BeCarefulWhenChangingSettings}"
+                                       TextColor="{StaticResource chartsGroupNameColor}" 
+                                       Style="{StaticResource labelTextStyle}"
+                                       VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                                </StackLayout>
+                            </ncontrol:RoundCornerView>
+
+                            <StackLayout Padding="0,10,0,0" Spacing="20" Orientation="Horizontal">
+                                <controls:ExtendetEntry Text="{Binding Ch1Value}" Placeholder="Ch1" 
+                                                        HorizontalOptions="FillAndExpand" IsCleanOnFocus="False"/>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch1ValueReadCommand}">
+                                        <Image Source="read" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch1ValueWriteCommand}">
+                                        <Image Source="write" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                            </StackLayout>
+                            <StackLayout Spacing="20" Orientation="Horizontal">
+                                <controls:ExtendetEntry Text="{Binding Ch2Value}" Placeholder="Ch2" 
+                                                        HorizontalOptions="FillAndExpand" IsCleanOnFocus="False"/>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch2ValueReadCommand}">
+                                        <Image Source="read" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch2ValueWriteCommand}">
+                                        <Image Source="write" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                            </StackLayout>
+                            <StackLayout Spacing="20" Orientation="Horizontal">
+                                <controls:ExtendetEntry Text="{Binding Ch3Value}" Placeholder="Ch3" 
+                                                        HorizontalOptions="FillAndExpand" IsCleanOnFocus="False"/>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch3ValueReadCommand}">
+                                        <Image Source="read" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch3ValueWriteCommand}">
+                                        <Image Source="write" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                            </StackLayout>
+                            <StackLayout Spacing="20" Orientation="Horizontal">
+                                <controls:ExtendetEntry Text="{Binding Ch5Value}" Placeholder="Ch5" 
+                                                        HorizontalOptions="FillAndExpand" IsCleanOnFocus="False"/>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch5ValueReadCommand}">
+                                        <Image Source="read" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch5ValueWriteCommand}">
+                                        <Image Source="write" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                            </StackLayout>
+                            <StackLayout Spacing="20" Orientation="Horizontal">
+                                <controls:ExtendetEntry Text="{Binding Ch6Value}" Placeholder="Ch6" 
+                                                        HorizontalOptions="FillAndExpand" IsCleanOnFocus="False"/>
+                                <ContentView>
+                                    <controls:ClickableContentView Command="{Binding Ch6ValueReadCommand}">
+                                        <Image Source="read" VerticalOptions="Center" />
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                                <ContentView>
+                                    <controls:ClickableContentView IsEnabled="False" IsAnimated="False">
+                                        <Image Source="write" VerticalOptions="Center" Opacity="0.5"/>
+                                    </controls:ClickableContentView>
+                                </ContentView>
+                                
+                            </StackLayout>
+
+                        </StackLayout>
+                    </controls:TabItem.View>
+                </controls:TabItem>
+            </controls:TabStrip.Children>
+        </controls:TabStrip>
+
+        <ContentView Grid.Row="3" HeightRequest="56" BackgroundColor="{StaticResource buttonBgColor}">
+            <ContentView.Triggers>
+                <DataTrigger TargetType="ContentView"
+                             Binding="{Binding AreSettingsChanged}"
+                             Value="False">
+                    <Setter Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </ContentView.Triggers>
+            <controls:ClickableContentView Command="{Binding ApplyCommand}"
+                                           IsEnabled="{Binding AreSettingsChanged}">
+                <Label HorizontalOptions="Center" VerticalOptions="Center"
+                       Text="{x:Static localization:Strings.Apply}" Style="{StaticResource buttonTextStyle}" />
+            </controls:ClickableContentView>
+        </ContentView>
+    </Grid>
+
+</p:BaseContentPage >
