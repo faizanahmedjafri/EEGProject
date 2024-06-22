@@ -8,16 +8,16 @@ using ZXing;
 
 namespace biopot.ViewModels
 {
-	public class PatientDetailsViewModel : BaseViewModel
-	{
+    public class PatientDetailsViewModel : BaseViewModel
+    {
         private IPermissionsRequester iPermissionsRequester;
         private IDisposable iSubscriptionToken;
 
         public event EventHandler<bool> IsValidationPassed;
 
-	    public PatientDetailsViewModel()
-	    {
-	        InitViews();
+        public PatientDetailsViewModel()
+        {
+            InitViews();
         }
 
         /// <summary>
@@ -34,43 +34,43 @@ namespace biopot.ViewModels
         #region -- Public properties --
 
         private string _id;
-		public string Id
-		{
-		    get => _id;
-		    set
-		    {
-		        SetProperty(ref _id, value);
-		        Validate();
-		    }
-		}
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                SetProperty(ref _id, value);
 
-	    private string _message;
-	    public string Message
-	    {
-	        get => _message;
-	        set => SetProperty(ref _message, value);
-	    }
+            }
+        }
+
+        private string _message;
+        public string Message
+        {
+            get => _message;
+            set => SetProperty(ref _message, value);
+        }
 
         private string _infoMessage;
-		public string InfoMessage
-		{
-			get => _infoMessage;
-		    set => SetProperty(ref _infoMessage, value);
-		}
+        public string InfoMessage
+        {
+            get => _infoMessage;
+            set => SetProperty(ref _infoMessage, value);
+        }
 
-	    private bool _isBarcodeScanned;
-	    public bool IsBarcodeScanned
-	    {
-	        get => _isBarcodeScanned;
-	        set => SetProperty(ref _isBarcodeScanned, value);
-	    }
+        private bool _isBarcodeScanned;
+        public bool IsBarcodeScanned
+        {
+            get => _isBarcodeScanned;
+            set => SetProperty(ref _isBarcodeScanned, value);
+        }
 
         private bool _isAnalyzing;
-	    public bool IsAnalyzing
-	    {
-	        get => _isAnalyzing;
-	        set => SetProperty(ref _isAnalyzing, value);
-	    }
+        public bool IsAnalyzing
+        {
+            get => _isAnalyzing;
+            set => SetProperty(ref _isAnalyzing, value);
+        }
 
         private bool _isBarcodeScanningAllowed;
         public bool IsBarcodeScanningAllowed
@@ -79,28 +79,104 @@ namespace biopot.ViewModels
             set => SetProperty(ref _isBarcodeScanningAllowed, value);
         }
 
+        #region Patients Information
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                SetProperty(ref _name, value);
+                Validate();
+            }
+        }
+
+        private string _sex;
+        public string Sex
+        {
+            get => _sex;
+            set => SetProperty(ref _sex, value);
+        }
+
+        private string _position;
+        public string Position
+        {
+            get => _position;
+            set => SetProperty(ref _position, value);
+        }
+
+        private string _team;
+        public string Team
+        {
+            get => _team;
+            set => SetProperty(ref _team, value);
+        }
+
+        private string _lastMatch;
+        public string LastMatch
+        {
+            get => _lastMatch;
+            set => SetProperty(ref _lastMatch, value);
+        }
+
+        private bool _concussed72Hr;
+        public bool Concussed72Hr
+        {
+            get => _concussed72Hr;
+            set => SetProperty(ref _concussed72Hr, value);
+        }
+
+        private string _lastConcussion;
+        public string LastConcussion
+        {
+            get => _lastConcussion;
+            set => SetProperty(ref _lastConcussion, value);
+        }
+
+        private string _lastHIA;
+        public string LastHIA
+        {
+            get => _lastHIA;
+            set => SetProperty(ref _lastHIA, value);
+        }
+
+        private string _symptoms;
+        public string Symptoms
+        {
+            get => _symptoms;
+            set => SetProperty(ref _symptoms, value);
+        }
+
+        private string _notes;
+        public string Notes
+        {
+            get => _notes;
+            set => SetProperty(ref _notes, value);
+        }
+        #endregion
+
         private Color _infoMessageColor;
-	    public Color InfoMessageColor
-	    {
-	        get => _infoMessageColor;
-	        set => SetProperty(ref _infoMessageColor, value);
-	    }
+        public Color InfoMessageColor
+        {
+            get => _infoMessageColor;
+            set => SetProperty(ref _infoMessageColor, value);
+        }
 
         private ICommand _barcodeScannedCommand;
-		public ICommand BarcodeScannedCommand => _barcodeScannedCommand ?? (_barcodeScannedCommand = new Command<Result>(OnBarcodeScanned));
+        public ICommand BarcodeScannedCommand => _barcodeScannedCommand ?? (_barcodeScannedCommand = new Command<Result>(OnBarcodeScanned));
 
-	    private ICommand _barcodeScannedFailureCommand;
-	    public ICommand BarcodeScannedFailureCommand => _barcodeScannedFailureCommand ?? (_barcodeScannedFailureCommand = new Command(OnBarcodeScannedFailure));
+        private ICommand _barcodeScannedFailureCommand;
+        public ICommand BarcodeScannedFailureCommand => _barcodeScannedFailureCommand ?? (_barcodeScannedFailureCommand = new Command(OnBarcodeScannedFailure));
 
-	    private ICommand _scanAgainCommand;
-	    public ICommand ScanAgainCommand => _scanAgainCommand ?? (_scanAgainCommand = new Command(OnScanAgainPressed));
+        private ICommand _scanAgainCommand;
+        public ICommand ScanAgainCommand => _scanAgainCommand ?? (_scanAgainCommand = new Command(OnScanAgainPressed));
 
         #endregion
 
-	    /// <inheritdoc/>
-	    public override void OnAppearing()
-	    {
-	        base.OnAppearing();
+        /// <inheritdoc/>
+        public override void OnAppearing()
+        {
+            base.OnAppearing();
 
             IsAnalyzing = true;
 
@@ -109,11 +185,11 @@ namespace biopot.ViewModels
 
         /// <inheritdoc/>
         public override void OnDisappearing()
-	    {
-	        IsAnalyzing = false;
+        {
+            IsAnalyzing = false;
 
-	        base.OnDisappearing();
-	    }
+            base.OnDisappearing();
+        }
 
         /// <inheritdoc />
         public override void Destroy()
@@ -140,7 +216,7 @@ namespace biopot.ViewModels
             Id = "";
             IsBarcodeScanned = false;
             InitViews();
-	    }
+        }
 
         /// <summary>
         /// Handles barcode scanned event.
@@ -159,20 +235,20 @@ namespace biopot.ViewModels
         /// </summary>
         // FIXME show the barcode scanning error if needed
         private void OnBarcodeScannedFailure()
-	    {
+        {
             InfoMessage = Strings.PatientDetailsScanFailed;
-	        InfoMessageColor = Color.Red;
-	    }
+            InfoMessageColor = Color.Red;
+        }
 
-	    /// <summary>
-	    /// Handles barcode scanned failure event.
-	    /// </summary>
-	    /// FIXME show that barcode scanning in process if needed
-	    private void OnBarcodeScanning()
-	    {
-	        InfoMessage = Strings.PatientDetailsScanningBarcode;
-	        InfoMessageColor = Color.DarkGray;
-	    }
+        /// <summary>
+        /// Handles barcode scanned failure event.
+        /// </summary>
+        /// FIXME show that barcode scanning in process if needed
+        private void OnBarcodeScanning()
+        {
+            InfoMessage = Strings.PatientDetailsScanningBarcode;
+            InfoMessageColor = Color.DarkGray;
+        }
 
         /// <summary>
         /// Initializes views.
@@ -180,8 +256,8 @@ namespace biopot.ViewModels
 	    private void InitViews()
         {
             InfoMessageColor = Color.DarkGray;
-	        Message = Strings.PatientDetailsPatientCodeScanOrEnter;
-	        InfoMessage = Strings.PatientDetailsScanHelpMessage;
+            Message = Strings.PatientDetailsPatientCodeScanOrEnter;
+            InfoMessage = Strings.PatientDetailsScanHelpMessage;
         }
 
         /// <summary>
@@ -189,10 +265,10 @@ namespace biopot.ViewModels
         /// </summary>
 	    private bool Validate()
         {
-            var isValid = !string.IsNullOrEmpty(Id?.Trim());
+            var isValid = !string.IsNullOrEmpty(Name?.Trim());
             IsValidationPassed?.Invoke(this, isValid);
 
             return isValid;
         }
-	}
+    }
 }

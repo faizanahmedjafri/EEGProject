@@ -11,62 +11,89 @@
         <ResourceDictionary>
             <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
             <x:Double x:Key="ScannerViewSize">200</x:Double>
-            <Thickness x:Key="ScannerViewMargin">16, 32, 16, 8</Thickness>>
+            <Thickness x:Key="ScannerViewMargin">16, 32, 16, 8</Thickness>
         </ResourceDictionary>
     </ContentView.Resources>
 
     <!-- FIXME move strings to resources -->
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+    <ScrollView>
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
                  x:Name="StackLayout"
                  Padding="16">
 
-        <!-- Scan or enter barcode -->
-        <Label Text="Patient Code (scan or enter)"
-               HorizontalOptions="StartAndExpand" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="7*" />
+                </Grid.ColumnDefinitions>
 
-        <Entry Placeholder="0000"
-               Text="{Binding Id}"
-               IsEnabled="{Binding IsBarcodeScanned, Converter={StaticResource NegateBooleanConverter}}"
-               HorizontalOptions="FillAndExpand" />
+                <!-- Name -->
+                <Label Grid.Row="0" Grid.Column="0" Text="Name:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Entry Grid.Row="0" Grid.Column="1" Placeholder="Enter Name" VerticalOptions="Center" FontSize="Small" Text="{Binding Name}"/>
 
-        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand"
-                     IsVisible="{Binding IsBarcodeScanned, Converter={StaticResource NegateBooleanConverter}}">
+                <!-- Sex -->
+                <Label Grid.Row="1" Grid.Column="0" Text="Sex:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="1" Grid.Column="1" Title="Select Sex" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Sex}">
+                    <Picker.Items>
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                    </Picker.Items>
+                </Picker>
 
-           <!-- Camera viewfinder -->
-           <Grid HeightRequest="{StaticResource ScannerViewSize}" WidthRequest="{StaticResource ScannerViewSize}"
-                 x:Name="CameraViewfinder"
-                 HorizontalOptions="Center" VerticalOptions="Center"
-                 Margin="{StaticResource ScannerViewMargin}">
+                <Label Grid.Row="2" Grid.Column="0" Text="Position:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="2" Grid.Column="1" Title="Select Position" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Position}">
+                    <Picker.Items>
+                        <x:String>Item1</x:String>
+                        <x:String>Item2</x:String>
+                    </Picker.Items>
+                </Picker>
 
-               <BoxView VerticalOptions="FillAndExpand"
-                        HorizontalOptions="FillAndExpand"
-                        HeightRequest="{StaticResource ScannerViewSize}"
-                        WidthRequest="{StaticResource ScannerViewSize}"
-                        BackgroundColor="Black" />
+                <Label Grid.Row="3" Grid.Column="0" Text="Team:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="3" Grid.Column="1" Title="Select Team" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Team}">
+                    <Picker.Items>
+                        <x:String>Item1</x:String>
+                        <x:String>Item2</x:String>
+                    </Picker.Items>
+                </Picker>
 
-               <!-- The actual surface view goes here in the code behind -->
+                <Label Grid.Row="4" Grid.Column="0" Text="Last Match:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="4" Grid.Column="1" Title="Select Last Match" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding LastMatch}">
+                    <Picker.Items>
+                        <x:String>Item1</x:String>
+                        <x:String>Item2</x:String>
+                    </Picker.Items>
+                </Picker>
 
-           </Grid>
+                <Label Grid.Row="5" Grid.Column="0" Text="Consussed 72 Hr:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="5" Grid.Column="1" Title="Select Consussed 72 Hr" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Consussed72Hr}">
+                    <Picker.Items>
+                        <x:String>Item1</x:String>
+                        <x:String>Item2</x:String>
+                    </Picker.Items>
+                </Picker>
 
-            <!-- Help message -->
-            <Label Text="{Binding InfoMessage}"
-                   HorizontalOptions="CenterAndExpand"
-                   HorizontalTextAlignment="Center"
-                   TextColor="{Binding InfoMessageColor}" />
+                <Label Grid.Row="6" Grid.Column="0" Text="Last Concussion:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="6" Grid.Column="1" Title="Select Last Concussion" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding LastConcussion}">
+                    <Picker.Items>
+                        <x:String>Item1</x:String>
+                        <x:String>Item2</x:String>
+                    </Picker.Items>
+                </Picker>
+
+                <Label Grid.Row="7" Grid.Column="0" Text="Last HIA:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Picker Grid.Row="7" Grid.Column="1" Title="Select Last HIA" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding LastHIA}">
+                    <Picker.Items>
+                        <x:String>Item1</x:String>
+                        <x:String>Item2</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+
+            <Label Text="Symptoms" />
+            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding Symptoms}"/>
+
+            <Label Text="Notes" />
+            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding Notes}"/>
         </StackLayout>
-
-        <!-- Scan again -->
-        <controls:ClickableContentView Padding="0, 16, 0, 16" IsVisible="{Binding IsBarcodeScanned}"
-                                       Command="{Binding ScanAgainCommand}">
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                <Image HeightRequest="24" WidthRequest="24"
-                       Source="scan_again" />
-
-                <Label Text="Scan Again" VerticalOptions="Center"/>
-
-            </StackLayout>
-        </controls:ClickableContentView>
-
-    </StackLayout>
+    </ScrollView>
 </ContentView>

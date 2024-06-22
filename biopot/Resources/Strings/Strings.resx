@@ -211,8 +211,7 @@
     <value>Connections</value>
   </data>
   <data name="EmptyConnections" xml:space="preserve">
-    <value>Sorry, we couldn’t find any Bluetooth 
-devices</value>
+    <value>Sorry, we couldn’t find any Bluetooth devices</value>
   </data>
   <data name="SelectBioPot" xml:space="preserve">
     <value>Select a BioPot to connect:</value>
@@ -287,10 +286,10 @@ devices</value>
     <value>Bio-impedance</value>
   </data>
   <data name="DeviceConfigurationChannelsNum" xml:space="preserve">
-    <value>{0} channels</value>
+    <value> { 0 } channels</value>
   </data>
   <data name="DeviceConfigurationBoImpedanceWithChannels" xml:space="preserve">
-    <value>Bio-impendance ({0} ch.)</value>
+    <value>Bio-impendance ( { 0 } ch.)</value>
   </data>
   <data name="ToolbarAdditionalSettings" xml:space="preserve">
     <value>Additional Settings</value>
@@ -299,7 +298,7 @@ devices</value>
     <value>Patient/Session/User Setup</value>
   </data>
   <data name="ToolbarSPS" xml:space="preserve">
-    <value>{0} SPS</value>
+    <value> { 0 } SPS</value>
   </data>
   <data name="LocatingConnections" xml:space="preserve">
     <value>Locating Connections...</value>
@@ -329,7 +328,7 @@ devices</value>
     <value>Scanning barcode...</value>
   </data>
   <data name="TemperatureCelsiusFormat" xml:space="preserve">
-    <value>{0}°C</value>
+    <value> { 0 }°C</value>
   </data>
   <data name="EraseModeNotificationSubtitle" xml:space="preserve">
     <value>Refer to manual for details</value>
@@ -350,21 +349,48 @@ devices</value>
     <value>Hardware Synch Completed</value>
   </data>
   <data name="ErrorConnectionLostMessage" xml:space="preserve">
-    <value>Unable to connect to the BioPot device (error code {0}). Please click the logo on the top left or restart the app, and try to connect again from the welcome screen.</value>
+    <value>Unable to connect to the BioPot device (error code { 0 }). Please click the logo on the top left or restart the app, and try to connect again from the welcome screen.</value>
   </data>
   <data name="ErrorConnectionLostTitle" xml:space="preserve">
     <value>Connection to BioBot was lost</value>
   </data>
   <data name="ErrorDataSaveMessage" xml:space="preserve">
-    <value>The saving target is not accessible or is giving errors (error code {0}). Please restart the app and select a different saving target from the "Session Details" tab in the welcome screen.</value>
+    <value>The saving target is not accessible or is giving errors (error code { 0 }). Please restart the app and select a different saving target from the "Session Details" tab in the welcome screen.</value>
   </data>
   <data name="ErrorDataSaveTitle" xml:space="preserve">
     <value>Unable to save data to memory</value>
   </data>
   <data name="ErrorSignalRetrieveMessage" xml:space="preserve">
-    <value>Unable to retrieve signals from the BioPot device (error code {0}). Please try to reset the device and then restart the app.</value>
+    <value>Unable to retrieve signals from the BioPot device (error code { 0 }). Please try to reset the device and then restart the app.</value>
   </data>
   <data name="ErrorSignalRetrieveTitle" xml:space="preserve">
     <value>Can not retrieve signals from the BioPot</value>
+  </data>
+  <data name="Concussed72Hr" xml:space="preserve">
+    <value>Concussed 72 Hr</value>
+  </data>
+  <data name="LastConcussion" xml:space="preserve">
+    <value>Last Concussion</value>
+  </data>
+  <data name="LastHIA" xml:space="preserve">
+    <value>Last HIA</value>
+  </data>
+  <data name="LastMatch" xml:space="preserve">
+    <value>Last Match</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Sex" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="Symptoms" xml:space="preserve">
+    <value>Symptoms</value>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>Team</value>
   </data>
 </root>
