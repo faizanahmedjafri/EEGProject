@@ -7,7 +7,6 @@ namespace SharedCore.Services
         event Action<int> OnError;
         void StartRecord();
         void StopRecord();
-        void CloseFile();
         void SaveAudioDate(string data);
     }
 }
