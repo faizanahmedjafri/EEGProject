@@ -10,6 +10,7 @@ using SharedCore.Services.MediaService;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -95,6 +96,10 @@ namespace biopot.ViewModels
 
             NavigationParameters navigationParameters = new NavigationParameters();
             navigationParameters.Add("EndTask", true);
+
+            string result = string.Join(", ", PitchRecordDict.Select(kvp => $"{kvp.Key} : {kvp.Value}"));
+            navigationParameters.Add("AudioData", result);
+            
             return _navigationService.NavigateAsync('/' + nameof(NavigationPage) + '/' + nameof(MainView), navigationParameters);
         }
 

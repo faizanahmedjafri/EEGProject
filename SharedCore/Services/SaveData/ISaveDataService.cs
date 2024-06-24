@@ -8,6 +8,6 @@ namespace SharedCore.Services
         void StartRecord();
         void StopRecord();
         void CloseFile();
-        void SaveAudioDate();
+        void SaveAudioDate(string data);
     }
 }

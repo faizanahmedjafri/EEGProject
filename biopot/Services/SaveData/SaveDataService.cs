@@ -43,12 +43,11 @@ namespace biopot.Services.SaveData
 
         public event Action<int> OnError;
 
-        public void SaveAudioDate()
+        public void SaveAudioDate(string data)
         {
             try
             {
-                string result = string.Join(", ", _audioRecognitionVM.PitchRecordDict.Select(kvp => $"{kvp.Key} : {kvp.Value}"));
-                _fileIoService.WriteToFile(_path, result);
+                _fileIoService.WriteToFile(_path, data);
             }
             catch (IOException ioex)
             {
