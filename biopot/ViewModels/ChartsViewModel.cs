@@ -409,6 +409,9 @@ namespace biopot.ViewModels
 
         private ICommand _closeSpsDetailsCommand;
         public ICommand CloseSpsDetailsCommand => _closeSpsDetailsCommand ?? (_closeSpsDetailsCommand = new Command(OnCloseSpsDetailsCommand));
+
+        private ICommand _startTestCommand;
+        public ICommand StartTestCommand => _startTestCommand ?? (_startTestCommand = new Command(OnStartTestCommand));
         /* H.H. no working !!!!!!!
         private ICommand _BackCommand;
         public ICommand BackCommand => _BackCommand ?? (_BackCommand = SingleExecutionCommand.FromFunc(OnBackCommandAsync));
@@ -663,6 +666,26 @@ namespace biopot.ViewModels
         private void OnCloseSpsDetailsCommand()
         {
             IsSpsChartVisible = false;
+        }
+
+        private async void OnStartTestCommand()
+        {
+            string[] audioOptions = { "Audio 1", "Audio 2" };
+            string selectedAudio = await Application.Current.MainPage.DisplayActionSheet("Select Audio", "Cancel", null, audioOptions);
+
+            string audioName = "";
+            if (selectedAudio == "Audio 1")
+            {
+                audioName = "oddball_sequence_6_minutes_10_percent.wav";
+            }
+            else if (selectedAudio == "Audio 2")
+            {
+                audioName = "oddball_sequence_6_minutes_20%.wav";
+            }
+
+            NavigationParameters navigationParameters = new NavigationParameters();
+            navigationParameters.Add("AudioName", audioName);
+            await _navigationService.NavigateAsync(nameof(AudioRecognitionView), navigationParameters);
         }
 
         private async Task OnUserSettingsCommand()

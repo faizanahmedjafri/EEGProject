@@ -279,7 +279,7 @@
                 Text="Start Test" 
                 AbsoluteLayout.LayoutBounds="0.97,0.97,134,80" 
                 AbsoluteLayout.LayoutFlags="PositionProportional" 
-                Clicked="StartTestBtn_Clicked"
+                Command="{Binding StartTestCommand}"
             />
 
             <controls:SpsDetailsView
