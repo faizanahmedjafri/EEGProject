@@ -69,7 +69,7 @@ namespace biopot.ViewModels
             Time--;
             if (Time == 0)
             {
-                _timer.Stop();
+                OnEndTaskCommand();
             }
         }
 
@@ -89,9 +89,9 @@ namespace biopot.ViewModels
 
         private Task OnEndTaskCommand()
         {
+            resetTimer();
             _logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: End Task button Navigate from Audio recognition page");
             _mediaService.Stop();
-            resetTimer();
 
             NavigationParameters navigationParameters = new NavigationParameters();
             navigationParameters.Add("EndTask", true);
