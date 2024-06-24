@@ -19,7 +19,7 @@ namespace biopot.Resources.Strings {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -97,15 +97,6 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Concussed 72 Hr.
-        /// </summary>
-        public static string Concussed72Hr {
-            get {
-                return ResourceManager.GetString("Concussed72Hr", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Connection Failed.
         /// </summary>
         public static string ConnectionFailed {
@@ -178,7 +169,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bio-impendance ( { 0 } ch.).
+        ///   Looks up a localized string similar to Bio-impendance ({0} ch.).
         /// </summary>
         public static string DeviceConfigurationBoImpedanceWithChannels {
             get {
@@ -187,7 +178,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  { 0 } channels.
+        ///   Looks up a localized string similar to {0} channels.
         /// </summary>
         public static string DeviceConfigurationChannelsNum {
             get {
@@ -241,7 +232,8 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, we couldn’t find any Bluetooth devices.
+        ///   Looks up a localized string similar to Sorry, we couldn’t find any Bluetooth 
+        ///devices.
         /// </summary>
         public static string EmptyConnections {
             get {
@@ -268,7 +260,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to connect to the BioPot device (error code { 0 }). Please click the logo on the top left or restart the app, and try to connect again from the welcome screen..
+        ///   Looks up a localized string similar to Unable to connect to the BioPot device (error code {0}). Please click the logo on the top left or restart the app, and try to connect again from the welcome screen..
         /// </summary>
         public static string ErrorConnectionLostMessage {
             get {
@@ -286,7 +278,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The saving target is not accessible or is giving errors (error code { 0 }). Please restart the app and select a different saving target from the &quot;Session Details&quot; tab in the welcome screen..
+        ///   Looks up a localized string similar to The saving target is not accessible or is giving errors (error code {0}). Please restart the app and select a different saving target from the &quot;Session Details&quot; tab in the welcome screen..
         /// </summary>
         public static string ErrorDataSaveMessage {
             get {
@@ -304,7 +296,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to retrieve signals from the BioPot device (error code { 0 }). Please try to reset the device and then restart the app..
+        ///   Looks up a localized string similar to Unable to retrieve signals from the BioPot device (error code {0}). Please try to reset the device and then restart the app..
         /// </summary>
         public static string ErrorSignalRetrieveMessage {
             get {
@@ -403,33 +395,6 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last Concussion.
-        /// </summary>
-        public static string LastConcussion {
-            get {
-                return ResourceManager.GetString("LastConcussion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last HIA.
-        /// </summary>
-        public static string LastHIA {
-            get {
-                return ResourceManager.GetString("LastHIA", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last Match.
-        /// </summary>
-        public static string LastMatch {
-            get {
-                return ResourceManager.GetString("LastMatch", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Locating Connections....
         /// </summary>
         public static string LocatingConnections {
@@ -507,15 +472,6 @@ namespace biopot.Resources.Strings {
         public static string NoConnectedTitle {
             get {
                 return ResourceManager.GetString("NoConnectedTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Notes.
-        /// </summary>
-        public static string Notes {
-            get {
-                return ResourceManager.GetString("Notes", resourceCulture);
             }
         }
         
@@ -628,15 +584,6 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position.
-        /// </summary>
-        public static string Position {
-            get {
-                return ResourceManager.GetString("Position", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Try again.
         /// </summary>
         public static string Retry {
@@ -691,15 +638,6 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sex.
-        /// </summary>
-        public static string Sex {
-            get {
-                return ResourceManager.GetString("Sex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Share via.
         /// </summary>
         public static string ShareVia {
@@ -723,15 +661,6 @@ namespace biopot.Resources.Strings {
         public static string Start {
             get {
                 return ResourceManager.GetString("Start", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Symptoms.
-        /// </summary>
-        public static string Symptoms {
-            get {
-                return ResourceManager.GetString("Symptoms", resourceCulture);
             }
         }
         
@@ -772,16 +701,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Team.
-        /// </summary>
-        public static string Team {
-            get {
-                return ResourceManager.GetString("Team", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  { 0 }°C.
+        ///   Looks up a localized string similar to {0}°C.
         /// </summary>
         public static string TemperatureCelsiusFormat {
             get {
@@ -817,7 +737,7 @@ namespace biopot.Resources.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  { 0 } SPS.
+        ///   Looks up a localized string similar to {0} SPS.
         /// </summary>
         public static string ToolbarSPS {
             get {
