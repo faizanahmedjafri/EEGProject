@@ -121,10 +121,6 @@ namespace biopot.Services.SaveData
         public void StopRecord()
         {
             UnSubscribe();
-        }
-
-        public void CloseFile()
-        {
             _fileIoService.CloseCurrentFile();
         }
 
@@ -290,7 +286,6 @@ namespace biopot.Services.SaveData
         {
             OnError?.Invoke((int)error);
             StopRecord();
-            CloseFile();
         }
 
         #endregion

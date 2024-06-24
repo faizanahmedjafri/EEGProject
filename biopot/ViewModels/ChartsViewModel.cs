@@ -892,7 +892,6 @@ namespace biopot.ViewModels
 			_saveDataService.OnError -= OnSaveDataError;
 
 			_saveDataService.StopRecord();
-            _saveDataService.CloseFile();
 
             IsRecording = false;
 		}

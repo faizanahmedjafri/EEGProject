@@ -290,7 +290,6 @@ namespace biopot.ViewModels
                     {
                         _saveDataService.SaveAudioDate(audioData);
                     }
-                    _saveDataService.CloseFile();
                 }
             }
         }
