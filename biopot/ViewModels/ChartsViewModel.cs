@@ -686,6 +686,8 @@ namespace biopot.ViewModels
             NavigationParameters navigationParameters = new NavigationParameters();
             navigationParameters.Add("AudioName", audioName);
             await _navigationService.NavigateAsync(nameof(AudioRecognitionView), navigationParameters);
+
+            OnStartRecord();
         }
 
         private async Task OnUserSettingsCommand()
@@ -890,8 +892,9 @@ namespace biopot.ViewModels
 			_saveDataService.OnError -= OnSaveDataError;
 
 			_saveDataService.StopRecord();
+            _saveDataService.CloseFile();
 
-			IsRecording = false;
+            IsRecording = false;
 		}
 
 		private async void OnSaveDataError(int aErrorId)

@@ -39,7 +39,8 @@ namespace biopot
 			public const string SESSION_DETAIL = "SessionViewModel";
 			public const string USER_DETAIL = "UserDetailsViewModel";
 			public const string OTHER_DETAIL = "OtherDetailsViewModel";
-		}
+            public const string AUDIO_RECOGNITION_DETAIL = "AudioRecognitionViewModel";
+        }
 
         public static class Files
         {

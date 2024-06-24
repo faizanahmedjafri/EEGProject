@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security;
 using System.Security;
 using System.Threading.Tasks;
@@ -7,6 +9,7 @@ using biopot.Helpers;
 using biopot.Models;
 using biopot.Services.Charts;
 using biopot.ViewModels;
+using Newtonsoft.Json;
 using SharedCore.Enums;
 using SharedCore.Services;
 
@@ -20,6 +23,7 @@ namespace biopot.Services.SaveData
         private PatientDetailsViewModel _patientVM;
         private SessionViewModel _sessionVM;
         private UserDetailsViewModel _doctorVM;
+        private AudioRecognitionViewModel _audioRecognitionVM;
         private const string SAVE_TARGET_INTERNAL = "Internal Memory";
         private const string SAVE_TARGET_SD = "Internal SD Card";
         private const string SAVE_TARGET_USB = "USB OTG Cable";
@@ -38,6 +42,37 @@ namespace biopot.Services.SaveData
         #region --ISaveDataService--
 
         public event Action<int> OnError;
+
+        public void SaveAudioDate()
+        {
+            try
+            {
+                string result = string.Join(", ", _audioRecognitionVM.PitchRecordDict.Select(kvp => $"{kvp.Key} : {kvp.Value}"));
+                _fileIoService.WriteToFile(_path, result);
+            }
+            catch (IOException ioex)
+            {
+                if (ioex.Message != null && ioex.Message.Contains("Disk full"))
+                {
+                    SendError(DataSavingErrors.OutOfMemory);
+                }
+                else
+                {
+                    SendError(DataSavingErrors.IoException);
+                }
+            }
+            catch (Exception e)
+            {
+                if (e is SecurityException | e is UnauthorizedAccessException)
+                {
+                    SendError(DataSavingErrors.MissingPermissions);
+                }
+                else
+                {
+                    SendError(DataSavingErrors.DevelopmentError);
+                }
+            }
+        }
 
         public async void StartRecord()
         {
@@ -87,6 +122,10 @@ namespace biopot.Services.SaveData
         public void StopRecord()
         {
             UnSubscribe();
+        }
+
+        public void CloseFile()
+        {
             _fileIoService.CloseCurrentFile();
         }
 
@@ -99,6 +138,7 @@ namespace biopot.Services.SaveData
             _patientVM = await _appSettings.GetObjectAsync<PatientDetailsViewModel>(Constants.StorageKeys.PATIENT_DETAIL);
             _sessionVM = await _appSettings.GetObjectAsync<SessionViewModel>(Constants.StorageKeys.SESSION_DETAIL);
             _doctorVM = await _appSettings.GetObjectAsync<UserDetailsViewModel>(Constants.StorageKeys.USER_DETAIL);
+            _audioRecognitionVM = await _appSettings.GetObjectAsync<AudioRecognitionViewModel>(Constants.StorageKeys.AUDIO_RECOGNITION_DETAIL);
         }
 
         private void WriteHeaderToFile(DateTime dateTime)
@@ -106,7 +146,7 @@ namespace biopot.Services.SaveData
             try
             {
                 //Patient Details:
-                _fileIoService.WriteToFile(_path, _patientVM.Id);
+                _fileIoService.WriteToFile(_path, JsonConvert.SerializeObject(_patientVM.PatientsInformation));
 
                 //Session Details:
                 _fileIoService.WriteToFile(_path, _sessionVM.SavingTarget);
@@ -251,6 +291,7 @@ namespace biopot.Services.SaveData
         {
             OnError?.Invoke((int)error);
             StopRecord();
+            CloseFile();
         }
 
         #endregion

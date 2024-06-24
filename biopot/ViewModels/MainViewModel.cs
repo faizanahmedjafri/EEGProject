@@ -28,8 +28,9 @@ namespace biopot.ViewModels
 		private readonly IUserDialogs _userDialogs;
 		private readonly IAppSettingsManagerService _appSettings;
 		private readonly ILogService _logService;
+        private readonly ISaveDataService _saveDataService;
 
-		private DeviceModel _currentDevice;
+        private DeviceModel _currentDevice;
 		private string _lastConnectedDeviceId;
 		private bool _IsFromChartsView = false;
 		private bool _wasDisconnectedDeviceOnChartsView;
@@ -40,7 +41,8 @@ namespace biopot.ViewModels
             IAppSettingsManagerService appSettings,
             IUserDialogs userDialogs,
             IBlueToothService blueToothService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            ISaveDataService saveDataService)
 		{
             _eventAggregator = eventAggregator;
             _permissionsRequester = permissionsRequester;
@@ -49,6 +51,7 @@ namespace biopot.ViewModels
 			_userDialogs = userDialogs;
 			_appSettings = appSettings;
 			_logService = logService;
+            _saveDataService = saveDataService;
 
             DiscoveredDeviceTappedCommand = new DelegateCommand<DeviceConnectionViewModel>(OnDiscoveredDeviceTappedCommand);
             StartCommand = new DelegateCommand(async () => await OnStartCommand())
@@ -282,6 +285,9 @@ namespace biopot.ViewModels
                 if (isEndTask)
                 {
                     CurrentStep = EWelcomeSteps.First;
+                    _saveDataService.StopRecord();
+                    _saveDataService.SaveAudioDate();
+                    _saveDataService.CloseFile();
                 }
             }
         }
@@ -440,7 +446,7 @@ namespace biopot.ViewModels
 			{
 				case EWelcomeSteps.First:
 					_logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: Patient Details Page");
-					if (string.IsNullOrWhiteSpace(PatientDetailsViewModel.Id))
+					if (string.IsNullOrWhiteSpace(PatientDetailsViewModel.PatientsInformation?.Name))
 					{
 						//isValid = false; TODO check nessarity for skip all
 						//PatientDetailsViewModel.Message = Strings.PleaseEnterAllFields;
@@ -449,7 +455,7 @@ namespace biopot.ViewModels
 					{
 						PatientDetailsViewModel.InfoMessage = "";
 					}
-					_logService.CreateLogDataAsync($"{Constants.Logs.DATA_ENTERED}: Patient id: " + PatientDetailsViewModel.Id);
+					_logService.CreateLogDataAsync($"{Constants.Logs.DATA_ENTERED}: Patient id: " + PatientDetailsViewModel.PatientsInformation.Name);
 					isValid = true; // TODO hack for skip validation
 					break;
 				case EWelcomeSteps.Second:
