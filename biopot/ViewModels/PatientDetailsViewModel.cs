@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using biopot.Models;
 using biopot.Resources.Strings;
 using biopot.Services;
 using Prism.Events;
@@ -18,6 +19,7 @@ namespace biopot.ViewModels
         public PatientDetailsViewModel()
         {
             InitViews();
+            PatientsInformation = new PatientsInformation();
         }
 
         /// <summary>
@@ -80,78 +82,25 @@ namespace biopot.ViewModels
         }
 
         #region Patients Information
-        private string _name;
-        public string Name
+
+        private PatientsInformation _patientsInformation;
+        public PatientsInformation PatientsInformation
         {
-            get => _name;
+            get => _patientsInformation;
             set
             {
-                SetProperty(ref _name, value);
-                Validate();
+                SetProperty(ref _patientsInformation, value);
+                _patientsInformation.PropertyChanged -= PatientsInformation_PropertyChanged;
+                _patientsInformation.PropertyChanged += PatientsInformation_PropertyChanged;
             }
         }
 
-        private string _sex;
-        public string Sex
+        private void PatientsInformation_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            get => _sex;
-            set => SetProperty(ref _sex, value);
-        }
-
-        private string _position;
-        public string Position
-        {
-            get => _position;
-            set => SetProperty(ref _position, value);
-        }
-
-        private string _team;
-        public string Team
-        {
-            get => _team;
-            set => SetProperty(ref _team, value);
-        }
-
-        private string _lastMatch;
-        public string LastMatch
-        {
-            get => _lastMatch;
-            set => SetProperty(ref _lastMatch, value);
-        }
-
-        private bool _concussed72Hr;
-        public bool Concussed72Hr
-        {
-            get => _concussed72Hr;
-            set => SetProperty(ref _concussed72Hr, value);
-        }
-
-        private string _lastConcussion;
-        public string LastConcussion
-        {
-            get => _lastConcussion;
-            set => SetProperty(ref _lastConcussion, value);
-        }
-
-        private string _lastHIA;
-        public string LastHIA
-        {
-            get => _lastHIA;
-            set => SetProperty(ref _lastHIA, value);
-        }
-
-        private string _symptoms;
-        public string Symptoms
-        {
-            get => _symptoms;
-            set => SetProperty(ref _symptoms, value);
-        }
-
-        private string _notes;
-        public string Notes
-        {
-            get => _notes;
-            set => SetProperty(ref _notes, value);
+            if (e?.PropertyName == nameof(PatientsInformation.Name))
+            {
+                Validate();
+            }
         }
         #endregion
 
@@ -265,7 +214,7 @@ namespace biopot.ViewModels
         /// </summary>
 	    private bool Validate()
         {
-            var isValid = !string.IsNullOrEmpty(Name?.Trim());
+            var isValid = !string.IsNullOrEmpty(PatientsInformation?.Name?.Trim());
             IsValidationPassed?.Invoke(this, isValid);
 
             return isValid;

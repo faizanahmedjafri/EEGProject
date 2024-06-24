@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<p:BaseContentPage 
+      xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:p="clr-namespace:biopot.Views;assembly=biopot"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:converters="clr-namespace:biopot.Converters" 
+      xmlns:controls="clr-namespace:biopot.Controls" 
+      xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls" 
+      x:Class="biopot.Views.AudioRecognitionView"
+      x:Name="ThisPage"
+    >
+
+    <StackLayout Orientation="Vertical" VerticalOptions="Center">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Label Text="Time Remaining:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Large"/>
+            <Label Text="{Binding Time, Converter={StaticResource SecondsToTimeFormateConverter}}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large"/>
+        </StackLayout>
+
+        <Button 
+            BackgroundColor="{StaticResource btnGreenColor}"
+            HeightRequest="56"
+            Command="{Binding HighPitchCommand}"
+            Text="High Pitch Tone"
+            Style="{StaticResource buttonTextStyle}" 
+        />
+        
+        <Button 
+            BackgroundColor="{StaticResource btnGreenColor}"
+            HeightRequest="56"
+            Command="{Binding LowPitchCommand}"
+            Text="Low Pitch Tone"
+            Style="{StaticResource buttonTextStyle}" 
+        />
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Button 
+                BackgroundColor="{StaticResource backButtonTextColor}"
+                Text="Previous"
+                Command="{Binding PreviousCommand}"
+                Style="{StaticResource buttonTextStyle}" 
+             />
+            <Button 
+                BackgroundColor="{StaticResource errorColor}"
+                HorizontalOptions="EndAndExpand"
+                Command="{Binding EndTaskCommand}"
+                Text="End Task"
+                Style="{StaticResource buttonTextStyle}" 
+             />
+        </StackLayout>
+    </StackLayout>
+</p:BaseContentPage >

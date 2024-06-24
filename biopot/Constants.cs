@@ -65,6 +65,7 @@ namespace biopot
             public const string DISCONNECTED_DEVICE = "DISCONNECTED_DEVICE";
             public const string DISCONNECTED_BLUETOOTH = "DISCONNECTED_BLUETOOTH";
             public const string NAV_FROM_IMPEDANCE = "NavFromImpedance";
+            public const string NAV_FROM_AUDIO_RECOGNITION = "NavFromAudioRecognition";
             public const string NAV_BACK_TO_SCREEN = "NavBackToScreen";
         }
 

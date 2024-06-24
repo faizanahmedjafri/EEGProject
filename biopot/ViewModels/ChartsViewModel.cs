@@ -86,7 +86,7 @@ namespace biopot.ViewModels
 
             RebuildUiComponentsAsync();
 
-			ChartSps = new ChartViewModel(_chartsManagerService, EDeviceType.SPSValue, 0)
+			ChartSps = new ChartViewModel(_chartsManagerService, EDeviceType.SPSValue, 0, _navigationService)
 			{
 				ViewportHalfY = Constants.Charts.ChartYAxisDefaultValue,
 			};
@@ -527,7 +527,7 @@ namespace biopot.ViewModels
                 foreach (var checkedItem in checkedChannels)
                 {
                     var viewModel = new ChartViewModel(_chartsManagerService, chartGroup.DeviceType,
-                        checkedItem.Id, checkedChannels.Select(model => model.Id))
+                        checkedItem.Id, _navigationService, checkedChannels.Select(model => model.Id))
                     {
                         ChartColor = SkiaSharp.SKColor.Parse(NextColor()),
                     };
@@ -769,7 +769,7 @@ namespace biopot.ViewModels
 				{
 
                     var chartViewModel = new ChartViewModel(_chartsManagerService, chartGroup.DeviceType, 
-                        checkedItem.Id, list.Select(model => model.Id))
+                        checkedItem.Id, _navigationService, list.Select(model => model.Id))
                     {
                         ChartColor = SkiaSharp.SKColor.Parse(NextColor()),
                     };

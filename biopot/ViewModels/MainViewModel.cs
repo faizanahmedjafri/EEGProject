@@ -276,7 +276,15 @@ namespace biopot.ViewModels
                     TryConnectLastDeviceOrDiscoverDevices();
 				}
 			}
-		}
+
+            if (parameters.TryGetValue("EndTask", out bool isEndTask))
+            {
+                if (isEndTask)
+                {
+                    CurrentStep = EWelcomeSteps.First;
+                }
+            }
+        }
 
 		#endregion
 

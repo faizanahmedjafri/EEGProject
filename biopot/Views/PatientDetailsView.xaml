@@ -29,11 +29,11 @@
 
                 <!-- Name -->
                 <Label Grid.Row="0" Grid.Column="0" Text="Name:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Entry Grid.Row="0" Grid.Column="1" Placeholder="Enter Name" VerticalOptions="Center" FontSize="Small" Text="{Binding Name}"/>
+                <Entry Grid.Row="0" Grid.Column="1" Placeholder="Enter Name" VerticalOptions="Center" FontSize="Small" Text="{Binding PatientsInformation.Name}"/>
 
                 <!-- Sex -->
                 <Label Grid.Row="1" Grid.Column="0" Text="Sex:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="1" Grid.Column="1" Title="Select Sex" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Sex}">
+                <Picker Grid.Row="1" Grid.Column="1" Title="Select Sex" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.Sex}">
                     <Picker.Items>
                         <x:String>Male</x:String>
                         <x:String>Female</x:String>
@@ -41,23 +41,23 @@
                 </Picker>
 
                 <Label Grid.Row="2" Grid.Column="0" Text="Position:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="2" Grid.Column="1" Title="Select Position" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Position}">
+                <Picker Grid.Row="2" Grid.Column="1" Title="Select Position" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.Position}">
                     <Picker.Items>
-                        <x:String>Item1</x:String>
-                        <x:String>Item2</x:String>
+                        <x:String>Position 1</x:String>
+                        <x:String>Position 2</x:String>
                     </Picker.Items>
                 </Picker>
 
                 <Label Grid.Row="3" Grid.Column="0" Text="Team:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="3" Grid.Column="1" Title="Select Team" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Team}">
+                <Picker Grid.Row="3" Grid.Column="1" Title="Select Team" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.Team}">
                     <Picker.Items>
-                        <x:String>Item1</x:String>
-                        <x:String>Item2</x:String>
+                        <x:String>Team 1</x:String>
+                        <x:String>Team 2</x:String>
                     </Picker.Items>
                 </Picker>
 
                 <Label Grid.Row="4" Grid.Column="0" Text="Last Match:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="4" Grid.Column="1" Title="Select Last Match" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding LastMatch}">
+                <Picker Grid.Row="4" Grid.Column="1" Title="Select Last Match" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.LastMatch}">
                     <Picker.Items>
                         <x:String>Item1</x:String>
                         <x:String>Item2</x:String>
@@ -65,35 +65,35 @@
                 </Picker>
 
                 <Label Grid.Row="5" Grid.Column="0" Text="Consussed 72 Hr:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="5" Grid.Column="1" Title="Select Consussed 72 Hr" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding Consussed72Hr}">
+                <Picker Grid.Row="5" Grid.Column="1" Title="Select Consussed 72 Hr" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.Consussed72Hr}">
                     <Picker.Items>
-                        <x:String>Item1</x:String>
-                        <x:String>Item2</x:String>
+                        <x:String>Consussed 1</x:String>
+                        <x:String>Consussed 2</x:String>
                     </Picker.Items>
                 </Picker>
 
                 <Label Grid.Row="6" Grid.Column="0" Text="Last Concussion:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="6" Grid.Column="1" Title="Select Last Concussion" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding LastConcussion}">
+                <Picker Grid.Row="6" Grid.Column="1" Title="Select Last Concussion" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.LastConcussion}">
                     <Picker.Items>
-                        <x:String>Item1</x:String>
-                        <x:String>Item2</x:String>
+                        <x:String>Last Concussion 1</x:String>
+                        <x:String>Last Concussion 2</x:String>
                     </Picker.Items>
                 </Picker>
 
                 <Label Grid.Row="7" Grid.Column="0" Text="Last HIA:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
-                <Picker Grid.Row="7" Grid.Column="1" Title="Select Last HIA" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding LastHIA}">
+                <Picker Grid.Row="7" Grid.Column="1" Title="Select Last HIA" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.LastHIA}">
                     <Picker.Items>
-                        <x:String>Item1</x:String>
-                        <x:String>Item2</x:String>
+                        <x:String>Last HIA 1</x:String>
+                        <x:String>Last HIA 2</x:String>
                     </Picker.Items>
                 </Picker>
             </Grid>
 
             <Label Text="Symptoms" />
-            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding Symptoms}"/>
+            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding PatientsInformation.Symptoms}"/>
 
             <Label Text="Notes" />
-            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding Notes}"/>
+            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding PatientsInformation.Notes}"/>
         </StackLayout>
     </ScrollView>
 </ContentView>
