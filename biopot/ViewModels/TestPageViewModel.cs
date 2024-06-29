@@ -26,22 +26,7 @@ namespace biopot.ViewModels
         public ICommand PreviousCommand => _PreviousCommand ?? (_PreviousCommand = SingleExecutionCommand.FromFunc(OnPreviousCommand));
         private async Task OnPreviousCommand()
         {
-            string[] audioOptions = { "Audio 1", "Audio 2" };
-            string selectedAudio = await Application.Current.MainPage.DisplayActionSheet("Select Audio", "Cancel", null, audioOptions);
-
-            string audioName = "";
-            if (selectedAudio == "Audio 1")
-            {
-                audioName = "oddball_sequence_6_minutes_10_percent.wav";
-            }
-            else if (selectedAudio == "Audio 2")
-            {
-                audioName = "oddball_sequence_6_minutes_20%.wav";
-            }
-
-            NavigationParameters navigationParameters = new NavigationParameters();
-            navigationParameters.Add("AudioName", audioName);
-            await _navigationService.NavigateAsync(nameof(AudioRecognitionView), navigationParameters);
+            await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
         }
     }
 }

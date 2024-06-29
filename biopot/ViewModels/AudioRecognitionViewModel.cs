@@ -27,6 +27,7 @@ namespace biopot.ViewModels
         private readonly IMediaService _mediaService;
         private Timer _timer;
         private ISimpleAudioPlayer _player;
+        List<string> audioList = new List<string> { "oddball_sequence_6_minutes_10_percent.wav", "oddball_sequence_6_minutes_20%.wav" };
 
         public AudioRecognitionViewModel(ILogService logService, INavigationService navigationService, IMediaService mediaService)
         {
@@ -48,6 +49,12 @@ namespace biopot.ViewModels
             set => SetProperty(ref _time, value);
         }
 
+        private string _audioName;
+        public string AudioName
+        {
+            get => _audioName;
+            set => SetProperty(ref _audioName, value);
+        }
         public Timer Timer { get => _timer; }
 
         private ICommand _PreviousCommand;
@@ -83,23 +90,20 @@ namespace biopot.ViewModels
         private Task OnPreviousCommand()
         {
             _logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: Previous button Navigate from Audio recognition page");
-            _mediaService.Stop();
-            resetTimer();
             return _navigationService.GoBackAsync();
         }
 
         private Task OnEndTaskCommand()
         {
-            resetTimer();
             _logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: End Task button Navigate from Audio recognition page");
-            _mediaService.Stop();
 
             NavigationParameters navigationParameters = new NavigationParameters();
             navigationParameters.Add("EndTask", true);
 
-            string result = string.Join(", ", PitchRecordDict.Select(kvp => $"{kvp.Key} : {kvp.Value}"));
+            string result = string.Join("\r\n", PitchRecordDict.Select(kvp => $"{kvp.Key} : {kvp.Value}"));
             navigationParameters.Add("AudioData", result);
-            
+            navigationParameters.Add("AudioName", _audioName);
+
             return _navigationService.NavigateAsync('/' + nameof(NavigationPage) + '/' + nameof(MainView), navigationParameters);
         }
 
@@ -115,10 +119,18 @@ namespace biopot.ViewModels
             return Task.FromResult(0);
         }
 
-        public override void OnNavigatingTo(NavigationParameters parameters)
+        public override void OnNavigatedFrom(NavigationParameters parameters)
         {
-            parameters.TryGetValue("AudioName", out string audioName);
-            _mediaService.LoadFileStream($"biopot.Resources.Audios.{audioName}");
+            resetTimer();
+            _mediaService.Stop();
+        }
+
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+            Random random = new Random();
+            _audioName = audioList[random.Next(audioList.Count)];
+
+            _mediaService.LoadFileStream($"biopot.Resources.Audios.{_audioName}");
             _mediaService.Play();
             _timer.Start();
         }
