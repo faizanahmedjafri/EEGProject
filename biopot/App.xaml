@@ -47,6 +47,7 @@
             <Color x:Key="impedanceSCh01Color">#FF4680F2</Color>
             <Color x:Key="impedanceSCh02Color">#FF212121</Color>
             <Color x:Key="btnGreenColor">#00af50</Color>
+            <Color x:Key="btnRedColor">#FF1C3A</Color>
 
             <Color x:Key="toolbarLogoColor">#4983EF</Color>
             <Color x:Key="toolbarGreyColor">#FF6F6F6F</Color>
