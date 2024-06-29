@@ -11,12 +11,12 @@ namespace biopot.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is int seconds)
+            if (value is double totalMilliseconds)
             {
-                TimeSpan time = TimeSpan.FromSeconds(seconds);
-                return $"{time:mm\\:ss}";
+                TimeSpan timeSpan = TimeSpan.FromMilliseconds(totalMilliseconds);
+                return $"{timeSpan.Minutes:D2}:{timeSpan.Seconds:D2}:{timeSpan.Milliseconds / 10:D2}";
             }
-            return "00:00"; // Default value or error handling
+            return "00:00:00";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

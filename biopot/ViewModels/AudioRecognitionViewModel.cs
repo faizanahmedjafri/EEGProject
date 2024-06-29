@@ -28,6 +28,8 @@ namespace biopot.ViewModels
         private Timer _timer;
         private ISimpleAudioPlayer _player;
         List<string> audioList = new List<string> { "oddball_sequence_6_minutes_10_percent.wav", "oddball_sequence_6_minutes_20%.wav" };
+        private TimeSpan _remainingTime;
+        private double _timerInterval = 10;
 
         public AudioRecognitionViewModel(ILogService logService, INavigationService navigationService, IMediaService mediaService)
         {
@@ -36,14 +38,15 @@ namespace biopot.ViewModels
             _mediaService = mediaService;
             _player = CrossSimpleAudioPlayer.Current;
 
-            _timer = new Timer();
-            _timer.Interval = 1000; // 1 second interval
+            _remainingTime = TimeSpan.FromMinutes(6);
+            _timer = new Timer(_timerInterval);
             _timer.Elapsed += TimerElapsed;
+            _time = _remainingTime.TotalMilliseconds;
         }
 
         #region -- Public properties --
-        private int _time = 360;
-        public int Time
+        private double _time;
+        public double Time
         {
             get => _time;
             set => SetProperty(ref _time, value);
@@ -69,21 +72,23 @@ namespace biopot.ViewModels
         private ICommand _LowPitchCommand;
         public ICommand LowPitchCommand => _LowPitchCommand ?? (_LowPitchCommand = SingleExecutionCommand.FromFunc(OnLowPitchCommand));
 
-        public Dictionary<int, bool> PitchRecordDict { get; set; } = new Dictionary<int, bool>();
+        public Dictionary<double, bool> PitchRecordDict { get; set; } = new Dictionary<double, bool>();
         #endregion
 
         private void TimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Time--;
-            if (Time == 0)
+            if (_remainingTime.TotalMilliseconds <= 0)
             {
                 OnEndTaskCommand();
             }
+
+            _remainingTime = _remainingTime.Subtract(TimeSpan.FromMilliseconds(_timerInterval));
+            Time = _remainingTime.TotalMilliseconds;
         }
 
         private void resetTimer()
         {
-            _time = 360;
+            _time = 0;
             Timer.Stop();
         }
 
