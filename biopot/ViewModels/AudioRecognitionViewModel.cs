@@ -79,7 +79,11 @@ namespace biopot.ViewModels
         {
             if (_remainingTime.TotalMilliseconds <= 0)
             {
-                OnEndTaskCommand();
+                resetTimer();
+                Device.BeginInvokeOnMainThread(() => {
+                    OnEndTaskCommand();
+                });
+                return;
             }
 
             _remainingTime = _remainingTime.Subtract(TimeSpan.FromMilliseconds(_timerInterval));
