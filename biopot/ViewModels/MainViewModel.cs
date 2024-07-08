@@ -291,6 +291,8 @@ namespace biopot.ViewModels
 
                     if (parameters.TryGetValue("AudioData", out string audioData))
                         _saveDataService.SaveAudioDate(audioData);
+
+                    PatientDetailsViewModel.PatientsInformation = new PatientsInformation();
                 }
             }
         }
@@ -412,7 +414,8 @@ namespace biopot.ViewModels
                 _lastConnectedDeviceId = await _appSettings.GetObjectAsync<string>(Constants.StorageKeys.CONNECTED_DEVICE);
           
             PatientDetailsViewModel.InitDependencies(_permissionsRequester, _eventAggregator);
-		}
+            PatientDetailsViewModel.PatientsInformation = new PatientsInformation();
+        }
 
 		private Task OnNextCommandExecute()
 		{
