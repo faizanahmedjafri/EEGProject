@@ -286,10 +286,11 @@ namespace biopot.ViewModels
                 {
                     CurrentStep = EWelcomeSteps.First;
                     _saveDataService.StopRecord();
+                    if (parameters.TryGetValue("AudioName", out string audioName))
+                        _saveDataService.SaveAudioDate(audioName);
+
                     if (parameters.TryGetValue("AudioData", out string audioData))
-                    {
                         _saveDataService.SaveAudioDate(audioData);
-                    }
                 }
             }
         }
