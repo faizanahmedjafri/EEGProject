@@ -43,16 +43,51 @@
                 <Label Grid.Row="2" Grid.Column="0" Text="Position:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
                 <Picker Grid.Row="2" Grid.Column="1" Title="Select Position" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.Position}">
                     <Picker.Items>
-                        <x:String>Position 1</x:String>
-                        <x:String>Position 2</x:String>
+                        <x:String>Full back</x:String>
+                        <x:String>Right wing</x:String>
+                        <x:String>Right centre</x:String>
+                        <x:String>Left centre</x:String>
+                        <x:String>Left wing</x:String>
+                        <x:String>Stand-off half</x:String>
+                        <x:String>Scrum half (Half-back)</x:String>
+                        <x:String>Prop (Front Row Forward)</x:String>
+                        <x:String>Hooker or Dummy-half</x:String>
+                        <x:String>Prop (Front Row Forward)</x:String>
+                        <x:String>Second Row Forward</x:String>
+                        <x:String>Second Row Forward</x:String>
+                        <x:String>Lock Forward or Loose Forward</x:String>
                     </Picker.Items>
                 </Picker>
 
                 <Label Grid.Row="3" Grid.Column="0" Text="Team:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
                 <Picker Grid.Row="3" Grid.Column="1" Title="Select Team" VerticalOptions="Center" FontSize="Small" SelectedItem="{Binding PatientsInformation.Team}">
                     <Picker.Items>
-                        <x:String>Team 1</x:String>
-                        <x:String>Team 2</x:String>
+                        <x:String>Barrow Raiders</x:String>
+                        <x:String>Batley Bulldogs</x:String>
+                        <x:String>Bradford Bulls</x:String>
+                        <x:String>Broncos</x:String>
+                        <x:String>Dewsbury Rams</x:String>
+                        <x:String>Doncaster RLFC</x:String>
+                        <x:String>Dragons</x:String>
+                        <x:String>Featherstone Rovers</x:String>
+                        <x:String>Giants</x:String>
+                        <x:String>Halifax Panthers</x:String>
+                        <x:String>Hull FC</x:String>
+                        <x:String>Leopards</x:String>
+                        <x:String>Red Devils</x:String>
+                        <x:String>Rhinos</x:String>
+                        <x:String>Robins</x:String>
+                        <x:String>Saints</x:String>
+                        <x:String>Sheffield Eagles</x:String>
+                        <x:String>Swinton Lions</x:String>
+                        <x:String>Tigers</x:String>
+                        <x:String>Toulouse Olympique XIII</x:String>
+                        <x:String>Wakefield Trinity</x:String>
+                        <x:String>Warriors</x:String>
+                        <x:String>Whitehaven RLFC</x:String>
+                        <x:String>Widnes Vikings</x:String>
+                        <x:String>Wolves</x:String>
+                        <x:String>York RLFC</x:String>
                     </Picker.Items>
                 </Picker>
 
