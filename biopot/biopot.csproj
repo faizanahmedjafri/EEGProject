@@ -115,10 +115,12 @@
   <ItemGroup>
     <None Remove="Resources\Audios\oddball_sequence_6_minutes_10_percent.wav" />
     <None Remove="Resources\Audios\oddball_sequence_6_minutes_20%25.wav" />
+    <None Remove="Resources\Images\paramita_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Audios\oddball_sequence_6_minutes_10_percent.wav" />
     <EmbeddedResource Include="Resources\Audios\oddball_sequence_6_minutes_20%.wav" />
+    <EmbeddedResource Include="Resources\Images\paramita_logo.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Controls\HorizontalValuePicker.xaml.cs">
