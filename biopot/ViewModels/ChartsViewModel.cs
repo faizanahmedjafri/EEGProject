@@ -671,6 +671,7 @@ namespace biopot.ViewModels
         private async void OnStartTestCommand()
         {
             await _navigationService.NavigateAsync(nameof(TestInstructionView));
+			OnStartRecord();
         }
 
         private async Task OnUserSettingsCommand()
