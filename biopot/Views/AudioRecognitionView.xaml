@@ -10,6 +10,7 @@
     x:Name="ThisPage">
 
     <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Spacing="20" Padding="20">
+        <Image Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" Spacing="20">
             <Label Text="Time Remaining:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Large" HorizontalOptions="StartAndExpand"/>
             <Label Text="{Binding Time, Converter={StaticResource SecondsToTimeFormateConverter}}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large" HorizontalOptions="EndAndExpand"/>

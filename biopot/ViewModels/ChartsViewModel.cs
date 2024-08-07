@@ -670,9 +670,7 @@ namespace biopot.ViewModels
 
         private async void OnStartTestCommand()
         {
-            await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
-
-            OnStartRecord();
+            await _navigationService.NavigateAsync(nameof(TestInstructionView));
         }
 
         private async Task OnUserSettingsCommand()
@@ -693,7 +691,6 @@ namespace biopot.ViewModels
         private async Task OnConnectionStateCommand()
 		{
 			_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}:Tapped Connection State command");
-
 			_userDialogs.ShowLoading();
 			await OnUpdateChartStateCommand();
 			NavigationParameters navigationParameters = new NavigationParameters();
