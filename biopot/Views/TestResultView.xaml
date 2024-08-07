@@ -6,7 +6,7 @@
     xmlns:converters="clr-namespace:biopot.Converters" 
     xmlns:controls="clr-namespace:biopot.Controls" 
     xmlns:ncontrol="clr-namespace:NControl.Controls;assembly=NControl.Controls" 
-    x:Class="biopot.Views.TestInstructionView"
+    x:Class="biopot.Views.TestResultView"
     x:Name="ThisPage">
 
     <ScrollView>
@@ -14,42 +14,27 @@
             <Image Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
             <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="20">
                 <Label 
-                    Text="Test instructions" 
+                    Text="Participant Test Results" 
                     FontSize="Large" 
                     FontAttributes="Bold" 
                     HorizontalOptions="Start"
                 />
-                <Label 
-                    Text="This test will last 6 minutes." 
-                    FontSize="Medium" 
-                />
-                <Label 
-                    Text="You will hear one of two sounds every few seconds." 
-                    FontSize="Medium" 
-                />
-                <Label 
-                    Text="Simply click on the corresponding button for a high pitch sound, or low pitch sound." 
-                    FontSize="Medium" 
-                />
-                <Image Source="test_instructions.png" 
-                    HeightRequest="300" 
-                    WidthRequest="300"  
+                <Image Source="response_range.png" 
+                    HeightRequest="400" 
+                    WidthRequest="400"  
                     Aspect="AspectFit" 
                     HorizontalOptions="Center"
                 />
-                <Label 
-                    Text="Click 'Start Test' below to begin the task." 
-                    FontSize="Medium" 
-                />
+               
                 <Button 
                     BackgroundColor="{StaticResource btnRedColor}"
                     HorizontalOptions="EndAndExpand"
-                    Text="Start Test"
+                    Text="Close"
                     Style="{StaticResource buttonTextStyle}" 
                     VerticalOptions="FillAndExpand"
                     FontSize="Large" 
-                    WidthRequest="150"  
-                    Command="{Binding StartTestCommand}"
+                    WidthRequest="100"  
+                    Command="{Binding CloseCommand}"
                 />
             </StackLayout>
         </StackLayout>

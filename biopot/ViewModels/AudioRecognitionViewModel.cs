@@ -107,13 +107,11 @@ namespace biopot.ViewModels
             _logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: End Task button Navigate from Audio recognition page");
 
             NavigationParameters navigationParameters = new NavigationParameters();
-            navigationParameters.Add("EndTask", true);
-
             string result = string.Join("\r\n", PitchRecordDict.Select(kvp => $"{kvp.Key} : {kvp.Value}"));
             navigationParameters.Add("AudioData", result);
             navigationParameters.Add("AudioName", _audioName);
 
-            return _navigationService.NavigateAsync('/' + nameof(NavigationPage) + '/' + nameof(MainView), navigationParameters);
+            return _navigationService.NavigateAsync('/' + nameof(NavigationPage) + '/' + nameof(TestResultView), navigationParameters);
         }
 
         private Task OnHighPitchCommand()

@@ -137,6 +137,7 @@ namespace biopot
             containerRegistry.RegisterForNavigation<TestPage>();
             containerRegistry.RegisterForNavigation<AudioRecognitionView>();
             containerRegistry.RegisterForNavigation<TestInstructionView>();
+            containerRegistry.RegisterForNavigation<TestResultView>();
 
 #if DEBUG
             Plugin.BLE.Abstractions.Trace.TraceImplementation = (aFormat, aArgs) =>

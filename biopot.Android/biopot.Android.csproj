@@ -548,5 +548,8 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\test_instructions.png" />
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\response_range.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
