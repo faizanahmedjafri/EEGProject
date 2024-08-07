@@ -9,43 +9,48 @@
     x:Class="biopot.Views.TestInstructionView"
     x:Name="ThisPage">
 
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Spacing="20" Padding="20">
-        <Image Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
-        <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="50">
-            <Label 
-                Text="Test instructions" 
-                FontSize="Large" 
-                FontAttributes="Bold" 
-                HorizontalOptions="Start"
-            />
-            <Label 
-                Text="This test will last 6 minutes." 
-                FontSize="Medium" 
-                Margin="0,10,0,20"
-            />
-            <Label 
-                Text="You will hear one of two sounds every few seconds." 
-                FontSize="Medium" 
-                Margin="0,10,0,20"
-            />
-            <Label 
-                Text="Simply click on the corresponding button for a high pitch sound, or low pitch sound." 
-                FontSize="Medium" 
-                Margin="0,10,0,20"
-            />
-            <Image Source="test_instructions.png" HeightRequest="400" WidthRequest="300"  Aspect="AspectFit" HorizontalOptions="Center"/>
-            <Label 
-                Text="Click 'Start Test' below to begin the task." 
-                FontSize="Medium" 
-                Margin="0,10,0,20"
-            />
-            <Button 
-                 BackgroundColor="{StaticResource btnRedColor}"
-                 HorizontalOptions="End"
-                 Text="Start Task"
-                 Style="{StaticResource buttonTextStyle}" 
-                 VerticalOptions="FillAndExpand"
-             />
+    <ScrollView>
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Spacing="20" Padding="20">
+            <Image Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
+            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="20">
+                <Label 
+                    Text="Test instructions" 
+                    FontSize="Large" 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="Start"
+                />
+                <Label 
+                    Text="This test will last 6 minutes." 
+                    FontSize="Medium" 
+                />
+                <Label 
+                    Text="You will hear one of two sounds every few seconds." 
+                    FontSize="Medium" 
+                />
+                <Label 
+                    Text="Simply click on the corresponding button for a high pitch sound, or low pitch sound." 
+                    FontSize="Medium" 
+                />
+                <Image Source="test_instructions.png" 
+                    HeightRequest="300" 
+                    WidthRequest="300"  
+                    Aspect="AspectFit" 
+                    HorizontalOptions="Center"
+                />
+                <Label 
+                    Text="Click 'Start Test' below to begin the task." 
+                    FontSize="Medium" 
+                />
+                <Button 
+                    BackgroundColor="{StaticResource btnRedColor}"
+                    HorizontalOptions="EndAndExpand"
+                    Text="Start Test"
+                    Style="{StaticResource buttonTextStyle}" 
+                    VerticalOptions="FillAndExpand"
+                    FontSize="Large" 
+                    WidthRequest="150"  
+                />
+            </StackLayout>
         </StackLayout>
-    </StackLayout>
+    </ScrollView>
 </p:BaseContentPage>
