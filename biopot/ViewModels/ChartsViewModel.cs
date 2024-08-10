@@ -162,7 +162,16 @@ namespace biopot.ViewModels
                 // restart the charts data instead of impedance
                 await _chartsManagerService.StartAsync(CaptureMode.CaptureEegEmg);
             }
-		}
+
+            if (parameters.TryGetValue("FromTestInstruction", out bool isFromTestInstruction))
+            {
+                if (isFromTestInstruction)
+                {
+                    await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
+                    OnStartRecord();
+                }
+            }
+        }
 
         /// <inheritdoc />
         public override void OnNavigatedFrom(NavigationParameters aParameters)

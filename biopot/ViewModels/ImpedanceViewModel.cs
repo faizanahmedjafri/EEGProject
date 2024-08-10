@@ -90,7 +90,7 @@ namespace biopot.ViewModels
 			set { SetProperty(ref _SensorConnectionList, value); }
 		}
 
-        public bool IsMajorityInRange => SensorConnectionList.Count > 0 &&
+        public bool IsMajorityInRange => SensorConnectionList != null && SensorConnectionList.Count > 0 &&
                                      SensorConnectionList.Count(s => (s.SignalValue >= 1500 && s.SignalValue <= 10000) || s.SignalValue >= 15000) > SensorConnectionList.Count / 2;
 
         private ICommand _BackCommand;

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace biopot.ViewModels
 {
@@ -23,9 +24,11 @@ namespace biopot.ViewModels
 
         private ICommand _StartTestCommand;
         public ICommand StartTestCommand => _StartTestCommand ?? (_StartTestCommand = SingleExecutionCommand.FromFunc(OnStartTestCommand));
-        private async Task OnStartTestCommand()
+        private Task OnStartTestCommand()
         {
-            await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
+            NavigationParameters navigationParameters = new NavigationParameters();
+            navigationParameters.Add("FromTestInstruction", true);
+            return _navigationService.NavigateAsync('/' + nameof(NavigationPage) + '/' + nameof(ChartsView), navigationParameters);
         }
     }
 }
