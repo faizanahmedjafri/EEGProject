@@ -174,17 +174,6 @@ namespace biopot.ViewModels
             IsMenuOpened = false;
         }
 
-        public override void OnNavigatedTo(NavigationParameters parameters)
-        {
-			AutoNavigateToImpedanceView();
-        }
-
-		public async Task AutoNavigateToImpedanceView()
-		{
-            await Task.Delay(6000);
-			await OnConnectionStateCommand();
-        }
-
         #endregion
 
         #region -- Public properties --

@@ -274,12 +274,18 @@
                     StopRecordCommand="{Binding StopRecordCommand}"
                     BackgroundColor="Transparent"
                     AbsoluteLayout.LayoutBounds="0.97,0.97,134,80" AbsoluteLayout.LayoutFlags="PositionProportional"/>-->
-            
+
+            <!-- Centered Start Test Button -->
             <Button 
                 Text="Start Test" 
-                AbsoluteLayout.LayoutBounds="0.97,0.97,134,80" 
-                AbsoluteLayout.LayoutFlags="PositionProportional" 
-                Command="{Binding StartTestCommand}"
+                Command="{Binding StartTestCommand}" 
+                BackgroundColor="{StaticResource btnRedColor}"
+                Style="{StaticResource titleTextLabelStyle}"
+                FontSize="Large"
+                HeightRequest="56"
+                WidthRequest="200" 
+                AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
             />
 
             <controls:SpsDetailsView
