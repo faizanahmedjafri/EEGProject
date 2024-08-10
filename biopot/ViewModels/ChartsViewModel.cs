@@ -174,11 +174,22 @@ namespace biopot.ViewModels
             IsMenuOpened = false;
         }
 
+        public override void OnNavigatedTo(NavigationParameters parameters)
+        {
+			AutoNavigateToImpedanceView();
+        }
+
+		public async Task AutoNavigateToImpedanceView()
+		{
+            await Task.Delay(3000);
+			await OnConnectionStateCommand();
+        }
+
         #endregion
 
         #region -- Public properties --
 
-	    private BiopotGenericInfo _deviceInfo = new BiopotGenericInfo();
+        private BiopotGenericInfo _deviceInfo = new BiopotGenericInfo();
 	    public BiopotGenericInfo DeviceInfo
 	    {
 	        get => _deviceInfo;
@@ -670,8 +681,7 @@ namespace biopot.ViewModels
 
         private async void OnStartTestCommand()
         {
-            await _navigationService.NavigateAsync(nameof(TestInstructionView));
-			OnStartRecord();
+			await OnConnectionStateCommand();
         }
 
         private async Task OnUserSettingsCommand()

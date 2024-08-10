@@ -726,10 +726,6 @@ namespace biopot.ViewModels
         /// </summary>
         private async void TryConnectLastDeviceOrDiscoverDevices()
         {
-            await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
-            return;
-
-
             _userDialogs.HideLoading();//H.H.
 
             //await DisconnectCurrentDeviceAsync();
