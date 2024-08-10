@@ -35,7 +35,8 @@
             </controls:ClickableContentView.Triggers>
         </controls:ClickableContentView>
 
-        <Grid ColumnSpacing="0" Grid.Row="1">
+        <Image Grid.Row="1" Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
+        <!--<Grid ColumnSpacing="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="0.8*"/>
@@ -47,7 +48,7 @@
                     <Setter Property="IsVisible" Value="false"/>
                 </DataTrigger>
             </Grid.Triggers>
-        </Grid>
+        </Grid>-->
         <Image Grid.Row="2" Source="navbar_shadow" Aspect="AspectFill" VerticalOptions="Start">
             <Image.Triggers>
                 <DataTrigger TargetType="Image" Binding="{Binding CurrentStep}" Value="Fourth">
