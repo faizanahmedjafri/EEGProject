@@ -12,6 +12,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <controls:ClickableContentView HorizontalOptions="Start" Command="{Binding BackCommand}">
@@ -32,6 +34,26 @@
             </Grid.RowDefinitions>
             <controls:ImpedanceControl Grid.Row="0" SensorConnectionList="{Binding SensorConnectionList}"/>
         </Grid>
+
+        <Label 
+            Grid.Row="2"
+            Text="The impendece range of the sensors are now between 1.5k to 10k range,  the device is calibrated" 
+            Margin="0,10,0,20"
+            Style="{StaticResource titleTextLabelStyle}"
+            IsVisible="{Binding IsMajorityInRange}"
+        />
+
+        <Button 
+            Grid.Row="3"
+            Text="Continue"  
+            FontSize="Large"
+            HeightRequest="56"
+            WidthRequest="200"
+            Command="{Binding ContinueCommand}"
+            BackgroundColor="{StaticResource btnRedColor}"
+            Style="{StaticResource titleTextLabelStyle}"
+            IsVisible="{Binding IsMajorityInRange}"
+        />
     </Grid>
 
 </p:BaseContentPage >
