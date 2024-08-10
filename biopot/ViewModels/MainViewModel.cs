@@ -419,29 +419,31 @@ namespace biopot.ViewModels
 
 		private Task OnNextCommandExecute()
 		{
-			_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}: NEXT tapped");
+            //_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}: NEXT tapped");
 
-			if (CurrentStep == EWelcomeSteps.Third && IsFromMenu)
-			{
-				OnBackToMenuCommand();
-				return Task.CompletedTask;
-			}
+            //if (CurrentStep == EWelcomeSteps.Third && IsFromMenu)
+            //{
+            //	OnBackToMenuCommand();
+            //	return Task.CompletedTask;
+            //}
 
-			if (CurrentStep <= EWelcomeSteps.Fourth)
-			{
-				bool IsAllFieldDataValid = ValidationAllFieldData(CurrentStep);
+            //if (CurrentStep <= EWelcomeSteps.Fourth)
+            //{
+            //	bool IsAllFieldDataValid = ValidationAllFieldData(CurrentStep);
 
-				if (IsAllFieldDataValid)
-				{
-					int num = (int)CurrentStep + 1;
-					CurrentStep = (EWelcomeSteps)(num);
-				}
-			}
+            //	if (IsAllFieldDataValid)
+            //	{
+            //		int num = (int)CurrentStep + 1;
+            //		CurrentStep = (EWelcomeSteps)(num);
+            //	}
+            //}
 
-			if (CurrentStep == EWelcomeSteps.Fourth)
-			{
-                TryConnectLastDeviceOrDiscoverDevices();
-			}
+            //if (CurrentStep == EWelcomeSteps.Fourth)
+            //{
+            //             TryConnectLastDeviceOrDiscoverDevices();
+            //}
+
+            OnSkipAllCommand();
 			return SaveVMDataAsync();
 		}
 
@@ -469,8 +471,6 @@ namespace biopot.ViewModels
 					if (string.IsNullOrWhiteSpace(SessionViewModel.FolderName))
 					{
 						SessionViewModel.FolderName = Strings.DefaultFolderName;
-						//isValid = false;  TODO check nessarity for skip all
-						//SessionViewModel.Message = Strings.PleaseEnterAllFields;
 					}
 					else
 					{
@@ -726,6 +726,9 @@ namespace biopot.ViewModels
         /// </summary>
         private async void TryConnectLastDeviceOrDiscoverDevices()
         {
+            await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
+            return;
+
 
             _userDialogs.HideLoading();//H.H.
 

@@ -73,7 +73,7 @@
                         </StackLayout>
 
                         <!-- Skip all -->
-                        <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                        <!--<controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
                             <StackLayout Spacing="0" HorizontalOptions="Center">
                                 <Label HorizontalOptions="Center" VerticalOptions="Center" 
                                        TextColor="{StaticResource entryTextColor}" 
@@ -86,7 +86,7 @@
                                     <Setter Property="IsVisible" Value="false" />
                                 </DataTrigger>
                             </controls:ClickableContentView.Triggers>
-                        </controls:ClickableContentView>
+                        </controls:ClickableContentView>-->
 
                         <Button Command="{Binding NextCommand}" BackgroundColor="{StaticResource buttonBgColor}"
                                 HeightRequest="56"
@@ -147,7 +147,7 @@
                     </StackLayout>
 
                     <!-- Skip all -->
-                    <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                    <!--<controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
                         <StackLayout Spacing="0" HorizontalOptions="Center">
                             <Label HorizontalOptions="Center" VerticalOptions="Center" 
                                    TextColor="{StaticResource entryTextColor}" 
@@ -160,7 +160,7 @@
                                 <Setter Property="IsVisible" Value="false" />
                             </DataTrigger>
                         </controls:ClickableContentView.Triggers>
-                    </controls:ClickableContentView>
+                    </controls:ClickableContentView>-->
 
                     <StackLayout MinimumHeightRequest="56" Spacing="0" Orientation="Horizontal" >
                         <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
@@ -197,7 +197,7 @@
                     </StackLayout>
 
                     <!-- Skip all -->
-                    <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                    <!--<controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
                         <StackLayout Spacing="0" HorizontalOptions="Center">
                             <Label HorizontalOptions="Center" VerticalOptions="Center" 
                                    TextColor="{StaticResource entryTextColor}" 
@@ -210,7 +210,7 @@
                                 <Setter Property="IsVisible" Value="false" />
                             </DataTrigger>
                         </controls:ClickableContentView.Triggers>
-                    </controls:ClickableContentView>
+                    </controls:ClickableContentView>-->
                     
                     <StackLayout Spacing="0" Orientation="Horizontal" >
                         <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
