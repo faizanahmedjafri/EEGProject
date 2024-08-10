@@ -181,7 +181,7 @@ namespace biopot.ViewModels
 
 		public async Task AutoNavigateToImpedanceView()
 		{
-            await Task.Delay(3000);
+            await Task.Delay(6000);
 			await OnConnectionStateCommand();
         }
 
