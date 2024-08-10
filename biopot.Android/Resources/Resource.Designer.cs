@@ -6478,79 +6478,88 @@ namespace biopot.Droid
 			public const int omega_yellow = 2131165538;
 			
 			// aapt resource value: 0x7F070163
-			public const int patient = 2131165539;
+			public const int paramita_logo = 2131165539;
 			
 			// aapt resource value: 0x7F070164
-			public const int pic_impedance = 2131165540;
+			public const int patient = 2131165540;
 			
 			// aapt resource value: 0x7F070165
-			public const int plus = 2131165541;
+			public const int pic_impedance = 2131165541;
 			
 			// aapt resource value: 0x7F070166
-			public const int radio_off = 2131165542;
+			public const int plus = 2131165542;
 			
 			// aapt resource value: 0x7F070167
-			public const int radio_on = 2131165543;
+			public const int radio_off = 2131165543;
 			
 			// aapt resource value: 0x7F070168
-			public const int read = 2131165544;
+			public const int radio_on = 2131165544;
 			
 			// aapt resource value: 0x7F070169
-			public const int roundedbg = 2131165545;
+			public const int read = 2131165545;
 			
 			// aapt resource value: 0x7F07016A
-			public const int roundedbgdark = 2131165546;
+			public const int response_range = 2131165546;
 			
 			// aapt resource value: 0x7F07016B
-			public const int scan_again = 2131165547;
+			public const int roundedbg = 2131165547;
 			
 			// aapt resource value: 0x7F07016C
-			public const int settings = 2131165548;
+			public const int roundedbgdark = 2131165548;
 			
 			// aapt resource value: 0x7F07016D
-			public const int settings_toolbar = 2131165549;
+			public const int scan_again = 2131165549;
 			
 			// aapt resource value: 0x7F07016E
-			public const int share = 2131165550;
+			public const int settings = 2131165550;
 			
 			// aapt resource value: 0x7F07016F
-			public const int share_inactive = 2131165551;
+			public const int settings_toolbar = 2131165551;
 			
 			// aapt resource value: 0x7F070170
-			public const int sml_logo = 2131165552;
+			public const int share = 2131165552;
 			
 			// aapt resource value: 0x7F070171
-			public const int splash = 2131165553;
+			public const int share_inactive = 2131165553;
 			
 			// aapt resource value: 0x7F070172
-			public const int splashDraw = 2131165554;
+			public const int sml_logo = 2131165554;
 			
 			// aapt resource value: 0x7F070173
-			public const int splashLogo = 2131165555;
+			public const int splash = 2131165555;
 			
 			// aapt resource value: 0x7F070174
-			public const int splashTitle = 2131165556;
+			public const int splashDraw = 2131165556;
 			
 			// aapt resource value: 0x7F070175
-			public const int success = 2131165557;
+			public const int splashLogo = 2131165557;
 			
 			// aapt resource value: 0x7F070176
-			public const int temperature = 2131165558;
+			public const int splashTitle = 2131165558;
 			
 			// aapt resource value: 0x7F070177
-			public const int tooltip_frame_dark = 2131165559;
+			public const int success = 2131165559;
 			
 			// aapt resource value: 0x7F070178
-			public const int tooltip_frame_light = 2131165560;
+			public const int temperature = 2131165560;
 			
 			// aapt resource value: 0x7F070179
-			public const int triangle = 2131165561;
+			public const int test_instructions = 2131165561;
 			
 			// aapt resource value: 0x7F07017A
-			public const int warning = 2131165562;
+			public const int tooltip_frame_dark = 2131165562;
 			
 			// aapt resource value: 0x7F07017B
-			public const int write = 2131165563;
+			public const int tooltip_frame_light = 2131165563;
+			
+			// aapt resource value: 0x7F07017C
+			public const int triangle = 2131165564;
+			
+			// aapt resource value: 0x7F07017D
+			public const int warning = 2131165565;
+			
+			// aapt resource value: 0x7F07017E
+			public const int write = 2131165566;
 			
 			static Drawable()
 			{
