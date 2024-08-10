@@ -163,14 +163,7 @@ namespace biopot.ViewModels
                 await _chartsManagerService.StartAsync(CaptureMode.CaptureEegEmg);
             }
 
-            if (parameters.TryGetValue("FromTestInstruction", out bool isFromTestInstruction))
-            {
-                if (isFromTestInstruction)
-                {
-                    await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
-                    OnStartRecord();
-                }
-            }
+            
         }
 
         /// <inheritdoc />
@@ -182,10 +175,21 @@ namespace biopot.ViewModels
             IsSpsChartVisible = false;
             IsMenuOpened = false;
         }
+        public override async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            if (parameters.TryGetValue("FromTestInstruction", out bool isFromTestInstruction))
+            {
+                if (isFromTestInstruction)
+                {
+                    await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
+                    OnStartRecord();
+                }
+            }
+        }
 
         #endregion
 
-        #region -- Public properties --
+            #region -- Public properties --
 
         private BiopotGenericInfo _deviceInfo = new BiopotGenericInfo();
 	    public BiopotGenericInfo DeviceInfo
