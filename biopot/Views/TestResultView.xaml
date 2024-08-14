@@ -12,20 +12,41 @@
     <ScrollView>
         <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" Spacing="20" Padding="20">
             <Image Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
-            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="20">
+            <StackLayout Orientation="Vertical" VerticalOptions="CenterAndExpand" Spacing="0">
                 <Label 
                     Text="Participant Test Results" 
+                    TextColor="Black"
                     FontSize="Large" 
                     FontAttributes="Bold" 
                     HorizontalOptions="Start"
                 />
+
                 <Image Source="response_range.png" 
-                    HeightRequest="400" 
-                    WidthRequest="400"  
+                    HeightRequest="300" 
+                    WidthRequest="300"  
                     Aspect="AspectFit" 
                     HorizontalOptions="Center"
                 />
-               
+                
+                <Label 
+                    TextColor="Black"
+                    HorizontalOptions="Center"
+                    WidthRequest="180"
+                    HorizontalTextAlignment="Center"
+                    VerticalOptions="Center"
+                    LineBreakMode="WordWrap"
+                    FontSize="Large"
+                    FontAttributes="Bold">          
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Response within " />
+                            <Span Text="a healthy range" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+            
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand" Spacing="20">
                 <Button 
                     BackgroundColor="{StaticResource btnRedColor}"
                     HorizontalOptions="EndAndExpand"
@@ -36,7 +57,7 @@
                     WidthRequest="100"  
                     Command="{Binding CloseCommand}"
                 />
-            </StackLayout>
+            </StackLayout>    
         </StackLayout>
     </ScrollView>
 </p:BaseContentPage>
