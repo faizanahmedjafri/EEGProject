@@ -15,6 +15,7 @@ using biopot.Services.Charts;
 using SharedCore.Services;
 using SharedCore.Services.Characteristic3Service;
 using System.Linq;
+using biopot.Views;
 
 namespace biopot.ViewModels
 {
@@ -89,14 +90,20 @@ namespace biopot.ViewModels
 			set { SetProperty(ref _SensorConnectionList, value); }
 		}
 
-		private ICommand _BackCommand;
+        public bool IsMajorityInRange => SensorConnectionList != null && SensorConnectionList.Count > 0 &&
+                                     SensorConnectionList.Count(s => (s.SignalValue >= 1500 && s.SignalValue <= 10000) || s.SignalValue >= 15000) > SensorConnectionList.Count / 2;
+
+        private ICommand _BackCommand;
 		public ICommand BackCommand => _BackCommand ?? (_BackCommand = SingleExecutionCommand.FromFunc(OnBackCommand));
 
-		#endregion
+        private ICommand _ContinueCommand;
+        public ICommand ContinueCommand => _ContinueCommand ?? (_ContinueCommand = SingleExecutionCommand.FromFunc(OnContinueCommand));
 
-		#region -- Overrides --
+        #endregion
 
-		public override void Destroy()
+        #region -- Overrides --
+
+        public override void Destroy()
 		{
 			Unsubscribe();
 			base.Destroy();
@@ -199,9 +206,15 @@ namespace biopot.ViewModels
             }
 
             RaisePropertyChanged(nameof(SensorConnectionList));
+            RaisePropertyChanged(nameof(IsMajorityInRange));
         }
 
-		private Task OnBackCommand()
+        private async Task OnContinueCommand()
+        {
+            await _navigationService.NavigateAsync(nameof(TestInstructionView));
+        }
+
+        private Task OnBackCommand()
 		{
 			_logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: Back button Navigate from Impedance page");
             return _navigationService.GoBackAsync(new NavigationParameters

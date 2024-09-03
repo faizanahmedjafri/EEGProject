@@ -60,6 +60,7 @@
     <Compile Include="Services\DeviceDataTransfer\IDeviceDataTransferService.cs" />
     <Compile Include="Models\Others\AOResult.cs" />
     <Compile Include="Services\Characteristic3Service\ICharacteristic3Service.cs" />
+    <Compile Include="Services\MediaService\IMediaService.cs" />
     <Compile Include="Services\Performance\Performance.cs" />
     <Compile Include="Services\Performance\DefaultPerformanceProvider.cs" />
     <Compile Include="Services\ReadWriteDeviceDataService\IReadWriteDeviceDataService.cs" />

@@ -18,6 +18,8 @@ using SharedCore.Services.Performance;
 using SharedCore.Services.TemperatureDataService;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
+using SharedCore.Services.MediaService;
+using biopot.Services.MediaService;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace biopot
@@ -119,6 +121,7 @@ namespace biopot
 			containerRegistry.RegisterInstance<ISaveDataService>(Container.Resolve<SaveDataService>());
 			containerRegistry.RegisterInstance<ITemperatureDataService>(Container.Resolve<BatteryAndTemperatureDataService>());
 			containerRegistry.RegisterInstance<ILogService>(Container.Resolve<LogService>());
+			containerRegistry.RegisterInstance<IMediaService>(Container.Resolve<MediaService>());
 
 			//Navigation
 			containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -130,6 +133,11 @@ namespace biopot
 			containerRegistry.RegisterForNavigation<SetupView>();
 			containerRegistry.RegisterForNavigation<BandWidthView>();
 			containerRegistry.RegisterForNavigation<TechnicalSettingsView>();
+
+            containerRegistry.RegisterForNavigation<TestPage>();
+            containerRegistry.RegisterForNavigation<AudioRecognitionView>();
+            containerRegistry.RegisterForNavigation<TestInstructionView>();
+            containerRegistry.RegisterForNavigation<TestResultView>();
 
 #if DEBUG
             Plugin.BLE.Abstractions.Trace.TraceImplementation = (aFormat, aArgs) =>

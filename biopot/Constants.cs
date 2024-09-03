@@ -39,7 +39,8 @@ namespace biopot
 			public const string SESSION_DETAIL = "SessionViewModel";
 			public const string USER_DETAIL = "UserDetailsViewModel";
 			public const string OTHER_DETAIL = "OtherDetailsViewModel";
-		}
+            public const string AUDIO_RECOGNITION_DETAIL = "AudioRecognitionViewModel";
+        }
 
         public static class Files
         {
@@ -65,6 +66,7 @@ namespace biopot
             public const string DISCONNECTED_DEVICE = "DISCONNECTED_DEVICE";
             public const string DISCONNECTED_BLUETOOTH = "DISCONNECTED_BLUETOOTH";
             public const string NAV_FROM_IMPEDANCE = "NavFromImpedance";
+            public const string NAV_FROM_AUDIO_RECOGNITION = "NavFromAudioRecognition";
             public const string NAV_BACK_TO_SCREEN = "NavBackToScreen";
         }
 

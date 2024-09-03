@@ -11,62 +11,254 @@
         <ResourceDictionary>
             <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
             <x:Double x:Key="ScannerViewSize">200</x:Double>
-            <Thickness x:Key="ScannerViewMargin">16, 32, 16, 8</Thickness>>
+            <Thickness x:Key="ScannerViewMargin">16, 32, 16, 8</Thickness>
         </ResourceDictionary>
     </ContentView.Resources>
 
     <!-- FIXME move strings to resources -->
-    <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+    <ScrollView>
+        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
                  x:Name="StackLayout"
                  Padding="16">
 
-        <!-- Scan or enter barcode -->
-        <Label Text="Patient Code (scan or enter)"
-               HorizontalOptions="StartAndExpand" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="7*" />
+                </Grid.ColumnDefinitions>
 
-        <Entry Placeholder="0000"
-               Text="{Binding Id}"
-               IsEnabled="{Binding IsBarcodeScanned, Converter={StaticResource NegateBooleanConverter}}"
-               HorizontalOptions="FillAndExpand" />
+                <!-- Name -->
+                <Label Grid.Row="0" Grid.Column="0" Text="Name:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <Entry Grid.Row="0" Grid.Column="1" Placeholder="Enter Name" VerticalOptions="Center" FontSize="Small" Text="{Binding PatientsInformation.Name}"/>
 
-        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand"
-                     IsVisible="{Binding IsBarcodeScanned, Converter={StaticResource NegateBooleanConverter}}">
+                <!-- Sex -->
+                <Label Grid.Row="1" Grid.Column="0" Text="Sex:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="1" Grid.Column="1">
+                    <Picker 
+                         x:Name="SexPicker"
+                         Title="Select Sex" 
+                         VerticalOptions="Center" 
+                         FontSize="Small" 
+                         SelectedItem="{Binding PatientsInformation.Sex}"
+                         AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                         AbsoluteLayout.LayoutFlags="All" 
+                         HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>Male</x:String>
+                            <x:String>Female</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                         WidthRequest="10" 
+                         HeightRequest="10" 
+                         AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                         AbsoluteLayout.LayoutFlags="All" 
+                         HorizontalOptions="End" 
+                         Margin="5,0"
+                         Source="down_arrow.png" 
+                     >
+                    </Image>
+                </AbsoluteLayout>
 
-           <!-- Camera viewfinder -->
-           <Grid HeightRequest="{StaticResource ScannerViewSize}" WidthRequest="{StaticResource ScannerViewSize}"
-                 x:Name="CameraViewfinder"
-                 HorizontalOptions="Center" VerticalOptions="Center"
-                 Margin="{StaticResource ScannerViewMargin}">
+                <Label Grid.Row="2" Grid.Column="0" Text="Position:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="2" Grid.Column="1"   >
+                    <Picker 
+                         Title="Select Position"
+                         VerticalOptions="Center" 
+                         FontSize="Small" 
+                         SelectedItem="{Binding PatientsInformation.Position}"
+                         AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                         AbsoluteLayout.LayoutFlags="All" 
+                         HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>Full back</x:String>
+                            <x:String>Right wing</x:String>
+                            <x:String>Right centre</x:String>
+                            <x:String>Left centre</x:String>
+                            <x:String>Left wing</x:String>
+                            <x:String>Stand-off half</x:String>
+                            <x:String>Scrum half (Half-back)</x:String>
+                            <x:String>Prop (Front Row Forward)</x:String>
+                            <x:String>Hooker or Dummy-half</x:String>
+                            <x:String>Prop (Front Row Forward)</x:String>
+                            <x:String>Second Row Forward</x:String>
+                            <x:String>Second Row Forward</x:String>
+                            <x:String>Lock Forward or Loose Forward</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                         WidthRequest="10" 
+                         HeightRequest="10" 
+                         AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                         AbsoluteLayout.LayoutFlags="All" 
+                         HorizontalOptions="End" 
+                         Margin="5,0"
+                         Source="down_arrow.png" 
+                     />
+                </AbsoluteLayout>
 
-               <BoxView VerticalOptions="FillAndExpand"
+                <Label Grid.Row="3" Grid.Column="0" Text="Team:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="3" Grid.Column="1"  >
+                    <Picker 
+                        Title="Select Team" 
+                        VerticalOptions="Center" 
+                        FontSize="Small" 
+                        SelectedItem="{Binding PatientsInformation.Team}"
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>Barrow Raiders</x:String>
+                            <x:String>Batley Bulldogs</x:String>
+                            <x:String>Bradford Bulls</x:String>
+                            <x:String>Broncos</x:String>
+                            <x:String>Dewsbury Rams</x:String>
+                            <x:String>Doncaster RLFC</x:String>
+                            <x:String>Dragons</x:String>
+                            <x:String>Featherstone Rovers</x:String>
+                            <x:String>Giants</x:String>
+                            <x:String>Halifax Panthers</x:String>
+                            <x:String>Hull FC</x:String>
+                            <x:String>Leopards</x:String>
+                            <x:String>Red Devils</x:String>
+                            <x:String>Rhinos</x:String>
+                            <x:String>Robins</x:String>
+                            <x:String>Saints</x:String>
+                            <x:String>Sheffield Eagles</x:String>
+                            <x:String>Swinton Lions</x:String>
+                            <x:String>Tigers</x:String>
+                            <x:String>Toulouse Olympique XIII</x:String>
+                            <x:String>Wakefield Trinity</x:String>
+                            <x:String>Warriors</x:String>
+                            <x:String>Whitehaven RLFC</x:String>
+                            <x:String>Widnes Vikings</x:String>
+                            <x:String>Wolves</x:String>
+                            <x:String>York RLFC</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                        WidthRequest="10" 
+                        HeightRequest="10" 
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="End" 
+                        Margin="5,0"
+                        Source="down_arrow.png" 
+                    />      
+                </AbsoluteLayout>
+
+                <Label Grid.Row="4" Grid.Column="0" Text="Last Match:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="4" Grid.Column="1"  >
+                    <Picker 
+                        Title="Select Last Match" 
+                        VerticalOptions="Center" 
+                        FontSize="Small" 
+                        SelectedItem="{Binding PatientsInformation.LastMatch}"
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>Item1</x:String>
+                            <x:String>Item2</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                        WidthRequest="10" 
+                        HeightRequest="10" 
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="End" 
+                        Margin="5,0"
+                        Source="down_arrow.png" 
+                    />
+                </AbsoluteLayout>
+
+                <Label Grid.Row="5" Grid.Column="0" Text="Consussed 72 Hr:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="5" Grid.Column="1" >
+                    <Picker 
+                        Title="Select Consussed 72 Hr" 
+                        VerticalOptions="Center" 
+                        FontSize="Small" 
+                        SelectedItem="{Binding PatientsInformation.Consussed72Hr}"
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>Consussed 1</x:String>
+                            <x:String>Consussed 2</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                        WidthRequest="10" 
+                        HeightRequest="10" 
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="End" 
+                        Margin="5,0"
+                        Source="down_arrow.png" 
+                    />
+                </AbsoluteLayout>
+
+                <Label Grid.Row="6" Grid.Column="0" Text="Last Concussion:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="6" Grid.Column="1" >
+                    <Picker 
+                        Title="Select Last Concussion" 
+                        VerticalOptions="Center" 
+                        FontSize="Small" 
+                        SelectedItem="{Binding PatientsInformation.LastConcussion}"
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
                         HorizontalOptions="FillAndExpand"
-                        HeightRequest="{StaticResource ScannerViewSize}"
-                        WidthRequest="{StaticResource ScannerViewSize}"
-                        BackgroundColor="Black" />
+                    >
+                        <Picker.Items>
+                            <x:String>Last Concussion 1</x:String>
+                            <x:String>Last Concussion 2</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                        WidthRequest="10" 
+                        HeightRequest="10" 
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="End" 
+                        Margin="5,0"
+                        Source="down_arrow.png" 
+                    />
+                </AbsoluteLayout>
 
-               <!-- The actual surface view goes here in the code behind -->
 
-           </Grid>
+                <Label Grid.Row="7" Grid.Column="0" Text="Last HIA:" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" FontSize="Small"/>
+                <AbsoluteLayout Grid.Row="7" Grid.Column="1" >
+                    <Picker 
+                        Title="Select Last HIA" 
+                        VerticalOptions="Center" 
+                        FontSize="Small" 
+                        SelectedItem="{Binding PatientsInformation.LastHIA}"
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="FillAndExpand">
+                        <Picker.Items>
+                            <x:String>Last HIA 1</x:String>
+                            <x:String>Last HIA 2</x:String>
+                        </Picker.Items>
+                    </Picker>
+                    <Image 
+                        WidthRequest="10" 
+                        HeightRequest="10" 
+                        AbsoluteLayout.LayoutBounds="1,1,1,1" 
+                        AbsoluteLayout.LayoutFlags="All" 
+                        HorizontalOptions="End" 
+                        Margin="5,0"
+                        Source="down_arrow.png" 
+                    />
+                </AbsoluteLayout>
+            </Grid>
 
-            <!-- Help message -->
-            <Label Text="{Binding InfoMessage}"
-                   HorizontalOptions="CenterAndExpand"
-                   HorizontalTextAlignment="Center"
-                   TextColor="{Binding InfoMessageColor}" />
+            <Label Text="Symptoms" />
+            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding PatientsInformation.Symptoms}"/>
+
+            <Label Text="Notes" />
+            <Editor VerticalOptions="FillAndExpand" FontSize="Small" Text="{Binding PatientsInformation.Notes}"/>
         </StackLayout>
-
-        <!-- Scan again -->
-        <controls:ClickableContentView Padding="0, 16, 0, 16" IsVisible="{Binding IsBarcodeScanned}"
-                                       Command="{Binding ScanAgainCommand}">
-
-            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                <Image HeightRequest="24" WidthRequest="24"
-                       Source="scan_again" />
-
-                <Label Text="Scan Again" VerticalOptions="Center"/>
-
-            </StackLayout>
-        </controls:ClickableContentView>
-
-    </StackLayout>
+    </ScrollView>
 </ContentView>

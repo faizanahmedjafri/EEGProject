@@ -266,15 +266,48 @@
                     </ListView.ItemTemplate>
                 </controls:SwipableListView>
 
-            <controls:RecordControl 
+            <!--<controls:RecordControl 
                     Padding="0,0,5,0"
                     IsRecording="{Binding IsRecording, Mode=TwoWay}" 
                     IsConnected="{Binding IsConnected}" 
                     StartRecordCommand="{Binding StartRecordCommand}" 
                     StopRecordCommand="{Binding StopRecordCommand}"
                     BackgroundColor="Transparent"
-                    AbsoluteLayout.LayoutBounds="0.97,0.97,134,80" AbsoluteLayout.LayoutFlags="PositionProportional"/>
-                
+                    AbsoluteLayout.LayoutBounds="0.97,0.97,134,80" AbsoluteLayout.LayoutFlags="PositionProportional"/>-->
+
+            <!-- Centered Start Test Button -->
+            <!--<Button 
+                Text="Start Test" 
+                Command="{Binding StartTestCommand}" 
+                BackgroundColor="{StaticResource btnRedColor}"
+                Style="{StaticResource titleTextLabelStyle}"
+                FontSize="Large"
+                HeightRequest="56"
+                WidthRequest="200" 
+                AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+            />-->
+
+            <AbsoluteLayout AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1" AbsoluteLayout.LayoutFlags="PositionProportional">
+                <!-- White background behind the button -->
+                <BoxView 
+                    Color="White"
+                    HeightRequest="1000"  
+                    WidthRequest="600"
+                    AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                    AbsoluteLayout.LayoutFlags="PositionProportional" />      
+                <Button 
+                    Text="Start Test" 
+                    Command="{Binding StartTestCommand}" 
+                    BackgroundColor="{StaticResource btnRedColor}"
+                    Style="{StaticResource titleTextLabelStyle}"
+                    FontSize="Large"
+                    HeightRequest="56"
+                    WidthRequest="200" 
+                    AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                    AbsoluteLayout.LayoutFlags="PositionProportional" />
+            </AbsoluteLayout>
+
             <controls:SpsDetailsView
                 IsVisible="{Binding IsSpsChartVisible}"
                 BindingContext="{Binding .}"

@@ -23,7 +23,7 @@ namespace biopot.ViewModels
 {
 	public class DetailedChartViewModel : BaseViewModel
 	{
-		private readonly INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
 		private readonly IChartManagerService _chartsService;
 		private readonly IAppSettingsManagerService _appSettingsManagerService;
 	    private readonly ITemperatureDataService _temperatureService;
@@ -56,7 +56,7 @@ namespace biopot.ViewModels
 
 			LoadData();
 
-			ChartSps = new ChartViewModel(_chartsService, EDeviceType.SPSValue, 0)
+			ChartSps = new ChartViewModel(_chartsService, EDeviceType.SPSValue, 0, _navigationService)
 			{
 				ViewportHalfY = Constants.Charts.ChartYAxisDefaultValue,
             };
@@ -77,15 +77,15 @@ namespace biopot.ViewModels
 				var _DeviceModel = await _appSettingsManagerService.GetObjectAsync<DeviceModel>(Constants.StorageKeys.CONNECTED_DEVICE);
 				if (_DeviceModel != null)
 					this.DeviceName = _DeviceModel.DeviceName;
-				_EEMorEMG = new GriddedChartViewModel(_chartsService)
+				_EEMorEMG = new GriddedChartViewModel(_chartsService, _navigationService)
 				{
 					DeviceType = EDeviceType.EEGorEMG
 				};
-				_BioImpedance = new GriddedChartViewModel(_chartsService)
+				_BioImpedance = new GriddedChartViewModel(_chartsService, _navigationService)
 				{
 					DeviceType = EDeviceType.BioImpedance
 				};
-				_Accelerometer = new GriddedChartViewModel(_chartsService)
+				_Accelerometer = new GriddedChartViewModel(_chartsService, _navigationService)
 				{
 					DeviceType = EDeviceType.Accelerometer
 				};

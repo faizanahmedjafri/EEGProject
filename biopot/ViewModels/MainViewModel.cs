@@ -28,8 +28,9 @@ namespace biopot.ViewModels
 		private readonly IUserDialogs _userDialogs;
 		private readonly IAppSettingsManagerService _appSettings;
 		private readonly ILogService _logService;
+        private readonly ISaveDataService _saveDataService;
 
-		private DeviceModel _currentDevice;
+        private DeviceModel _currentDevice;
 		private string _lastConnectedDeviceId;
 		private bool _IsFromChartsView = false;
 		private bool _wasDisconnectedDeviceOnChartsView;
@@ -40,7 +41,8 @@ namespace biopot.ViewModels
             IAppSettingsManagerService appSettings,
             IUserDialogs userDialogs,
             IBlueToothService blueToothService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            ISaveDataService saveDataService)
 		{
             _eventAggregator = eventAggregator;
             _permissionsRequester = permissionsRequester;
@@ -49,6 +51,7 @@ namespace biopot.ViewModels
 			_userDialogs = userDialogs;
 			_appSettings = appSettings;
 			_logService = logService;
+            _saveDataService = saveDataService;
 
             DiscoveredDeviceTappedCommand = new DelegateCommand<DeviceConnectionViewModel>(OnDiscoveredDeviceTappedCommand);
             StartCommand = new DelegateCommand(async () => await OnStartCommand())
@@ -276,7 +279,23 @@ namespace biopot.ViewModels
                     TryConnectLastDeviceOrDiscoverDevices();
 				}
 			}
-		}
+
+            if (parameters.TryGetValue("EndTask", out bool isEndTask))
+            {
+                if (isEndTask)
+                {
+                    CurrentStep = EWelcomeSteps.First;
+                    _saveDataService.StopRecord();
+                    if (parameters.TryGetValue("AudioName", out string audioName))
+                        _saveDataService.SaveAudioDate(audioName);
+
+                    if (parameters.TryGetValue("AudioData", out string audioData))
+                        _saveDataService.SaveAudioDate(audioData);
+
+                    PatientDetailsViewModel.PatientsInformation = new PatientsInformation();
+                }
+            }
+        }
 
 		#endregion
 
@@ -395,33 +414,36 @@ namespace biopot.ViewModels
                 _lastConnectedDeviceId = await _appSettings.GetObjectAsync<string>(Constants.StorageKeys.CONNECTED_DEVICE);
           
             PatientDetailsViewModel.InitDependencies(_permissionsRequester, _eventAggregator);
-		}
+            PatientDetailsViewModel.PatientsInformation = new PatientsInformation();
+        }
 
 		private Task OnNextCommandExecute()
 		{
-			_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}: NEXT tapped");
+            //_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}: NEXT tapped");
 
-			if (CurrentStep == EWelcomeSteps.Third && IsFromMenu)
-			{
-				OnBackToMenuCommand();
-				return Task.CompletedTask;
-			}
+            //if (CurrentStep == EWelcomeSteps.Third && IsFromMenu)
+            //{
+            //	OnBackToMenuCommand();
+            //	return Task.CompletedTask;
+            //}
 
-			if (CurrentStep <= EWelcomeSteps.Fourth)
-			{
-				bool IsAllFieldDataValid = ValidationAllFieldData(CurrentStep);
+            //if (CurrentStep <= EWelcomeSteps.Fourth)
+            //{
+            //	bool IsAllFieldDataValid = ValidationAllFieldData(CurrentStep);
 
-				if (IsAllFieldDataValid)
-				{
-					int num = (int)CurrentStep + 1;
-					CurrentStep = (EWelcomeSteps)(num);
-				}
-			}
+            //	if (IsAllFieldDataValid)
+            //	{
+            //		int num = (int)CurrentStep + 1;
+            //		CurrentStep = (EWelcomeSteps)(num);
+            //	}
+            //}
 
-			if (CurrentStep == EWelcomeSteps.Fourth)
-			{
-                TryConnectLastDeviceOrDiscoverDevices();
-			}
+            //if (CurrentStep == EWelcomeSteps.Fourth)
+            //{
+            //             TryConnectLastDeviceOrDiscoverDevices();
+            //}
+
+            OnSkipAllCommand();
 			return SaveVMDataAsync();
 		}
 
@@ -432,7 +454,7 @@ namespace biopot.ViewModels
 			{
 				case EWelcomeSteps.First:
 					_logService.CreateLogDataAsync($"{Constants.Logs.NAVIGATION}: Patient Details Page");
-					if (string.IsNullOrWhiteSpace(PatientDetailsViewModel.Id))
+					if (string.IsNullOrWhiteSpace(PatientDetailsViewModel.PatientsInformation?.Name))
 					{
 						//isValid = false; TODO check nessarity for skip all
 						//PatientDetailsViewModel.Message = Strings.PleaseEnterAllFields;
@@ -441,7 +463,7 @@ namespace biopot.ViewModels
 					{
 						PatientDetailsViewModel.InfoMessage = "";
 					}
-					_logService.CreateLogDataAsync($"{Constants.Logs.DATA_ENTERED}: Patient id: " + PatientDetailsViewModel.Id);
+					_logService.CreateLogDataAsync($"{Constants.Logs.DATA_ENTERED}: Patient id: " + PatientDetailsViewModel.PatientsInformation.Name);
 					isValid = true; // TODO hack for skip validation
 					break;
 				case EWelcomeSteps.Second:
@@ -449,8 +471,6 @@ namespace biopot.ViewModels
 					if (string.IsNullOrWhiteSpace(SessionViewModel.FolderName))
 					{
 						SessionViewModel.FolderName = Strings.DefaultFolderName;
-						//isValid = false;  TODO check nessarity for skip all
-						//SessionViewModel.Message = Strings.PleaseEnterAllFields;
 					}
 					else
 					{
@@ -706,7 +726,6 @@ namespace biopot.ViewModels
         /// </summary>
         private async void TryConnectLastDeviceOrDiscoverDevices()
         {
-
             _userDialogs.HideLoading();//H.H.
 
             //await DisconnectCurrentDeviceAsync();

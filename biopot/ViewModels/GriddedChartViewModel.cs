@@ -5,19 +5,22 @@ using biopot.Enums;
 using biopot.Extensions;
 using biopot.Services.Charts;
 using Prism.Commands;
+using Prism.Navigation;
 
 namespace biopot.ViewModels
 {
 	public class GriddedChartViewModel : BaseViewModel
 	{
         private readonly IChartManagerService _chartsService;
+        private readonly INavigationService _navigationService;
         private int _currentChartIndex;
 
-        public GriddedChartViewModel(IChartManagerService chartsService)
+        public GriddedChartViewModel(IChartManagerService chartsService, INavigationService navigationService)
         {
             _chartsService = chartsService;
+            _navigationService = navigationService;
 
-            _ChartViewModel = new ChartViewModel(_chartsService, EDeviceType.EEGorEMG, 1)
+            _ChartViewModel = new ChartViewModel(_chartsService, EDeviceType.EEGorEMG, 1, _navigationService)
             {
                 ViewportHalfY = Constants.Charts.ChartYAxisDefaultValue,
             };

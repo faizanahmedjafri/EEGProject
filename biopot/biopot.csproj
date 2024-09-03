@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -50,6 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NeoSmart.AsyncLock" Version="0.3.0.2" />
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.6.0" />
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.697729" />
     <PackageReference Include="Prism.Core" Version="7.0.0.396" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.0.0.396" />
@@ -64,6 +65,7 @@
     <PackageReference Include="Microsoft.AppCenter" Version="1.9.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.9.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.9.0" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.41" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>
@@ -91,10 +93,22 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\AudioRecognitionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\PatientDetailsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TechnicalSettingsView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TestInstructionView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TestPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TestResultView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -103,6 +117,14 @@
     <Compile Remove="Services\Bluetooth\IBlueToothService.cs" />
     <Compile Remove="Models\DeviceModel.cs" />
     <Compile Remove="ViewModels\ChartsViewModel_BASE_44892.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Audios\oddball_sequence_6_minutes_10_percent.wav" />
+    <None Remove="Resources\Audios\oddball_sequence_6_minutes_20%25.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Audios\oddball_sequence_6_minutes_10_percent.wav" />
+    <EmbeddedResource Include="Resources\Audios\oddball_sequence_6_minutes_20%.wav" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Controls\HorizontalValuePicker.xaml.cs">

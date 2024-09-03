@@ -86,7 +86,7 @@ namespace biopot.ViewModels
 
             RebuildUiComponentsAsync();
 
-			ChartSps = new ChartViewModel(_chartsManagerService, EDeviceType.SPSValue, 0)
+			ChartSps = new ChartViewModel(_chartsManagerService, EDeviceType.SPSValue, 0, _navigationService)
 			{
 				ViewportHalfY = Constants.Charts.ChartYAxisDefaultValue,
 			};
@@ -162,7 +162,9 @@ namespace biopot.ViewModels
                 // restart the charts data instead of impedance
                 await _chartsManagerService.StartAsync(CaptureMode.CaptureEegEmg);
             }
-		}
+
+            
+        }
 
         /// <inheritdoc />
         public override void OnNavigatedFrom(NavigationParameters aParameters)
@@ -173,12 +175,23 @@ namespace biopot.ViewModels
             IsSpsChartVisible = false;
             IsMenuOpened = false;
         }
+        public override async void OnNavigatedTo(NavigationParameters parameters)
+        {
+            if (parameters.TryGetValue("FromTestInstruction", out bool isFromTestInstruction))
+            {
+                if (isFromTestInstruction)
+                {
+                    await _navigationService.NavigateAsync(nameof(AudioRecognitionView));
+                    OnStartRecord();
+                }
+            }
+        }
 
         #endregion
 
-        #region -- Public properties --
+            #region -- Public properties --
 
-	    private BiopotGenericInfo _deviceInfo = new BiopotGenericInfo();
+        private BiopotGenericInfo _deviceInfo = new BiopotGenericInfo();
 	    public BiopotGenericInfo DeviceInfo
 	    {
 	        get => _deviceInfo;
@@ -409,6 +422,9 @@ namespace biopot.ViewModels
 
         private ICommand _closeSpsDetailsCommand;
         public ICommand CloseSpsDetailsCommand => _closeSpsDetailsCommand ?? (_closeSpsDetailsCommand = new Command(OnCloseSpsDetailsCommand));
+
+        private ICommand _startTestCommand;
+        public ICommand StartTestCommand => _startTestCommand ?? (_startTestCommand = new Command(OnStartTestCommand));
         /* H.H. no working !!!!!!!
         private ICommand _BackCommand;
         public ICommand BackCommand => _BackCommand ?? (_BackCommand = SingleExecutionCommand.FromFunc(OnBackCommandAsync));
@@ -527,7 +543,7 @@ namespace biopot.ViewModels
                 foreach (var checkedItem in checkedChannels)
                 {
                     var viewModel = new ChartViewModel(_chartsManagerService, chartGroup.DeviceType,
-                        checkedItem.Id, checkedChannels.Select(model => model.Id))
+                        checkedItem.Id, _navigationService, checkedChannels.Select(model => model.Id))
                     {
                         ChartColor = SkiaSharp.SKColor.Parse(NextColor()),
                     };
@@ -665,6 +681,11 @@ namespace biopot.ViewModels
             IsSpsChartVisible = false;
         }
 
+        private async void OnStartTestCommand()
+        {
+			await OnConnectionStateCommand();
+        }
+
         private async Task OnUserSettingsCommand()
 		{
 			_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}:Tapped Settings command");
@@ -683,7 +704,6 @@ namespace biopot.ViewModels
         private async Task OnConnectionStateCommand()
 		{
 			_logService.CreateLogDataAsync($"{Constants.Logs.EVENT}:Tapped Connection State command");
-
 			_userDialogs.ShowLoading();
 			await OnUpdateChartStateCommand();
 			NavigationParameters navigationParameters = new NavigationParameters();
@@ -769,7 +789,7 @@ namespace biopot.ViewModels
 				{
 
                     var chartViewModel = new ChartViewModel(_chartsManagerService, chartGroup.DeviceType, 
-                        checkedItem.Id, list.Select(model => model.Id))
+                        checkedItem.Id, _navigationService, list.Select(model => model.Id))
                     {
                         ChartColor = SkiaSharp.SKColor.Parse(NextColor()),
                     };
@@ -868,7 +888,7 @@ namespace biopot.ViewModels
 
 			_saveDataService.StopRecord();
 
-			IsRecording = false;
+            IsRecording = false;
 		}
 
 		private async void OnSaveDataError(int aErrorId)

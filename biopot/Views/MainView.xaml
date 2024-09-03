@@ -35,7 +35,8 @@
             </controls:ClickableContentView.Triggers>
         </controls:ClickableContentView>
 
-        <Grid ColumnSpacing="0" Grid.Row="1">
+        <Image Grid.Row="1" Source="paramita_logo.png" HeightRequest="150" WidthRequest="250"  Aspect="AspectFit" HorizontalOptions="End"/>
+        <!--<Grid ColumnSpacing="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="0.8*"/>
@@ -47,7 +48,7 @@
                     <Setter Property="IsVisible" Value="false"/>
                 </DataTrigger>
             </Grid.Triggers>
-        </Grid>
+        </Grid>-->
         <Image Grid.Row="2" Source="navbar_shadow" Aspect="AspectFill" VerticalOptions="Start">
             <Image.Triggers>
                 <DataTrigger TargetType="Image" Binding="{Binding CurrentStep}" Value="Fourth">
@@ -73,7 +74,7 @@
                         </StackLayout>
 
                         <!-- Skip all -->
-                        <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                        <!--<controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
                             <StackLayout Spacing="0" HorizontalOptions="Center">
                                 <Label HorizontalOptions="Center" VerticalOptions="Center" 
                                        TextColor="{StaticResource entryTextColor}" 
@@ -86,7 +87,7 @@
                                     <Setter Property="IsVisible" Value="false" />
                                 </DataTrigger>
                             </controls:ClickableContentView.Triggers>
-                        </controls:ClickableContentView>
+                        </controls:ClickableContentView>-->
 
                         <Button Command="{Binding NextCommand}" BackgroundColor="{StaticResource buttonBgColor}"
                                 HeightRequest="56"
@@ -147,7 +148,7 @@
                     </StackLayout>
 
                     <!-- Skip all -->
-                    <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                    <!--<controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
                         <StackLayout Spacing="0" HorizontalOptions="Center">
                             <Label HorizontalOptions="Center" VerticalOptions="Center" 
                                    TextColor="{StaticResource entryTextColor}" 
@@ -160,7 +161,7 @@
                                 <Setter Property="IsVisible" Value="false" />
                             </DataTrigger>
                         </controls:ClickableContentView.Triggers>
-                    </controls:ClickableContentView>
+                    </controls:ClickableContentView>-->
 
                     <StackLayout MinimumHeightRequest="56" Spacing="0" Orientation="Horizontal" >
                         <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
@@ -197,7 +198,7 @@
                     </StackLayout>
 
                     <!-- Skip all -->
-                    <controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
+                    <!--<controls:ClickableContentView Padding="0,0,0,10" Command="{Binding SkipAllCommand}">
                         <StackLayout Spacing="0" HorizontalOptions="Center">
                             <Label HorizontalOptions="Center" VerticalOptions="Center" 
                                    TextColor="{StaticResource entryTextColor}" 
@@ -210,7 +211,7 @@
                                 <Setter Property="IsVisible" Value="false" />
                             </DataTrigger>
                         </controls:ClickableContentView.Triggers>
-                    </controls:ClickableContentView>
+                    </controls:ClickableContentView>-->
                     
                     <StackLayout Spacing="0" Orientation="Horizontal" >
                         <ContentView HeightRequest="56" HorizontalOptions="FillAndExpand" BackgroundColor="{StaticResource backButtonBgColor}">
